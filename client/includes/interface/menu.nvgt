@@ -1,0 +1,64 @@
+void setupmenu(bool music=false,string menusounds="main") {
+ m.reset(false);
+ m.enable_first_letter_navigation=true;
+ m.wrap=false;
+ m.enable_side_scrolling=true;
+ m.speak_letter=true;
+ if(music) m.add_music("UI/menu/"+menusounds+"/music.ogg");
+ else if(!music) m.add_music("");
+ m.edge_sound="UI/menu/"+menusounds+"/edge.ogg";
+ m.close_sound="UI/menu/"+menusounds+"/close.ogg";
+ m.open_sound="UI/menu/"+menusounds+"/open.ogg";
+ m.click_sound="UI/menu//click.ogg";
+ m.enter_sound="UI/menu/"+menusounds+"/enter.ogg";
+ m.enable_home_and_end=true;
+ m.letters_autoactivate=true;
+ m.enable_left_and_right=true;
+ m.allow_escape=true;
+}
+void mainmenu() {
+ setupmenu(true);
+ m.add_item_tts("Preferences","prefs");
+ m.add_item_tts("Exit","Exit","x");
+ mres=m.run("Main menu",true);
+ string mname=m.get_item_name(mres);
+ if(mname=="prefs") {
+  preferences_menu();
+ }
+ else {
+  m.fade_music(15);
+  save_preferences();
+  exit();
+ }
+}
+void preferences_menu() {
+ string[] d=get_sound_output_devices();
+ form.create_window("Settings",false,false);
+ int scard=form.create_list("select audio output device", 0);
+ for(uint i=0; i<d.length(); i+=1) {
+  form.add_list_item(scard,d[i],i);
+ }
+ int save=form.create_button("&save",true);
+ int cancel=form.create_button("&cancel",false,true);
+ form.focus(scard);
+ while(true) {
+  wait(5);
+  monitor_form(form);
+  if(form.is_pressed(cancel)) {
+   speak("Canceled");
+   form.reset();
+   mainmenu();
+   break;
+  }
+  if(form.is_pressed(save)) {
+   soundcard=form.get_list_position(scard);
+   wait(5);
+   set_sound_output_device(soundcard);
+   save_preferences();
+   speak("saved");
+   form.reset();
+   mainmenu();
+break;
+  }
+ }
+}
