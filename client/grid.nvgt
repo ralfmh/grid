@@ -36,7 +36,6 @@ void main() {
  p.hrtf=true;
  if(!pf.open("sounds.dat", PACK_OPEN_MODE_READ)) {
   alert("error", "failed to load sounds.dat!");
-  exit();
  }
  @miscp.pack_file=pf;
  @p.pack_file=pf;

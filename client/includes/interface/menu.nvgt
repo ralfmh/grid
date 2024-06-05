@@ -17,7 +17,7 @@ void setupmenu(bool music=false,string menusounds="main") {
  m.allow_escape=true;
 }
 void mainmenu() {
- setupmenu(true);
+ setupmenu(true,"main");
  m.add_item_tts("Preferences","prefs");
  m.add_item_tts("Exit","Exit","x");
  mres=m.run("Main menu",true);
@@ -38,6 +38,7 @@ void preferences_menu() {
  for(uint i=0; i<d.length(); i+=1) {
   form.add_list_item(scard,d[i],i);
  }
+ form.set_list_position(scard,soundcard);
  int save=form.create_button("&save",true);
  int cancel=form.create_button("&cancel",false,true);
  form.focus(scard);
