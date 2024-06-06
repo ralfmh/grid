@@ -4,7 +4,6 @@
 #include"form.nvgt"
 #include"dget.nvgt"
 #include"bgt_compat.nvgt"
-string[] sounds;
 mixer mix;
 audio_form form;
 pack pf;
