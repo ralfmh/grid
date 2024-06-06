@@ -1,0 +1,9 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_ok_wall()
+{
+  string definition = "wall fx10 tx10 fy0 ty10 mldirt";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+}

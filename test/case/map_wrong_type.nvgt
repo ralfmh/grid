@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_wrong_type()
+{
+  string definition = "wal fx10 tx10 fy0 ty5 mlstone";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "Unknown type 'wal' in line 1");
+}

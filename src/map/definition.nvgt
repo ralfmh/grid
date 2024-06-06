@@ -1,0 +1,65 @@
+/*
+** Map definition array.
+** [0]: Line type.
+** [1]: Segment 1.
+** [2]: Segment n...
+*/
+const string[][] MAP_DEFINITION =
+{
+  {
+    "ladr",
+    "fx",
+    "fy",
+    "ml",
+    "tx",
+    "ty"
+  },
+  {
+    "text",
+    "fx",
+    "fy",
+    "lv",
+    "tx",
+    "ty"
+  },
+  {
+    "tile",
+    "fx",
+    "fy",
+    "ml",
+    "tx"
+  },
+  {
+    "wall",
+    "fx",
+    "fy",
+    "ml",
+    "tx",
+    "ty"
+  }
+};
+
+/*
+** The character which separates lines in the definition.
+*/
+const string LINE_SEPARATOR = "\n";
+
+/*
+** The character which separates segments in a line.
+*/
+const string SEGMENT_SEPARATOR = " ";
+
+/*
+** Returns an array of required segments for a given type.
+*/
+string[] GetRequiredSegments(
+  int typeIndex // The index of the type.
+)
+{
+  string[] segments;
+  for (int i = 1; i < MAP_DEFINITION[typeIndex].length(); i++)
+  {
+    segments.insert_last(MAP_DEFINITION[typeIndex][i]);
+  }
+  return segments;
+}

@@ -1,0 +1,97 @@
+#include "bgt_compat.nvgt"
+#include "definition.nvgt"
+
+/*
+** Represents a 2-dimensional map of tiles and text areas.
+*/
+final class Map
+{
+  private string definition;  // The complete map definition.
+  
+  /*
+  ** Parses a map definition. Returns an array of validation errors
+  ** that occurred while parsing the definition.
+  */
+  string[] Parse(
+    string definition // The complete map definition.
+  )
+  {
+    string label;
+    int requiredIndex;
+    string[] requiredSegments;
+    int typeIndex;
+    string[] validationErrors;
+    this.definition = definition;
+    if (definition.empty())
+    {
+      validationErrors.insert_last("Map is empty.");
+      return validationErrors;
+    }
+    string[] lines = definition.split(LINE_SEPARATOR);
+    string[] segments;
+    bool lineHasErrors;
+    for (int l = 0; l < lines.length(); l++)
+    {
+      lineHasErrors = false;
+      segments = lines[l].split(SEGMENT_SEPARATOR);
+      typeIndex = -1;
+      for (int t = 0; t < MAP_DEFINITION.length(); t++)
+      {
+        if (MAP_DEFINITION[t][0] == segments[0])
+        {
+          typeIndex = t;
+          break;
+        }
+      }
+      if (typeIndex == -1)
+      {
+        validationErrors.insert_last("Unknown type '" + segments[0]
+          + "' in line " + (l + 1));
+        lineHasErrors = true;
+        continue;
+      }
+      requiredSegments = GetRequiredSegments(typeIndex);
+      for (int s = 1; s < segments.length(); s++)
+      {
+        label = string_left(segments[s], 2);
+        if (MAP_DEFINITION[typeIndex].find(1, label) == -1)
+        {
+          validationErrors.insert_last("Segment '" + label
+            + "' is not supported for type '" + MAP_DEFINITION[typeIndex][0]
+            + "' in line " + (l + 1));
+          lineHasErrors = true;
+          break;
+        }
+        requiredIndex = requiredSegments.find(label);
+        if (requiredIndex > -1)
+        {
+          requiredSegments.remove_at(requiredIndex);
+        }
+        if (label == "lv")
+        {
+          break;
+        }
+      }
+      if (!lineHasErrors && requiredSegments.length() > 0)
+      {
+        string message = "The following segments are missing for type '"
+          + MAP_DEFINITION[typeIndex][0] + "' in line " + (l + 1) + ": ";
+        for (int i = 0; i < requiredSegments.length(); i++)
+        {
+          if (i > 0)
+          {
+            message += ", ";
+          }
+          message += requiredSegments[i];
+        }
+        validationErrors.insert_last(message);
+        lineHasErrors = true;
+      }
+      if (lineHasErrors)
+      {
+        continue;
+      }
+    }
+    return validationErrors;
+  }
+}

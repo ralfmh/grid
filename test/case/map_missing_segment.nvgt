@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_missing_segment()
+{
+  string definition = "ladr fx10 fy0 mlmetal";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "The following segments are missing for type 'ladr' in line 1: tx, ty");
+}

@@ -1,4 +1,0 @@
-void test_this_fails()
-{
-  assert(1 == 0);
-}

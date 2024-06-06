@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_wrong_segment()
+{
+  string definition = "tile fx0 tx10 fy0 ty5 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "Segment 'ty' is not supported for type 'tile' in line 1");
+}

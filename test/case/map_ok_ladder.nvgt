@@ -1,0 +1,9 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_ok_ladder()
+{
+  string definition = "ladr fx10 tx10 fy0 ty5 mlmetal";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+}

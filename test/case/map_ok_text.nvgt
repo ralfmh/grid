@@ -1,0 +1,9 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_ok_text()
+{
+  string definition = "text fx0 tx10 fy0 ty0 lvHello world!";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+}
