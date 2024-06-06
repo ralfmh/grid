@@ -17,6 +17,7 @@ final class Map
   )
   {
     string label;
+    string[] processedSegments;
     int requiredIndex;
     string[] requiredSegments;
     int typeIndex;
@@ -50,6 +51,7 @@ final class Map
         lineHasErrors = true;
         continue;
       }
+      processedSegments.resize(0);
       requiredSegments = GetRequiredSegments(typeIndex);
       for (int s = 1; s < segments.length(); s++)
       {
@@ -62,11 +64,18 @@ final class Map
           lineHasErrors = true;
           break;
         }
+        if (processedSegments.find(label) > -1)
+        {
+          validationErrors.insert_last("Duplicate segment '" + label
+            + "' in line " + (l + 1));
+          lineHasErrors = true;
+        }
         requiredIndex = requiredSegments.find(label);
         if (requiredIndex > -1)
         {
           requiredSegments.remove_at(requiredIndex);
         }
+        processedSegments.insert_last(label);
         if (label == "lv")
         {
           break;

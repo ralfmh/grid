@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_duplicate_segment()
+{
+  string definition = "tile fx0 tx10 fy0 tx20 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "Duplicate segment 'tx' in line 1");
+}
