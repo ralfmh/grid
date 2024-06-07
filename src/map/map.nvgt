@@ -10,9 +10,17 @@ final class Map
   
   private Entity@[] entities; // Array of entities.
   
+  private int maxX; // The maximum x position of this map.
+  
+  private int maxY; // The maximum y position of this map.
+  
+  private grid<int>@ tiles;  // Grid of tiles.
+  
   /*
-  ** Parses a map definition. Returns an array of validation errors
-  ** that occurred while parsing the definition.
+  ** Parses a map definition, fills the entities array and sets
+  ** the maximum x and y positions of the map.
+  ** Returns an array of validation errors that occurred
+  ** while parsing the definition.
   */
   string[] Parse(
     string definition // The complete map definition.
@@ -27,6 +35,10 @@ final class Map
     string[] validationErrors;
     string value;
     this.definition = definition;
+    @this.tiles = null;
+    this.entities.resize(0);
+    this.maxX = 0;
+    this.maxY = 0;
     if (definition.empty())
     {
       validationErrors.insert_last("Map is empty.");
@@ -154,7 +166,70 @@ final class Map
           + (l + 1));
         break;
       }
+      if (entity.Type == TYPE_TILE)
+      {
+        entity.ToY = entity.FromY;
+      }
+      this.entities.insert_last(entity);
+      if (entity.Type != TYPE_TEXT)
+      {
+        if (entity.ToX > this.maxX)
+        {
+          this.maxX = entity.ToX;
+        }
+        if (entity.ToY > this.maxY)
+        {
+          this.maxY = entity.ToY;
+        }
+      }
     }
     return validationErrors;
+  }
+  
+  /*
+  ** Creates the tiles grid.
+  */
+  void CreateTiles()
+  {
+    @this.tiles = grid<int>(this.maxX + 1, this.maxY + 1);
+    for (int i = 0; i <= this.maxX; i++)
+    {
+      for (int j = 0; j <= this.maxY; j++)
+      {
+        this.tiles[i, j] = -1;
+      }
+    }
+    for (int i = 0; i < this.entities.length(); i++)
+    {
+      if (this.entities[i].Type == TYPE_TEXT)
+      {
+        continue;
+      }
+      for (int x = this.entities[i].FromX; x <= this.entities[i].ToX; x++)
+      {
+        for (int y = this.entities[i].FromY; y <= this.entities[i].ToY; y++)
+        {
+          this.tiles[x, y] = i;
+        }
+      }
+    }
+  }
+  
+  /*
+  ** Gets the tile at a position.
+  ** Returns the default tile if none exists at the given position,
+  ** or the position lies outside of map boundaries.
+  */
+  string GetTile(
+    int x,  // The x position.
+    int y // The y position.
+  )
+  {
+    if (x >= this.tiles.width() || y >= this.tiles.height()
+      || this.tiles[x, y] == -1)
+    {
+      return DEFAULT_TILE;
+    }
+    return this.entities[this.tiles[x, y]].Content;
   }
 }

@@ -1,0 +1,12 @@
+#include "../../src/map/map.nvgt"
+
+void test_tile_wall()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "wall fx11 tx11 fy0 ty10 mldirt";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateTiles();
+  assert(map.GetTile(11, 0) == "dirt");
+}

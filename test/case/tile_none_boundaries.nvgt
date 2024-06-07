@@ -1,0 +1,12 @@
+#include "../../src/map/map.nvgt"
+
+void test_tile_none_boundaries()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "ladr fx11 tx11 fy0 ty10 mlmetal";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateTiles();
+  assert(map.GetTile(9, 5) == DEFAULT_TILE);
+}

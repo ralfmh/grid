@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_tile_ladder()
+{
+  string definition = "ladr fx0 tx0 fy0 ty10 mlmetal";
+  Map map;
+  map.Parse(definition);
+  map.CreateTiles();
+  assert(map.GetTile(0, 5) == "metal");
+}

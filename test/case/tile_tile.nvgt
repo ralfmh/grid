@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_tile_tile()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone";
+  Map map;
+  map.Parse(definition);
+  map.CreateTiles();
+  assert(map.GetTile(5, 0) == "stone");
+}
