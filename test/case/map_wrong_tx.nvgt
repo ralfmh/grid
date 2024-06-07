@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_wrong_tx()
+{
+  string definition = "tile fx10 tx5 fy0 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "'tx' may not be less than 'fx' in line 1");
+}

@@ -106,6 +106,10 @@ final class Map
         {
           entity.FromY = parse_int(value);
         }
+        else if (label == SEGMENT_ML)
+        {
+          entity.Content = value;
+        }
         else if (label == SEGMENT_TX)
         {
           entity.ToX = parse_int(value);
@@ -137,6 +141,18 @@ final class Map
       if (lineHasErrors)
       {
         continue;
+      }
+      if (entity.ToX < entity.FromX)
+      {
+        validationErrors.insert_last("'tx' may not be less than 'fx' in line "
+          + (l + 1));
+        break;
+      }
+      if (entity.ToY < entity.FromY)
+      {
+        validationErrors.insert_last("'ty' may not be less than 'fy' in line "
+          + (l + 1));
+        break;
       }
     }
     return validationErrors;

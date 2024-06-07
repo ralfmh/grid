@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_wrong_ty()
+{
+  string definition = "ladr fx10 tx10 fy5 ty0 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "'ty' may not be less than 'fy' in line 1");
+}
