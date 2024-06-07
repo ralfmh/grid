@@ -83,6 +83,13 @@ final class Map
         }
         processedSegments.insert_last(label);
         value = segments[s].substr(2);
+        if (value.empty())
+        {
+          validationErrors.insert_last("The value for segment '" + label
+            + "' is missing in line " + (l + 1));
+          lineHasErrors = true;
+          break;
+        }
         if (label != SEGMENT_LV && label != SEGMENT_ML
           && !value.is_digits())
         {

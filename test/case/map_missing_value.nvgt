@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_missing_value()
+{
+  string definition = "ladr fx0 tx10 fy0 ty5 ml";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "The value for segment 'ml' is missing in line 1");
+}
