@@ -84,48 +84,28 @@ final class Map
         }
         processedSegments.insert_last(label);
         value = string_trim_left(segments[s], 2);
+        if (label != SEGMENT_LV && label != SEGMENT_ML
+          && !string_is_digits(value))
+        {
+          validationErrors.insert_last("Invalid value '" + value
+            + "' for segment '" + label + "' in line " + (l + 1));
+          lineHasErrors = true;
+          break;
+        }
         if (label == SEGMENT_FX)
         {
-          if (!string_is_digits(value))
-          {
-            validationErrors.insert_last("Invalid value '" + value
-              + "' for segment '" + label + "' in line " + (l + 1));
-            lineHasErrors = true;
-            break;
-          }
           entity.FromX = string_to_number(value);
         }
         else if (label == SEGMENT_FY)
         {
-          if (!string_is_digits(value))
-          {
-            validationErrors.insert_last("Invalid value '" + value
-              + "' for segment '" + label + "' in line " + (l + 1));
-            lineHasErrors = true;
-            break;
-          }
           entity.FromY = string_to_number(value);
         }
         else if (label == SEGMENT_TX)
         {
-          if (!string_is_digits(value))
-          {
-            validationErrors.insert_last("Invalid value '" + value
-              + "' for segment '" + label + "' in line " + (l + 1));
-            lineHasErrors = true;
-            break;
-          }
           entity.ToX = string_to_number(value);
         }
         else if (label == SEGMENT_TY)
         {
-          if (!string_is_digits(value))
-          {
-            validationErrors.insert_last("Invalid value '" + value
-              + "' for segment '" + label + "' in line " + (l + 1));
-            lineHasErrors = true;
-            break;
-          }
           entity.ToY = string_to_number(value);
         }
         else if (label == SEGMENT_LV)
