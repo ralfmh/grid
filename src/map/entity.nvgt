@@ -1,0 +1,17 @@
+/*
+** Represents an entity on the map.
+*/
+final class Entity
+{
+  string Content; // The material or literal value of the entity.
+  
+  int FromX;  // The minimum x position of the entity.
+  
+  int FromY;  // The minimum y position of the entity.
+  
+  int ToX;  // The maximum x position of the entity.
+  
+  int ToY;  // The maximum y position of the entity.
+  
+  string Type;  // The type of the entity.
+}

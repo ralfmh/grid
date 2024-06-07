@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_wrong_value()
+{
+  string definition = "tile fx0 txten fy0 ty5 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "Invalid value 'ten' for segment 'tx' in line 1");
+}

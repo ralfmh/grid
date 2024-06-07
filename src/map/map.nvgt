@@ -1,5 +1,6 @@
 #include "bgt_compat.nvgt"
 #include "definition.nvgt"
+#include "entity.nvgt"
 
 /*
 ** Represents a 2-dimensional map of tiles and text areas.
@@ -7,6 +8,8 @@
 final class Map
 {
   private string definition;  // The complete map definition.
+  
+  private Entity@[] entities; // Array of entities.
   
   /*
   ** Parses a map definition. Returns an array of validation errors
@@ -16,12 +19,14 @@ final class Map
     string definition // The complete map definition.
   )
   {
+    Entity@ entity;
     string label;
     string[] processedSegments;
     int requiredIndex;
     string[] requiredSegments;
     int typeIndex;
     string[] validationErrors;
+    string value;
     this.definition = definition;
     if (definition.empty())
     {
@@ -51,6 +56,8 @@ final class Map
         lineHasErrors = true;
         continue;
       }
+      @entity = Entity();
+      entity.Type = MAP_DEFINITION[typeIndex][0];
       processedSegments.resize(0);
       requiredSegments = GetRequiredSegments(typeIndex);
       for (int s = 1; s < segments.length(); s++)
@@ -76,7 +83,52 @@ final class Map
           requiredSegments.remove_at(requiredIndex);
         }
         processedSegments.insert_last(label);
-        if (label == "lv")
+        value = string_trim_left(segments[s], 2);
+        if (label == SEGMENT_FX)
+        {
+          if (!string_is_digits(value))
+          {
+            validationErrors.insert_last("Invalid value '" + value
+              + "' for segment '" + label + "' in line " + (l + 1));
+            lineHasErrors = true;
+            break;
+          }
+          entity.FromX = string_to_number(value);
+        }
+        else if (label == SEGMENT_FY)
+        {
+          if (!string_is_digits(value))
+          {
+            validationErrors.insert_last("Invalid value '" + value
+              + "' for segment '" + label + "' in line " + (l + 1));
+            lineHasErrors = true;
+            break;
+          }
+          entity.FromY = string_to_number(value);
+        }
+        else if (label == SEGMENT_TX)
+        {
+          if (!string_is_digits(value))
+          {
+            validationErrors.insert_last("Invalid value '" + value
+              + "' for segment '" + label + "' in line " + (l + 1));
+            lineHasErrors = true;
+            break;
+          }
+          entity.ToX = string_to_number(value);
+        }
+        else if (label == SEGMENT_TY)
+        {
+          if (!string_is_digits(value))
+          {
+            validationErrors.insert_last("Invalid value '" + value
+              + "' for segment '" + label + "' in line " + (l + 1));
+            lineHasErrors = true;
+            break;
+          }
+          entity.ToY = string_to_number(value);
+        }
+        else if (label == SEGMENT_LV)
         {
           break;
         }
