@@ -5,5 +5,5 @@ void test_map_empty()
   Map map;
   string[] errors = map.Parse("");
   assert(errors.length() == 1);
-  assert(string_contains(errors[0], "empty", 1) > -1);
+  assert(errors[0].find_first("empty") > -1);
 }

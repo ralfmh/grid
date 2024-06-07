@@ -1,4 +1,3 @@
-#include "bgt_compat.nvgt"
 #include "definition.nvgt"
 #include "entity.nvgt"
 
@@ -62,7 +61,7 @@ final class Map
       requiredSegments = GetRequiredSegments(typeIndex);
       for (int s = 1; s < segments.length(); s++)
       {
-        label = string_left(segments[s], 2);
+        label = segments[s].substr(0, 2);
         if (MAP_DEFINITION[typeIndex].find(1, label) == -1)
         {
           validationErrors.insert_last("Segment '" + label
@@ -83,9 +82,9 @@ final class Map
           requiredSegments.remove_at(requiredIndex);
         }
         processedSegments.insert_last(label);
-        value = string_trim_left(segments[s], 2);
+        value = segments[s].substr(2);
         if (label != SEGMENT_LV && label != SEGMENT_ML
-          && !string_is_digits(value))
+          && !value.is_digits())
         {
           validationErrors.insert_last("Invalid value '" + value
             + "' for segment '" + label + "' in line " + (l + 1));
@@ -94,19 +93,19 @@ final class Map
         }
         if (label == SEGMENT_FX)
         {
-          entity.FromX = string_to_number(value);
+          entity.FromX = parse_int(value);
         }
         else if (label == SEGMENT_FY)
         {
-          entity.FromY = string_to_number(value);
+          entity.FromY = parse_int(value);
         }
         else if (label == SEGMENT_TX)
         {
-          entity.ToX = string_to_number(value);
+          entity.ToX = parse_int(value);
         }
         else if (label == SEGMENT_TY)
         {
-          entity.ToY = string_to_number(value);
+          entity.ToY = parse_int(value);
         }
         else if (label == SEGMENT_LV)
         {
