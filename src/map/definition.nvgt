@@ -1,41 +1,60 @@
 /*
+** Segments.
+*/
+const string SEGMENT_FX = "fx";
+const string SEGMENT_FY = "fy";
+const string SEGMENT_LV = "lv";
+const string SEGMENT_ML = "ml";
+const string SEGMENT_TX = "tx";
+const string SEGMENT_TY = "ty";
+
+
+/*
+** Entity types.
+*/
+const string TYPE_LADDER = "ladr";
+const string TYPE_TEXT = "text";
+const string TYPE_TILE = "tile";
+const string TYPE_WALL = "wall";
+
+/*
 ** Map definition array.
-** [0]: Line type.
+** [0]: Entity type.
 ** [1]: Segment 1.
 ** [2]: Segment n...
 */
 const string[][] MAP_DEFINITION =
 {
   {
-    "ladr",
-    "fx",
-    "fy",
-    "ml",
-    "tx",
-    "ty"
+    TYPE_LADDER,
+    SEGMENT_FX,
+    SEGMENT_FY,
+    SEGMENT_ML,
+    SEGMENT_TX,
+    SEGMENT_TY
   },
   {
-    "text",
-    "fx",
-    "fy",
-    "lv",
-    "tx",
-    "ty"
+    TYPE_TEXT,
+    SEGMENT_FX,
+    SEGMENT_FY,
+    SEGMENT_LV,
+    SEGMENT_TX,
+    SEGMENT_TY
   },
   {
-    "tile",
-    "fx",
-    "fy",
-    "ml",
-    "tx"
+    TYPE_TILE,
+    SEGMENT_FX,
+    SEGMENT_FY,
+    SEGMENT_ML,
+    SEGMENT_TX
   },
   {
-    "wall",
-    "fx",
-    "fy",
-    "ml",
-    "tx",
-    "ty"
+    TYPE_WALL,
+    SEGMENT_FX,
+    SEGMENT_FY,
+    SEGMENT_ML,
+    SEGMENT_TX,
+    SEGMENT_TY
   }
 };
 
