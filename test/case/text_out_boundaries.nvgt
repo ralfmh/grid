@@ -1,0 +1,11 @@
+#include "../../src/map/map.nvgt"
+
+void test_text_out_boundaries()
+{
+  string definition = "text fx0 tx10 fy0 ty0 lvThis is a hallway.";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  assert(map.GetText(11, 0) == DEFAULT_TEXT);
+}

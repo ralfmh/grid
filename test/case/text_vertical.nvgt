@@ -1,0 +1,11 @@
+#include "../../src/map/map.nvgt"
+
+void test_text_vertical()
+{
+  string definition = "text fx5 tx5 fy0 ty10 lvThis is a ladder.";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  assert(map.GetText(5, 5) == "This is a ladder.");
+}

@@ -7,6 +7,6 @@ void test_tile_none_boundaries()
   Map map;
   string[] errors = map.Parse(definition);
   assert(errors.length() == 0);
-  map.CreateTiles();
+  map.CreateGrids();
   assert(map.GetTile(9, 5) == DEFAULT_TILE);
 }

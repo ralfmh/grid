@@ -1,0 +1,12 @@
+#include "../../src/map/map.nvgt"
+
+void test_text_none_boundaries()
+{
+  string definition = "text fx0 tx10 fy0 ty0 lvThis is a hallway." + LINE_SEPARATOR;
+  definition += "text fx11 tx11 fy0 ty10 lvThis is a ladder.";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  assert(map.GetText(9, 5) == DEFAULT_TEXT);
+}

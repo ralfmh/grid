@@ -10,11 +10,17 @@ final class Map
   
   private Entity@[] entities; // Array of entities.
   
-  private int maxX; // The maximum x position of this map.
+  private grid<int>@ texts; // Grid of texts.
   
-  private int maxY; // The maximum y position of this map.
+  private int textMaxX; // The maximum x position of the texts on this map.
   
-  private grid<int>@ tiles;  // Grid of tiles.
+  private int textMaxY; // The maximum y position of the texts on this map.
+  
+  private grid<int>@ tiles; // Grid of tiles.
+  
+  private int tileMaxX; // The maximum x position of the tiles on this map.
+  
+  private int tileMaxY; // The maximum y position of the tiles on this map.
   
   /*
   ** Parses a map definition, fills the entities array and sets
@@ -35,10 +41,13 @@ final class Map
     string[] validationErrors;
     string value;
     this.definition = definition;
+    @this.texts = null;
     @this.tiles = null;
     this.entities.resize(0);
-    this.maxX = 0;
-    this.maxY = 0;
+    this.textMaxX = 0;
+    this.textMaxY = 0;
+    this.tileMaxX = 0;
+    this.tileMaxY = 0;
     if (definition.empty())
     {
       validationErrors.insert_last("Map is empty.");
@@ -132,6 +141,7 @@ final class Map
         }
         else if (label == SEGMENT_LV)
         {
+          entity.Content = lines[l].substr(lines[l].find_first(SEGMENT_LV) + 2);
           break;
         }
       }
@@ -171,15 +181,26 @@ final class Map
         entity.ToY = entity.FromY;
       }
       this.entities.insert_last(entity);
-      if (entity.Type != TYPE_TEXT)
+      if (entity.Type == TYPE_TEXT)
       {
-        if (entity.ToX > this.maxX)
+        if (entity.ToX > this.textMaxX)
         {
-          this.maxX = entity.ToX;
+          this.textMaxX = entity.ToX;
         }
-        if (entity.ToY > this.maxY)
+        if (entity.ToY > this.textMaxY)
         {
-          this.maxY = entity.ToY;
+          this.textMaxY = entity.ToY;
+        }
+      }
+      else
+      {
+        if (entity.ToX > this.tileMaxX)
+        {
+          this.tileMaxX = entity.ToX;
+        }
+        if (entity.ToY > this.tileMaxY)
+        {
+          this.tileMaxY = entity.ToY;
         }
       }
     }
@@ -187,14 +208,22 @@ final class Map
   }
   
   /*
-  ** Creates the tiles grid.
+  ** Creates the texts and tiles grids.
   */
-  void CreateTiles()
+  void CreateGrids()
   {
-    @this.tiles = grid<int>(this.maxX + 1, this.maxY + 1);
-    for (int i = 0; i <= this.maxX; i++)
+    @this.texts = grid<int>(this.textMaxX + 1, this.textMaxY + 1);
+    for (int i = 0; i <= this.textMaxX; i++)
     {
-      for (int j = 0; j <= this.maxY; j++)
+      for (int j = 0; j <= this.textMaxY; j++)
+      {
+        this.texts[i, j] = -1;
+      }
+    }
+    @this.tiles = grid<int>(this.tileMaxX + 1, this.tileMaxY + 1);
+    for (int i = 0; i <= this.tileMaxX; i++)
+    {
+      for (int j = 0; j <= this.tileMaxY; j++)
       {
         this.tiles[i, j] = -1;
       }
@@ -203,16 +232,43 @@ final class Map
     {
       if (this.entities[i].Type == TYPE_TEXT)
       {
-        continue;
-      }
-      for (int x = this.entities[i].FromX; x <= this.entities[i].ToX; x++)
-      {
-        for (int y = this.entities[i].FromY; y <= this.entities[i].ToY; y++)
+        for (int x = this.entities[i].FromX; x <= this.entities[i].ToX; x++)
         {
-          this.tiles[x, y] = i;
+          for (int y = this.entities[i].FromY; y <= this.entities[i].ToY; y++)
+          {
+            this.texts[x, y] = i;
+          }
+        }
+      }
+      else
+      {
+        for (int x = this.entities[i].FromX; x <= this.entities[i].ToX; x++)
+        {
+          for (int y = this.entities[i].FromY; y <= this.entities[i].ToY; y++)
+          {
+            this.tiles[x, y] = i;
+          }
         }
       }
     }
+  }
+  
+  /*
+  ** Gets the text at a position.
+  ** Returns the default text if none exists at the given position,
+  ** or the position lies outside of map boundaries.
+  */
+  string GetText(
+    int x,  // The x position.
+    int y // The y position.
+  )
+  {
+    if (x >= this.texts.width() || y >= this.texts.height()
+      || this.texts[x, y] == -1)
+    {
+      return DEFAULT_TEXT;
+    }
+    return this.entities[this.texts[x, y]].Content;
   }
   
   /*
