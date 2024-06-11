@@ -1,3 +1,5 @@
+#include "entity_type.nvgt"
+
 /*
 ** Represents an entity on the map.
 */
@@ -13,5 +15,5 @@ final class Entity
   
   int ToY;  // The maximum y position of the entity.
   
-  string Type;  // The type of the entity.
+  EntityType Type;  // The type of the entity.
 }

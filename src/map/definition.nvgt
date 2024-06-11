@@ -29,6 +29,14 @@ const string TYPE_TEXT = "text";
 const string TYPE_TILE = "tile";
 const string TYPE_WALL = "wall";
 
+string[] ENTITY_TYPE =
+{
+  TYPE_LADDER,
+  TYPE_TEXT,
+  TYPE_TILE,
+  TYPE_WALL
+};
+
 /*
 ** Map definition array.
 ** [0]: Entity type.

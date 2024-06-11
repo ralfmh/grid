@@ -1,0 +1,10 @@
+/*
+** Defines the available entity types.
+*/
+enum EntityType
+{
+  Ladder,
+  Text,
+  Tile,
+  Wall
+}
