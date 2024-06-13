@@ -1,36 +1,26 @@
-#include"includes/*.nvgt";
 #include"includes/*/*.nvgt"
 #include"sound_pool.nvgt"
 #include"form.nvgt"
 #include"dget.nvgt"
-#include"bgt_compat.nvgt"
 mixer mix;
 audio_form form;
 pack pf;
-sound_pool p,srcp,miscp;
+sound_pool p,miscp;
 int soundcard=1;
-instance game_instance("Grid");
 bool can_move=true;
 string savedir=DIRECTORY_APPDATA+"/grid";
 timer walktimer;
-savedata sd(savedir+"/data.dat","Lm`TfO_w1|n*~p#<}:yN0ldBX|[jCE");
 int walktime=200;
 int mres;
-double dir=0.0;
 vector me,cam;
 dynamic_menu_pro m;
 void main() {
- if(game_instance.is_already_running) {
-  alert("Error!","You can only have one instance of the game open!");
-  exit();
- }
  if(!directory_exists(savedir)) directory_create(savedir);
  show_window("Grid");
  read_preferences();
  set_sound_output_device(soundcard);
  sound_global_hrtf = true;
  @p.mixer=mix;
- @srcp.mixer=mix;
  p.pan_step=0.8;
  p.hrtf=true;
  if(!pf.open("sounds.dat", PACK_OPEN_MODE_READ)) {
@@ -39,16 +29,13 @@ void main() {
  @miscp.pack_file=pf;
  @p.pack_file=pf;
  @spool.pack_file=pf;
- @srcp.pack_file=pf;
  mainmenu();
 }
 void read_preferences() {
- sd.load();
- if(sd.d.exists("soundcard")) soundcard=sd.readn("soundcard");
+ //should load your settings form an ini file.
 }
 void save_preferences() {
-sd.add("soundcard",soundcard);
-sd.save();
+ //should write your settings into an ini file.
 }
 void game() {
  speedhack_protection=true;

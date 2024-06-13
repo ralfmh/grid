@@ -7,7 +7,7 @@ void dlg(string message) {
   }
   if(key_pressed(KEY_C)) {
    speak("Copied to clipboard");
-   clipboard_copy_text(message);
+   clipboard_set_text(message);
   }
   if (key_pressed(KEY_RETURN) or key_pressed(KEY_ESCAPE)) {
    break;
