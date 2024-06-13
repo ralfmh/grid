@@ -22,14 +22,14 @@ void main()
   double parseTime = parseTimer.elapsed;
   assert(errors.length() == 0);
   timer createTimer;
-  map.CreateTiles();
+  map.CreateGrids();
   double createTime = createTimer.elapsed;
   timer getTimer;
-  string tile = map.GetTile(500, 500);
+  Block@ block = map.GetBlock(500, 500);
   double getTime = getTimer.elapsed;
-  assert(tile == "metal50");
+  assert(block.Material == "metal50");
   info_box("Map benchmark", "Results", "Created " + count + " ladders, "
     + "ranging from 0, 0 to 1000, 1000:\r\nParse time: " + parseTime
-    + " ms\r\nTile creation time: " + createTime + " ms\r\nTile query time: "
+    + " ms\r\nGrid creation time: " + createTime + " ms\r\nBlock query time: "
     + getTime + " ms");
 }
