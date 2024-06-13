@@ -1,5 +1,6 @@
 #include "../map/map.nvgt"
 #include "direction.nvgt"
+#include "move_result.nvgt"
 
 /*
 ** Represents a person moving around the map.
@@ -36,7 +37,7 @@ final class Person
   ** Moves the person in the given direction.
   ** Returns true if the move succeeded, false otherwise.
   */
-  bool Move(
+  MoveResult Move(
     Direction direction // The direction in which to move.
   )
   {
@@ -62,8 +63,8 @@ final class Person
     {
       this.X = newX;
       this.Y = newY;
-      return true;
+      return Moved;
     }
-    return false;
+    return Walled;
   }
 }

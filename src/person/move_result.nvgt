@@ -1,0 +1,10 @@
+/*
+** Defines the result of the call to the Person.Move method.
+*/
+enum MoveResult
+{
+  Delayed,  // The move is delayed due to the current time / move interval.
+  Edged,  // The person has reached the edge of the map.
+  Moved,  // The person moved successfully to a new position.
+  Walled  // The move encountered a wall and cannot continue in the direction.
+}
