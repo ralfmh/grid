@@ -1,0 +1,10 @@
+/*
+** Defines the available directions.
+*/
+enum Direction
+{
+  Down,
+  Left,
+  Right,
+  Up
+}

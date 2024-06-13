@@ -1,0 +1,15 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_move_right()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone";
+  Map map;
+  map.Parse(definition);
+  map.CreateGrids();
+  Person p(map);
+  assert(p.Move(Right) == true);
+  assert(p.Block != null);
+  assert(p.Block.Material == "stone");
+  assert(p.X == 1);
+  assert(p.Y == 0);
+}
