@@ -22,6 +22,14 @@ final class Map
   private int textMaxX; // The maximum x position of the texts on this map.
   
   private int textMaxY; // The maximum y position of the texts on this map.
+
+  /*
+  ** Returns the maximum x position of all blocks on the map.
+  */
+  int GetMaxX()
+  {
+    return this.blocksMaxX;
+  }
   
   /*
   ** Parses a map definition, fills the entities array and sets

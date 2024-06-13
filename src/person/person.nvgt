@@ -58,6 +58,10 @@ final class Person
         newY++;
         break;
     }
+    if (newX > this.map.GetMaxX())
+    {
+      return Edged;
+    }
     @this.Block = this.map.GetBlock(newX, newY);
     if (this.Block == null || this.Block.Type != Wall)
     {
