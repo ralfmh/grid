@@ -1,14 +1,14 @@
 /*
+** The name of the default tile, in case none is defined
+** at the requested position, or the position lies outside the map boundaries.
+*/
+const string DEFAULT_BLOCK = "air";
+
+/*
 ** The default text, in case none is defined
 ** at the requested position, or the position lies outside the map boundaries.
 */
 const string DEFAULT_TEXT = "";
-
-/*
-** The name of the default tile, in case none is defined
-** at the requested position, or the position lies outside the map boundaries.
-*/
-const string DEFAULT_TILE = "air";
 
 /*
 ** Segments.

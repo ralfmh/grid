@@ -1,12 +1,12 @@
 #include "../../src/map/map.nvgt"
 
-void test_tile_wall()
+void test_block_override()
 {
   string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
-  definition += "wall fx11 tx11 fy0 ty10 mldirt";
+  definition += "ladr fx5 tx5 fy0 ty10 mlmetal";
   Map map;
   string[] errors = map.Parse(definition);
   assert(errors.length() == 0);
   map.CreateGrids();
-  assert(map.GetTile(11, 0) == "dirt");
+  assert(map.GetBlock(5, 0) == "metal");
 }

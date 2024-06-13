@@ -1,10 +1,10 @@
 #include "../../src/map/map.nvgt"
 
-void test_tile_out_boundaries()
+void test_block_tile()
 {
   string definition = "tile fx0 tx10 fy0 mlstone";
   Map map;
   map.Parse(definition);
   map.CreateGrids();
-  assert(map.GetTile(15, 0) == DEFAULT_TILE);
+  assert(map.GetBlock(5, 0) == "stone");
 }

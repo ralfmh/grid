@@ -6,6 +6,12 @@
 */
 final class Map
 {
+  private grid<int>@ blocks;  // Grid of blocks.
+  
+  private int blocksMaxX; // The maximum x position of the blocks on this map.
+  
+  private int blocksMaxY; // The maximum y position of the blocks on this map.
+  
   private string definition;  // The complete map definition.
   
   private Entity@[] entities; // Array of entities.
@@ -15,12 +21,6 @@ final class Map
   private int textMaxX; // The maximum x position of the texts on this map.
   
   private int textMaxY; // The maximum y position of the texts on this map.
-  
-  private grid<int>@ tiles; // Grid of tiles.
-  
-  private int tileMaxX; // The maximum x position of the tiles on this map.
-  
-  private int tileMaxY; // The maximum y position of the tiles on this map.
   
   /*
   ** Parses a map definition, fills the entities array and sets
@@ -41,13 +41,13 @@ final class Map
     string[] validationErrors;
     string value;
     this.definition = definition;
+    @this.blocks = null;
     @this.texts = null;
-    @this.tiles = null;
     this.entities.resize(0);
+    this.blocksMaxX = 0;
+    this.blocksMaxY = 0;
     this.textMaxX = 0;
     this.textMaxY = 0;
-    this.tileMaxX = 0;
-    this.tileMaxY = 0;
     if (definition.empty())
     {
       validationErrors.insert_last("Map is empty.");
@@ -194,13 +194,13 @@ final class Map
       }
       else
       {
-        if (entity.ToX > this.tileMaxX)
+        if (entity.ToX > this.blocksMaxX)
         {
-          this.tileMaxX = entity.ToX;
+          this.blocksMaxX = entity.ToX;
         }
-        if (entity.ToY > this.tileMaxY)
+        if (entity.ToY > this.blocksMaxY)
         {
-          this.tileMaxY = entity.ToY;
+          this.blocksMaxY = entity.ToY;
         }
       }
     }
@@ -208,24 +208,24 @@ final class Map
   }
   
   /*
-  ** Creates the texts and tiles grids.
+  ** Creates the blocks and texts grids.
   */
   void CreateGrids()
   {
+    @this.blocks = grid<int>(this.blocksMaxX + 1, this.blocksMaxY + 1);
+    for (int i = 0; i <= this.blocksMaxX; i++)
+    {
+      for (int j = 0; j <= this.blocksMaxY; j++)
+      {
+        this.blocks[i, j] = -1;
+      }
+    }
     @this.texts = grid<int>(this.textMaxX + 1, this.textMaxY + 1);
     for (int i = 0; i <= this.textMaxX; i++)
     {
       for (int j = 0; j <= this.textMaxY; j++)
       {
         this.texts[i, j] = -1;
-      }
-    }
-    @this.tiles = grid<int>(this.tileMaxX + 1, this.tileMaxY + 1);
-    for (int i = 0; i <= this.tileMaxX; i++)
-    {
-      for (int j = 0; j <= this.tileMaxY; j++)
-      {
-        this.tiles[i, j] = -1;
       }
     }
     for (int i = 0; i < this.entities.length(); i++)
@@ -246,11 +246,29 @@ final class Map
         {
           for (int y = this.entities[i].FromY; y <= this.entities[i].ToY; y++)
           {
-            this.tiles[x, y] = i;
+            this.blocks[x, y] = i;
           }
         }
       }
     }
+  }
+  
+  /*
+  ** Gets the block at a position.
+  ** Returns the default block if none exists at the given position,
+  ** or the position lies outside of map boundaries.
+  */
+  string GetBlock(
+    int x,  // The x position.
+    int y // The y position.
+  )
+  {
+    if (x >= this.blocks.width() || y >= this.blocks.height()
+      || this.blocks[x, y] == -1)
+    {
+      return DEFAULT_BLOCK;
+    }
+    return this.entities[this.blocks[x, y]].Content;
   }
   
   /*
@@ -269,23 +287,5 @@ final class Map
       return DEFAULT_TEXT;
     }
     return this.entities[this.texts[x, y]].Content;
-  }
-  
-  /*
-  ** Gets the tile at a position.
-  ** Returns the default tile if none exists at the given position,
-  ** or the position lies outside of map boundaries.
-  */
-  string GetTile(
-    int x,  // The x position.
-    int y // The y position.
-  )
-  {
-    if (x >= this.tiles.width() || y >= this.tiles.height()
-      || this.tiles[x, y] == -1)
-    {
-      return DEFAULT_TILE;
-    }
-    return this.entities[this.tiles[x, y]].Content;
   }
 }
