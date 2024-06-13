@@ -20,14 +20,16 @@ final class Person
   ** Initializes a new instance of the Person class.
   */
   Person(
+    int initialX, // The initial x position.
+    int initialY, // The initial y position.
     Map@ map  // The current map.
   )
   {
     @this.Block = null;
     this.health = 100;
     @this.map = @map;
-    this.X = 0;
-    this.Y = 0;
+    this.X = initialX;
+    this.Y = initialY;
   }
   
   /*
