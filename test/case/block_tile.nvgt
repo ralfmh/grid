@@ -6,5 +6,7 @@ void test_block_tile()
   Map map;
   map.Parse(definition);
   map.CreateGrids();
-  assert(map.GetBlock(5, 0) == "stone");
+  Block@ block = map.GetBlock(5, 0);
+  assert(block.Material == "stone");
+  assert(block.Type == Tile);
 }

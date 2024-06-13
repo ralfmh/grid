@@ -8,5 +8,5 @@ void test_block_none_boundaries()
   string[] errors = map.Parse(definition);
   assert(errors.length() == 0);
   map.CreateGrids();
-  assert(map.GetBlock(9, 5) == DEFAULT_BLOCK);
+  assert(map.GetBlock(9, 5) == null);
 }

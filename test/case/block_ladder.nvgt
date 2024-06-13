@@ -6,5 +6,7 @@ void test_block_ladder()
   Map map;
   map.Parse(definition);
   map.CreateGrids();
-  assert(map.GetBlock(0, 5) == "metal");
+  Block@ block = map.GetBlock(0, 5);
+  assert(block.Material == "metal");
+  assert(block.Type == Ladder);
 }

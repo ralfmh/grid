@@ -1,3 +1,4 @@
+#include "block.nvgt"
 #include "definition.nvgt"
 #include "entity.nvgt"
 
@@ -254,11 +255,11 @@ final class Map
   }
   
   /*
-  ** Gets the block at a position.
-  ** Returns the default block if none exists at the given position,
+  ** Gets the block entity at a position.
+  ** Returns null if none exists at the given position,
   ** or the position lies outside of map boundaries.
   */
-  string GetBlock(
+  Block@ GetBlock(
     int x,  // The x position.
     int y // The y position.
   )
@@ -266,9 +267,10 @@ final class Map
     if (x >= this.blocks.width() || y >= this.blocks.height()
       || this.blocks[x, y] == -1)
     {
-      return DEFAULT_BLOCK;
+      return null;
     }
-    return this.entities[this.blocks[x, y]].Content;
+    return Block(this.entities[this.blocks[x, y]].Content,
+      this.entities[this.blocks[x, y]].Type);
   }
   
   /*

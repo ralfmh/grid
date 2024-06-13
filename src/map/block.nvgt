@@ -1,0 +1,23 @@
+#include "entity_type.nvgt"
+
+/*
+** Represents a building block of the map.
+*/
+final class Block
+{
+  string Material;  // The material of the block.
+  
+  EntityType Type;  // The type of the block.
+  
+  /*
+  ** Initializes a new instance of the Block class.
+  */
+  Block(
+    string material,  // The material of the block.
+    EntityType type // The type of the block.
+  )
+  {
+    this.Material = material;
+    this.Type = type;
+  }
+}

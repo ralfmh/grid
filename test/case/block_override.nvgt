@@ -8,5 +8,7 @@ void test_block_override()
   string[] errors = map.Parse(definition);
   assert(errors.length() == 0);
   map.CreateGrids();
-  assert(map.GetBlock(5, 0) == "metal");
+  Block@ block = map.GetBlock(5, 0);
+  assert(block.Material == "metal");
+  assert(block.Type == Ladder);
 }

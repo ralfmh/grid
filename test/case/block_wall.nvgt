@@ -8,5 +8,7 @@ void test_block_wall()
   string[] errors = map.Parse(definition);
   assert(errors.length() == 0);
   map.CreateGrids();
-  assert(map.GetBlock(11, 0) == "dirt");
+  Block@ block = map.GetBlock(11, 0);
+  assert(block.Material == "dirt");
+  assert(block.Type == Wall);
 }
