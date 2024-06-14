@@ -4,7 +4,8 @@ void test_block_out_boundaries()
 {
   string definition = "tile fx0 tx10 fy0 mlstone";
   Map map;
-  map.Parse(definition);
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
   map.CreateGrids();
   assert(map.GetBlock(15, 0) == null);
 }

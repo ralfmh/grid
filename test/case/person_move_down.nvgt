@@ -4,7 +4,8 @@ void test_person_move_down()
 {
   string definition = "ladr fx0 tx0 fy0 ty10 mlmetal";
   Map map;
-  map.Parse(definition);
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
   map.CreateGrids();
   Person p(0, 10, map);
   assert(p.Move(Down) == Moved);
