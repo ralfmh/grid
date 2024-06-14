@@ -1,0 +1,9 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_tile_above()
+{
+  string definition = "tile fx0 tx5 fy5 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+}

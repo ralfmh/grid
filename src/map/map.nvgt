@@ -173,6 +173,10 @@ final class Map
       {
         continue;
       }
+      if (entity.Type == Tile)
+      {
+        entity.ToY = entity.FromY;
+      }
       if (entity.ToX < entity.FromX)
       {
         validationErrors.insert_last("'tx' may not be less than 'fx' in line "
@@ -184,10 +188,6 @@ final class Map
         validationErrors.insert_last("'ty' may not be less than 'fy' in line "
           + (l + 1));
         break;
-      }
-      if (entity.Type == TYPE_TILE)
-      {
-        entity.ToY = entity.FromY;
       }
       this.entities.insert_last(entity);
       if (entity.Type == Text)
