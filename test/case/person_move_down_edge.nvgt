@@ -1,0 +1,13 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_move_down_edge()
+{
+  string definition = "tile fx0 tx5 fy5 mlwood";
+  Map map;
+  map.Parse(definition);
+  map.CreateGrids();
+  Person p(3, 5, map);
+  assert(p.Move(Down) == Edged);
+  assert(p.X == 3);
+  assert(p.Y == 5);
+}
