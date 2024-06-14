@@ -1,10 +1,4 @@
 /*
-** The name of the default tile, in case none is defined
-** at the requested position, or the position lies outside the map boundaries.
-*/
-const string DEFAULT_BLOCK = "air";
-
-/*
 ** The default text, in case none is defined
 ** at the requested position, or the position lies outside the map boundaries.
 */
@@ -77,6 +71,12 @@ const string[][] MAP_DEFINITION =
     SEGMENT_TY
   }
 };
+
+/*
+** The minimum x position of each map.
+** This position cannot be undercut due to the current implementation.
+*/
+const int MAP_MIN_X = 0;
 
 /*
 ** The character which separates lines in the definition.

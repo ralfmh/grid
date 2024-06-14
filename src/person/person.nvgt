@@ -35,7 +35,7 @@ final class Person
   
   /*
   ** Moves the person in the given direction.
-  ** Returns true if the move succeeded, false otherwise.
+  ** Returns MoveResult.Moved if the move succeeded.
   */
   MoveResult Move(
     Direction direction // The direction in which to move.
@@ -58,7 +58,7 @@ final class Person
         newY++;
         break;
     }
-    if (newX > this.map.GetMaxX())
+    if (newX > this.map.GetMaxX() || newX < MAP_MIN_X)
     {
       return Edged;
     }
