@@ -63,12 +63,19 @@ final class Person
       return Edged;
     }
     @this.Block = this.map.GetBlock(newX, newY);
-    if (this.Block == null || this.Block.Type != Wall)
+    if (this.Block == null)
     {
-      this.X = newX;
-      this.Y = newY;
-      return Moved;
+      if (newY != this.Y)
+      {
+        return Edged;
+      }
     }
-    return Walled;
+    else if (this.Block.Type == Wall)
+    {
+      return Walled;
+    }
+    this.X = newX;
+    this.Y = newY;
+    return Moved;
   }
 }
