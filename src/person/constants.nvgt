@@ -1,4 +1,24 @@
 /*
+** The default move interval (milliseconds per move) while falling.
+*/
+const int DEFAULT_FALL_INTERVAL = 180;
+
+/*
+** The default move interval (milliseconds per move) while jumping.
+*/
+const int DEFAULT_JUMP_INTERVAL = 72;
+
+/*
 ** The person's default jump range.
 */
 const int DEFAULT_JUMP_RANGE = 5;
+
+/*
+** The default move interval (milliseconds per move).
+*/
+const int DEFAULT_MOVE_INTERVAL = 250;
+
+/*
+** The default run interval (milliseconds per move).
+*/
+const int DEFAULT_RUN_INTERVAL = 167;
