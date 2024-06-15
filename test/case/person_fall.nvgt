@@ -1,0 +1,28 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_fall()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "tile fx0 tx5 fy5 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(5, 5, map);
+  assert(p.Move(Right) == Moved);
+  assert(p.Block == null);
+  assert(p.X == 6);
+  assert(p.Y == 5);
+  assert(p.AutoMoveState == Falling);
+  p.AutoMove();
+  assert(p.Y == 4);
+  p.AutoMove();
+  assert(p.Y == 3);
+  p.AutoMove();
+  assert(p.Y == 2);
+  p.AutoMove();
+  assert(p.Y == 1);
+  p.AutoMove();
+  assert(p.Y == 0);
+  assert(p.AutoMoveState == Standing);
+}

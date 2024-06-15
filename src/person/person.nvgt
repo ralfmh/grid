@@ -46,13 +46,22 @@ final class Person
   void AutoMove()
   {
     MoveResult result;
-    if (this.AutoMoveState == Jumping)
+    switch (this.AutoMoveState)
     {
-      result = this.Move(Up);
-      if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE)
-      {
-        this.AutoMoveState = Falling;
-      }
+      case Jumping:
+        result = this.Move(Up);
+        if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE)
+        {
+          this.AutoMoveState = Falling;
+        }
+        break;
+      case Falling:
+        result = this.Move(Down);
+        if (this.Block != null)
+        {
+          this.AutoMoveState = Standing;
+        }
+        break;
     }
   }
   
@@ -97,9 +106,16 @@ final class Person
     @this.Block = this.map.GetBlock(newX, newY);
     if (this.Block == null)
     {
-      if (newY != this.Y && this.AutoMoveState == Standing)
+      if (this.AutoMoveState == Standing)
       {
-        return Edged;
+        if (newY != this.Y)
+        {
+          return Edged;
+        }
+        else
+        {
+          this.AutoMoveState = Falling;
+        }
       }
     }
     else if (this.Block.Type == Wall)
