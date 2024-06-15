@@ -1,0 +1,18 @@
+/*
+** Defines the states of the person when its moved automatically.
+*/
+enum AutoMoveState
+{
+  /*
+  ** The person is moved down the y axis until it hits a block.
+  */
+  Falling,
+  /*
+  ** The person is moved up the y axis until it hits a wall or the jump range.
+  */
+  Jumping,
+  /*
+  ** The person is not moved automatically.
+  */
+  Standing
+}

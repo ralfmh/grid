@@ -1,0 +1,4 @@
+/*
+** The person's default jump range.
+*/
+const int DEFAULT_JUMP_RANGE = 5;

@@ -1,4 +1,6 @@
 #include "../map/map.nvgt"
+#include "auto_move_state.nvgt"
+#include "constants.nvgt"
 #include "direction.nvgt"
 #include "move_result.nvgt"
 
@@ -7,9 +9,13 @@
 */
 final class Person
 {
+  AutoMoveState AutoMoveState;  // Current AutoMoveState.
+  
   Block@ Block; // The current block at which the person is located.
   
   private int health; // Current health of the person.
+  
+  private int jumpStart;  // Y position where the person started to jump.
   
   private Map@ map; // The current map.
   
@@ -26,11 +32,37 @@ final class Person
     Map@ map  // The current map.
   )
   {
+    this.AutoMoveState = Standing;
     @this.Block = null;
     this.health = 100;
     @this.map = @map;
     this.X = initialX;
     this.Y = initialY;
+  }
+  
+  /*
+  ** Moves the person automatically (e.g during jumping or falling).
+  */
+  void AutoMove()
+  {
+    MoveResult result;
+    if (this.AutoMoveState == Jumping)
+    {
+      result = this.Move(Up);
+      if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE)
+      {
+        this.AutoMoveState = Falling;
+      }
+    }
+  }
+  
+  /*
+  ** Initiates a jump from the current position.
+  */
+  void Jump()
+  {
+    this.jumpStart = this.Y;
+    this.AutoMoveState = Jumping;
   }
   
   /*
@@ -65,7 +97,7 @@ final class Person
     @this.Block = this.map.GetBlock(newX, newY);
     if (this.Block == null)
     {
-      if (newY != this.Y)
+      if (newY != this.Y && this.AutoMoveState == Standing)
       {
         return Edged;
       }
