@@ -50,7 +50,8 @@ final class Person
     {
       case Jumping:
         result = this.Move(Up);
-        if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE)
+        if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
+          || result == Walled)
         {
           this.AutoMoveState = Falling;
         }
