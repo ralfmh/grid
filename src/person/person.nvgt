@@ -58,7 +58,7 @@ final class Person
         break;
       case Falling:
         result = this.Move(Down);
-        if (this.Block != null)
+        if (this.Block != null || result == Edged)
         {
           this.AutoMoveState = Standing;
         }
@@ -100,7 +100,7 @@ final class Person
         newY++;
         break;
     }
-    if (newX > this.map.GetMaxX() || newX < MAP_MIN_X)
+    if (newX > this.map.GetMaxX() || newX < MAP_MIN_X || newY < MAP_MIN_Y)
     {
       return Edged;
     }

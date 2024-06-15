@@ -79,6 +79,12 @@ const string[][] MAP_DEFINITION =
 const int MAP_MIN_X = 0;
 
 /*
+** The minimum x position of each map.
+** This position cannot be undercut due to the current implementation.
+*/
+const int MAP_MIN_Y = 0;
+
+/*
 ** The character which separates lines in the definition.
 */
 const string LINE_SEPARATOR = "\n";
