@@ -9,15 +9,33 @@
 */
 final class Person
 {
+  /*
+  ** The interval in ms for each automatically performed move.
+  */
+  private int autoMoveInterval;
+  
   AutoMoveState AutoMoveState;  // Current AutoMoveState.
+  
+  private timer autoMoveTimer;  // The timer controlling automatic moves.
   
   Block@ Block; // The current block at which the person is located.
   
+  int FallInterval; // The interval in ms for each falling move.
+  
   private int health; // Current health of the person.
+  
+  int JumpInterval; // The interval in ms for each jumping move.
   
   private int jumpStart;  // Y position where the person started to jump.
   
   private Map@ map; // The current map.
+  
+  /*
+  ** The interval in ms for each manually performed move.
+  */
+  int ManualMoveInterval;
+  
+  private timer manualMoveTimer;  // The timer controlling manual moves.
   
   int X;  // Current x position.
   
@@ -49,15 +67,16 @@ final class Person
     switch (this.AutoMoveState)
     {
       case Jumping:
-        result = this.Move(Up);
+        result = this.Move(Up, true);
         if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
           || result == Walled)
         {
           this.AutoMoveState = Falling;
+          this.autoMoveInterval = this.FallInterval;
         }
         break;
       case Falling:
-        result = this.Move(Down);
+        result = this.Move(Down, true);
         if (this.Block != null || result == Edged)
         {
           this.AutoMoveState = Standing;
@@ -78,6 +97,7 @@ final class Person
     }
     this.jumpStart = this.Y;
     this.AutoMoveState = Jumping;
+    this.autoMoveInterval = this.JumpInterval;
     return true;
   }
   
@@ -89,6 +109,34 @@ final class Person
     Direction direction // The direction in which to move.
   )
   {
+    return this.Move(direction, false);
+  }
+  
+  /*
+  ** Moves the person in the given direction.
+  ** Returns MoveResult.Moved if the move succeeded.
+  */
+  private MoveResult Move(
+    Direction direction,  // The direction in which to move.
+    bool isAutoMove // Boolean value indicating whether the move is performed automatically.
+  )
+  {
+    if (isAutoMove)
+    {
+      if (this.autoMoveTimer.elapsed < this.autoMoveInterval)
+      {
+        return Delayed;
+      }
+      this.autoMoveTimer.restart();
+    }
+    else
+    {
+      if (this.manualMoveTimer.elapsed < this.ManualMoveInterval)
+      {
+        return Delayed;
+      }
+      this.manualMoveTimer.restart();
+    }
     int newX = this.X;
     int newY = this.Y;
     switch (direction)
@@ -122,6 +170,7 @@ final class Person
         else
         {
           this.AutoMoveState = Falling;
+          this.autoMoveInterval = this.FallInterval;
         }
       }
     }
