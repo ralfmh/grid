@@ -1,0 +1,27 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_jump_tile()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "tile fx0 tx5 fy5 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(0, 0, map);
+  p.Jump();
+  p.AutoMove();
+  p.Y = 1;
+  p.AutoMove();
+  p.Y = 2;
+  p.AutoMove();
+  p.Y = 3;
+  p.AutoMove();
+  p.Y = 4;
+  p.AutoMove();
+  p.Y = 5;
+  p.AutoMoveState = Falling;
+  p.AutoMove();
+  p.AutoMoveState = Standing;
+  p.Y = 5;
+}
