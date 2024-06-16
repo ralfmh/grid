@@ -68,11 +68,17 @@ final class Person
   
   /*
   ** Initiates a jump from the current position.
+  ** Returns true if the jump was initiated, false otherwise.
   */
-  void Jump()
+  bool Jump()
   {
+    if (this.AutoMoveState != Standing)
+    {
+      return false;
+    }
     this.jumpStart = this.Y;
     this.AutoMoveState = Jumping;
+    return true;
   }
   
   /*
