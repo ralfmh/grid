@@ -32,6 +32,29 @@ final class Map
   }
   
   /*
+  ** Returns an array of all distinct used blocks on the map.
+  */
+  Block@[] GetUsedBlocks()
+  {
+    Block@ block;
+    Block@[] blocks;
+    for (int i = 0; i < this.entities.length(); i++)
+    {
+      if (this.entities[i].Type == Text)
+      {
+        continue;
+      }
+      @block = Block(this.entities[i].Content,
+        this.entities[i].Type == Ladder ? Tile : this.entities[i].Type);
+      if (blocks.find(block) == -1)
+      {
+        blocks.insert_last(block);
+      }
+    }
+    return blocks;
+  }
+  
+  /*
   ** Parses a map definition, fills the entities array and sets
   ** the maximum x and y positions of the map.
   ** Returns an array of validation errors that occurred

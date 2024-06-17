@@ -1,0 +1,23 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_used_blocks()
+{
+  string definition = "tile fx0 tx9 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "wall fx10 tx10 fy0 ty10 mlglass" + LINE_SEPARATOR;
+  definition += "tile fx11 tx20 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "ladr fx3 tx3 fy1 ty4 mlwood" + LINE_SEPARATOR;
+  definition += "tile fx0 tx5 fy5 mlwood" + LINE_SEPARATOR;
+  definition += "wall fx6 tx6 fy5 ty15 mlglass";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  Block@[] blocks = map.GetUsedBlocks();
+  assert(blocks.length() == 3);
+  blocks.sort_ascending();
+  assert(blocks[0].Material == "stone");
+  assert(blocks[0].Type == Tile);
+  assert(blocks[1].Material == "wood");
+  assert(blocks[1].Type == Tile);
+  assert(blocks[2].Material == "glass");
+  assert(blocks[2].Type == Wall);
+}

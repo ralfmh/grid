@@ -20,4 +20,9 @@ final class Block
     this.Material = material;
     this.Type = type;
   }
+  
+  int opCmp(Block@ other)
+  {
+    return (this.Type + this.Material).opCmp(other.Type + other.Material);
+  }
 }
