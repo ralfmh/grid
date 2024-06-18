@@ -7,14 +7,18 @@ class BlockSound
  }
  int PlayStep()
  {
-  return p.play_stationary("blocks/platforms/"+block+"/"+random(1,5)+".ogg",false); 
+  return p.play_stationary("sounds/blocks/platforms/"+block+"/"+random(1,5)+".ogg",false); 
  }
  int PlayLand()
  {
-  return p.play_stationary("blocks/platforms/"+block+"/land.ogg",false); 
+  return p.play_stationary("sounds/blocks/platforms/"+block+"/land.ogg",false); 
  }
  int PlayFall()
  {
-  return p.play_stationary("blocks/platforms/"+block+"/fall.ogg",false); 
+  return p.play_stationary("sounds/blocks/platforms/"+block+"/fall.ogg",false); 
+ }
+ int opCmp(BlockSound@ other)
+ {
+  return this.block.opCmp(other.block);
  }
 }
