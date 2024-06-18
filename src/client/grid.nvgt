@@ -19,16 +19,12 @@ void main() {
  show_window("Grid");
  read_preferences();
  set_sound_output_device(soundcard);
- sound_global_hrtf = true;
  @p.mixer=mix;
  p.pan_step=0.8;
- p.hrtf=true;
  if(!pf.open("sounds.dat", PACK_OPEN_MODE_READ)) {
   alert("error", "failed to load sounds.dat!");
  }
- @miscp.pack_file=pf;
- @p.pack_file=pf;
- @spool.pack_file=pf;
+ @sound_default_pack=pf;
  mainmenu();
 }
 void read_preferences() {

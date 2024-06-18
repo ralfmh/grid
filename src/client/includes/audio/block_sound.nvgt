@@ -1,0 +1,20 @@
+class BlockSound
+{
+ string block;
+ BlockSound(string b)
+ {
+  block=b;
+ }
+ int PlayStep()
+ {
+  return p.play_stationary("blocks/platforms/"+block+"/"+random(1,5)+".ogg",false); 
+ }
+ int PlayLand()
+ {
+  return p.play_stationary("blocks/platforms/"+block+"/land.ogg",false); 
+ }
+ int PlayFall()
+ {
+  return p.play_stationary("blocks/platforms/"+block+"/fall.ogg",false); 
+ }
+}
