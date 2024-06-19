@@ -181,6 +181,11 @@ final class Person
     }
     else if (this.Block.Type == Wall)
     {
+      if (this.AutoMoveState == Falling)
+      {
+        this.X = newX;
+        this.Y = newY;
+      }
       return Walled;
     }
     this.X = newX;

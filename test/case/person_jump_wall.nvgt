@@ -1,0 +1,31 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_jump_wall()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "wall fx1 tx1 fy0 ty4 mlglass";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(0, 0, map);
+  p.Jump();
+  p.AutoMove();
+  assert(p.Y == 1);
+  p.AutoMove();
+  assert(p.Y == 2);
+  p.AutoMove();
+  assert(p.Y == 3);
+  p.AutoMove();
+  assert(p.Y == 4);
+  p.AutoMove();
+  assert(p.Y == 5);
+  assert(p.AutoMoveState == Falling);
+  assert(p.Move(Right) == Moved);
+  assert(p.X == 1);
+  p.AutoMove();
+  assert(p.Y == 4);
+  assert(p.AutoMoveState == Standing);
+  assert(p.Block != null);
+  assert(p.Block.Type == Wall);
+}
