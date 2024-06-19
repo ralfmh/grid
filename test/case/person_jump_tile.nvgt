@@ -11,17 +11,17 @@ void test_person_jump_tile()
   Person p(0, 0, map);
   p.Jump();
   p.AutoMove();
-  p.Y = 1;
+  assert(p.Y == 1);
   p.AutoMove();
-  p.Y = 2;
+  assert(p.Y == 2);
   p.AutoMove();
-  p.Y = 3;
+  assert(p.Y == 3);
   p.AutoMove();
-  p.Y = 4;
+  assert(p.Y == 4);
   p.AutoMove();
-  p.Y = 5;
-  p.AutoMoveState = Falling;
+  assert(p.Y == 5);
+  assert(p.AutoMoveState == Falling);
   p.AutoMove();
-  p.AutoMoveState = Standing;
-  p.Y = 5;
+  assert(p.AutoMoveState == Standing);
+  assert(p.Y == 5);
 }

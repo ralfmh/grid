@@ -76,6 +76,11 @@ final class Person
         }
         break;
       case Falling:
+        if (this.Block != null && this.Block.Type != Wall)
+        {
+          this.AutoMoveState = Standing;
+          break;
+        }
         result = this.Move(Down, true);
         if (this.Block != null || result == Edged)
         {
