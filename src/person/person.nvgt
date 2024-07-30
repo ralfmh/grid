@@ -51,11 +51,11 @@ final class Person
   )
   {
     this.AutoMoveState = Standing;
-    @this.Block = null;
     this.health = 100;
     @this.map = @map;
     this.X = initialX;
     this.Y = initialY;
+    @this.Block = this.map.GetBlock(this.X, this.Y);
   }
   
   /*
@@ -192,4 +192,67 @@ final class Person
     this.Y = newY;
     return Moved;
   }
+  
+  /*
+  ** Summarizes the horizontally or vertically adjacent blocks.
+  */
+  string View(
+    Direction direction // The direction in which to view the adjacent blocks.
+  )
+  {
+    int axis;
+    int count;
+    int modifier;
+    int[] position = { this.X, this.Y };
+    int target;
+    string view;
+    switch (direction)
+    {
+      case Down:
+        axis = 1;
+        modifier = -1;
+        target = max(MAP_MIN_Y, this.Y - DEFAULT_VIEW_VERTICAL);
+        break;
+      case Left:
+        axis = 0;
+        modifier = -1;
+        target = max(MAP_MIN_X, this.X - DEFAULT_VIEW_HORIZONTAL);
+        break;
+      case Right:
+        axis = 0;
+        modifier = 1;
+        target = min(this.map.GetMaxX(), this.X + DEFAULT_VIEW_HORIZONTAL);
+        break;
+      case Up:
+        axis = 1;
+        modifier = 1;
+        target = min(this.map.GetMaxY(), this.Y + DEFAULT_VIEW_VERTICAL);
+        break;
+    }
+    Block@ block;
+    string localMaterial = this.Block != null ? this.Block.Material
+      : this.map.DefaultMaterial;
+    string remoteMaterial;
+    for (; position[axis] != target; position[axis] += modifier)
+    {
+      count++;
+      @block = this.map.GetBlock(position[0], position[1]);
+      string remoteMaterial = block != null ? block.Material
+        : this.map.DefaultMaterial;
+      if (remoteMaterial != localMaterial)
+      {
+        view += remoteMaterial + " (" + count + "), ";
+        localMaterial = remoteMaterial;
+      }
+    }
+    if (view == "")
+    {
+      return "nothing";
+    }
+    return view;
+  }
 }
+
+int max(int a, int b) { return a > b ? a : b; }
+
+int min(int a, int b) { return a < b ? a : b; }

@@ -22,3 +22,13 @@ const int DEFAULT_MOVE_INTERVAL = 250;
 ** The default run interval (milliseconds per move).
 */
 const int DEFAULT_RUN_INTERVAL = 167;
+
+/*
+** The default horizontal view range.
+*/
+const int DEFAULT_VIEW_HORIZONTAL = 60;
+
+/*
+** The default vertical view range.
+*/
+const int DEFAULT_VIEW_VERTICAL = 120;

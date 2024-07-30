@@ -12,6 +12,12 @@ final class Map
   private int blocksMaxX; // The maximum x position of the blocks on this map.
   
   private int blocksMaxY; // The maximum y position of the blocks on this map.
+
+  /*
+  ** The default material for a block returned by GetBlock,
+  ** in case none is defined at the requested position.
+  */
+  string DefaultMaterial = DEFAULT_MATERIAL;
   
   private string definition;  // The complete map definition.
   
@@ -29,6 +35,14 @@ final class Map
   int GetMaxX()
   {
     return this.blocksMaxX;
+  }
+  
+  /*
+  ** Returns the maximum y position of all blocks on the map.
+  */
+  int GetMaxY()
+  {
+    return this.blocksMaxY;
   }
   
   /*

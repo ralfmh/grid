@@ -1,4 +1,10 @@
 /*
+** The default material for a block, in case none is defined
+** at the requested position.
+*/
+const string DEFAULT_MATERIAL = "air";
+
+/*
 ** The default text, in case none is defined
 ** at the requested position, or the position lies outside the map boundaries.
 */
