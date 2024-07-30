@@ -233,18 +233,30 @@ final class Person
     string localMaterial = this.Block != null ? this.Block.Material
       : this.map.DefaultMaterial;
     string remoteMaterial;
+    string type;
     do
     {
       position[axis] += modifier;
       count++;
       @block = this.map.GetBlock(position[0], position[1]);
-      string remoteMaterial = block != null ? block.Material
-        : this.map.DefaultMaterial;
+      type = "";
+      if (@block != null)
+      {
+        remoteMaterial = block.Material;
+        if (block.Type != Tile)
+        {
+          type = ENTITY_TYPE_NAME[block.Type] + " ";
+        }
+      }
+      else
+      {
+        remoteMaterial = this.map.DefaultMaterial;
+      }
       if (remoteMaterial != localMaterial)
       {
         if (axis == 0 || remoteMaterial != this.map.DefaultMaterial)
         {
-          view += remoteMaterial + " (" + count + "), ";
+          view += type + remoteMaterial + " (" + count + "), ";
         }
         localMaterial = remoteMaterial;
       }

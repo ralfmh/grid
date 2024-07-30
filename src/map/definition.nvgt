@@ -37,6 +37,14 @@ string[] ENTITY_TYPE =
   TYPE_WALL
 };
 
+string[] ENTITY_TYPE_NAME =
+{
+  "ladder",
+  "text",
+  "tile",
+  "wall"
+};
+
 /*
 ** Map definition array.
 ** [0]: Entity type.
