@@ -201,11 +201,11 @@ final class Person
   )
   {
     int axis;
-    int count;
+    int count = 0;
     int modifier;
     int[] position = { this.X, this.Y };
     int target;
-    string view;
+    string view = "";
     switch (direction)
     {
       case Down:
@@ -233,7 +233,8 @@ final class Person
     string localMaterial = this.Block != null ? this.Block.Material
       : this.map.DefaultMaterial;
     string remoteMaterial;
-    for (; position[axis] != target; position[axis] += modifier)
+    for (position[axis] += modifier; position[axis] != target;
+      position[axis] += modifier)
     {
       count++;
       @block = this.map.GetBlock(position[0], position[1]);
