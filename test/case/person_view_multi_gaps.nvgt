@@ -1,0 +1,14 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_view_multi_gaps()
+{
+  string definition = "tile fx0 tx4 fy10 mlwood" + LINE_SEPARATOR;
+  definition += "tile fx8 tx11 fy10 mlwood" + LINE_SEPARATOR;
+  definition += "tile fx17 tx20 fy10 mlbridge";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(0, 10, map);
+  assert(p.View(Right) == "air (5), wood (8), air (12), bridge (17), ");
+}
