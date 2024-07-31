@@ -1,0 +1,17 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_sonar_vertical()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "tile fx0 tx5 fy5 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(0, 0, map);
+  int distance;
+  EntityType type;
+  assert(p.Sonar(Up, distance, type));
+  assert(distance == 5);
+  assert(type == Tile);
+}

@@ -1,0 +1,17 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_sonar_wall()
+{
+  string definition = "tile fx0 tx9 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "wall fx10 tx10 fy0 ty5 mlfence";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(0, 0, map);
+  int distance;
+  EntityType type;
+  assert(p.Sonar(Right, distance, type));
+  assert(distance == 10);
+  assert(type == Wall);
+}
