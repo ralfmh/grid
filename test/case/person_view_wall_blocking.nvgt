@@ -1,0 +1,14 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_view_wall_blocking()
+{
+  string definition = "tile fx0 tx4 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "wall fx5 tx6 fy0 ty5 mlbrick" + LINE_SEPARATOR;
+  definition += "tile fx7 tx10 fy0 mlgrass";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(0, 0, map);
+  assert(p.View(Right) == "wall brick (5), ");
+}

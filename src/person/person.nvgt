@@ -230,6 +230,7 @@ final class Person
         break;
     }
     Block@ block;
+    bool foundWall = false;
     string localMaterial = this.Block != null ? this.Block.Material
       : this.map.DefaultMaterial;
     string remoteMaterial;
@@ -246,6 +247,7 @@ final class Person
         if (block.Type != Tile)
         {
           type = ENTITY_TYPE_NAME[block.Type] + " ";
+          foundWall = block.Type == Wall;
         }
       }
       else
@@ -260,7 +262,7 @@ final class Person
         }
         localMaterial = remoteMaterial;
       }
-    } while (position[axis] != target);
+    } while (position[axis] != target && !foundWall);
     if (view == "")
     {
       return "nothing";
