@@ -32,6 +32,7 @@ const string TYPE_WALL = "wall";
 string[] ENTITY_TYPE =
 {
   TYPE_LADDER,
+  "none",
   TYPE_TEXT,
   TYPE_TILE,
   TYPE_WALL
@@ -40,6 +41,7 @@ string[] ENTITY_TYPE =
 string[] ENTITY_TYPE_NAME =
 {
   "ladder",
+  "none",
   "text",
   "tile",
   "wall"

@@ -24,6 +24,11 @@ const int DEFAULT_MOVE_INTERVAL = 250;
 const int DEFAULT_RUN_INTERVAL = 167;
 
 /*
+** The default range of the sonar.
+*/
+const int DEFAULT_SONAR_RANGE = 10;
+
+/*
 ** The default horizontal view range.
 */
 const int DEFAULT_VIEW_HORIZONTAL = 60;

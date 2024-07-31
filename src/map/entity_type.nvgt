@@ -4,6 +4,7 @@
 enum EntityType
 {
   Ladder,
+  None,
   Text,
   Tile,
   Wall

@@ -195,6 +195,45 @@ final class Person
   }
   
   /*
+  ** Checks if a block with a different material than the current block
+  ** is approached during movement.
+  */
+  bool Sonar(
+    Direction direction,  // The direction in which to search for the block.
+    int &out distance,  // The distance to the block.
+    EntityType &out type  // The type of the block.
+  )
+  {
+    string localMaterial = this.Block != null ? this.Block.Material
+      : this.map.DefaultMaterial;
+    string remoteMaterial;
+    BlockSearcher searcher(direction, this.map, this.X, this.Y,
+      DEFAULT_SONAR_RANGE, DEFAULT_SONAR_RANGE);
+    Block@ block;
+    while(searcher.Find(block))
+    {
+      if (@block != null)
+      {
+        remoteMaterial = block.Material;
+        type = block.Type;
+      }
+      else
+      {
+        remoteMaterial = this.map.DefaultMaterial;
+        type = None;
+      }
+      if (remoteMaterial != localMaterial
+        && (searcher.SearchAxis == Horizontal
+        || remoteMaterial != this.map.DefaultMaterial))
+      {
+        distance = searcher.Squares;
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /*
   ** Summarizes the horizontally or vertically adjacent blocks.
   */
   string View(
