@@ -225,7 +225,8 @@ final class Person
       }
       if (remoteMaterial != localMaterial)
       {
-        if (searcher.Axis == 0 || remoteMaterial != this.map.DefaultMaterial)
+        if (searcher.SearchAxis == Horizontal
+          || remoteMaterial != this.map.DefaultMaterial)
         {
           view += type + remoteMaterial + " (" + searcher.Squares + "), ";
         }

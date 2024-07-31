@@ -1,3 +1,4 @@
+#include "axis.nvgt"
 #include "../map/map.nvgt"
 
 /*
@@ -5,8 +6,6 @@
 */
 final class BlockSearcher
 {
-  int Axis; // The axis on which to search (0 = x, 1 = y).
-  
   /*
   ** Boolean value indicating whether a wall was found
   ** during the last step of the search.
@@ -22,6 +21,8 @@ final class BlockSearcher
   private int modifier;
   
   private int[] position; // The current position of the searcher.
+  
+  Axis SearchAxis; // The axis on which to search.
   
   int Squares;  // The number of passed squares since the search started.
   
@@ -44,22 +45,22 @@ final class BlockSearcher
     switch (direction)
     {
       case Down:
-        this.Axis = 1;
+        this.SearchAxis = Vertical;
         this.modifier = -1;
         this.target = max(MAP_MIN_Y, startY - DEFAULT_VIEW_VERTICAL);
         break;
       case Left:
-        this.Axis = 0;
+        this.SearchAxis = Horizontal;
         this.modifier = -1;
         this.target = max(MAP_MIN_X, startX - DEFAULT_VIEW_HORIZONTAL);
         break;
       case Right:
-        this.Axis = 0;
+        this.SearchAxis = Horizontal;
         this.modifier = 1;
         this.target = min(this.map.GetMaxX(), startX + DEFAULT_VIEW_HORIZONTAL);
         break;
       case Up:
-        this.Axis = 1;
+        this.SearchAxis = Vertical;
         this.modifier = 1;
         this.target = min(this.map.GetMaxY(), startY + DEFAULT_VIEW_VERTICAL);
         break;
@@ -74,11 +75,11 @@ final class BlockSearcher
     Block@ &out block  // The found block.
   )
   {
-    if (this.position[this.Axis] == this.target || this.foundWall)
+    if (this.position[this.SearchAxis] == this.target || this.foundWall)
     {
       return false;
     }
-    this.position[this.Axis] += this.modifier;
+    this.position[this.SearchAxis] += this.modifier;
     this.Squares++;
     @block = this.map.GetBlock(this.position[0], this.position[1]);
     this.foundWall = @block != null && block.Type == Wall;

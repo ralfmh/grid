@@ -1,0 +1,8 @@
+/*
+** Defines the axes.
+*/
+enum Axis
+{
+  Horizontal,
+  Vertical
+}
