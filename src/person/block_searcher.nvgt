@@ -35,7 +35,9 @@ final class BlockSearcher
     Direction direction,  // The search direction.
     Map@ map, // The map on which the search is performed.
     int startX, // Starting x position.
-    int startY  // Starting y position.
+    int startY, // Starting y position.
+    int horizontalRange,  // The horizontal search range.
+    int verticalRange // The vertical search range.
   )
   {
     this.foundWall = false;
@@ -47,22 +49,22 @@ final class BlockSearcher
       case Down:
         this.SearchAxis = Vertical;
         this.modifier = -1;
-        this.target = max(MAP_MIN_Y, startY - DEFAULT_VIEW_VERTICAL);
+        this.target = max(MAP_MIN_Y, startY - verticalRange);
         break;
       case Left:
         this.SearchAxis = Horizontal;
         this.modifier = -1;
-        this.target = max(MAP_MIN_X, startX - DEFAULT_VIEW_HORIZONTAL);
+        this.target = max(MAP_MIN_X, startX - horizontalRange);
         break;
       case Right:
         this.SearchAxis = Horizontal;
         this.modifier = 1;
-        this.target = min(this.map.GetMaxX(), startX + DEFAULT_VIEW_HORIZONTAL);
+        this.target = min(this.map.GetMaxX(), startX + horizontalRange);
         break;
       case Up:
         this.SearchAxis = Vertical;
         this.modifier = 1;
-        this.target = min(this.map.GetMaxY(), startY + DEFAULT_VIEW_VERTICAL);
+        this.target = min(this.map.GetMaxY(), startY + verticalRange);
         break;
     }
   }

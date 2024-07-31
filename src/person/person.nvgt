@@ -207,7 +207,8 @@ final class Person
       : this.map.DefaultMaterial;
     string remoteMaterial;
     string type;
-    BlockSearcher searcher(direction, this.map, this.X, this.Y);
+    BlockSearcher searcher(direction, this.map, this.X, this.Y,
+      DEFAULT_VIEW_HORIZONTAL, DEFAULT_VIEW_VERTICAL);
     while (searcher.Find(block))
     {
       type = "";
