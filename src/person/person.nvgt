@@ -173,10 +173,21 @@ final class Person
     {
       return Edged;
     }
+    if (this.Hooked && (newY <= this.hookFromY || newY >= this.hookToY
+      || newX != this.X))
+    {
+      this.Hooked = false;
+    }
     @this.Block = this.map.GetBlock(newX, newY);
     if (this.Block == null)
     {
-      if (this.AutoMoveState == Standing)
+      if (this.Hooked)
+      {
+        this.X = newX;
+        this.Y = newY;
+        return Moved;
+      }
+      else if (this.AutoMoveState == Standing)
       {
         if (newY != this.Y)
         {
