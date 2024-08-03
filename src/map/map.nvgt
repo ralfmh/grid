@@ -319,6 +319,29 @@ final class Map
   }
   
   /*
+  ** Gets the block entity at a position.
+  ** Returns null if none exists at the given position,
+  ** or the position lies outside of map boundaries.
+  */
+  Block@ GetBlock(
+    int x,  // The x position.
+    int y,  // The y position.
+    int &out fromY, // The minimum y position of the block.
+    int &out toY  // The maximum y position of the block.
+  )
+  {
+    if (x >= this.blocks.width() || y >= this.blocks.height()
+      || this.blocks[x, y] == -1)
+    {
+      return null;
+    }
+    fromY = this.entities[this.blocks[x, y]].FromY;
+    toY = this.entities[this.blocks[x, y]].ToY;
+    return Block(this.entities[this.blocks[x, y]].Content,
+      this.entities[this.blocks[x, y]].Type);
+  }
+  
+  /*
   ** Gets the text at a position.
   ** Returns the default text if none exists at the given position,
   ** or the position lies outside of map boundaries.

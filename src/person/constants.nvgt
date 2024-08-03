@@ -4,6 +4,11 @@
 const int DEFAULT_FALL_INTERVAL = 180;
 
 /*
+** The default range of the grappling hook.
+*/
+const int DEFAULT_HOOK_RANGE = 100;
+
+/*
 ** The default move interval (milliseconds per move) while jumping.
 */
 const int DEFAULT_JUMP_INTERVAL = 72;

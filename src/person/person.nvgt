@@ -25,6 +25,15 @@ final class Person
   
   private int health; // Current health of the person.
   
+  /*
+  ** Boolean value indicating whether the person is hooked to a block.
+  */
+  bool Hooked;
+  
+  private int hookFromY;  // The minimum y position of the hook.
+  
+  private int hookToY;  // The maximum y position of the hook.
+  
   int JumpInterval; // The interval in ms for each jumping move.
   
   private int jumpStart;  // Y position where the person started to jump.
@@ -278,5 +287,43 @@ final class Person
       return "nothing";
     }
     return view;
+  }
+  
+  /*
+  ** Hooks into a block above or below the current position.
+  */
+  void Hook(
+    Direction direction,  // The vertical direction in which to hook.
+    int xOffset // The offset from the x axis.
+  )
+  {
+    if (this.Hooked)
+    {
+      this.Hooked = false;
+      return;
+    }
+    Block@ block;
+    int fromY;
+    int toY;
+    BlockSearcher searcher(direction, this.map, this.X + xOffset, this.Y,
+      0, DEFAULT_HOOK_RANGE);
+    while (searcher.Find(block, fromY, toY))
+    {
+      if (@block != null)
+      {
+        this.Hooked = true;
+        if (direction == Up)
+        {
+          this.hookFromY = this.Y;
+          this.hookToY = toY;
+        }
+        else
+        {
+          this.hookFromY = fromY;
+          this.hookToY = this.Y;
+        }
+        return;
+      }
+    }
   }
 }

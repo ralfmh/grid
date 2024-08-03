@@ -70,12 +70,10 @@ final class BlockSearcher
   }
   
   /*
-  ** Finds the next block.
+  ** Advances the search to the next position.
   ** Returns a boolean value indicating whether the search is finished.
   */
-  bool Find(
-    Block@ &out block  // The found block.
-  )
+  private bool Advance()
   {
     if (this.position[this.SearchAxis] == this.target || this.foundWall)
     {
@@ -83,8 +81,53 @@ final class BlockSearcher
     }
     this.position[this.SearchAxis] += this.modifier;
     this.Squares++;
-    @block = this.map.GetBlock(this.position[0], this.position[1]);
+    return true;
+  }
+  
+  /*
+  ** Checks if the last search step encountered a wall
+  ** and sets foundWall accordingly.
+  */
+  void CheckWall(
+    Block@ block  // The found block.
+  )
+  {
     this.foundWall = @block != null && block.Type == Wall;
+  }
+  
+  /*
+  ** Finds the next block.
+  ** Returns a boolean value indicating whether the search is finished.
+  */
+  bool Find(
+    Block@ &out block  // The found block.
+  )
+  {
+    if (!this.Advance())
+    {
+      return false;
+    }
+    @block = this.map.GetBlock(this.position[0], this.position[1]);
+    this.CheckWall(block);
+    return true;
+  }
+  
+  /*
+  ** Finds the next block.
+  ** Returns a boolean value indicating whether the search is finished.
+  */
+  bool Find(
+    Block@ &out block,  // The found block.
+    int &out fromY, // The minimum y position of the block.
+    int &out toY  // The maximum y position of the block.
+  )
+  {
+    if (!this.Advance())
+    {
+      return false;
+    }
+    @block = this.map.GetBlock(this.position[0], this.position[1], fromY, toY);
+    this.CheckWall(block);
     return true;
   }
 }
