@@ -302,10 +302,15 @@ final class Person
       this.Hooked = false;
       return;
     }
+    int x = this.X + xOffset;
+    if (x < MAP_MIN_X || x > this.map.GetMaxX())
+    {
+      return;
+    }
     Block@ block;
     int fromY;
     int toY;
-    BlockSearcher searcher(direction, this.map, this.X + xOffset, this.Y,
+    BlockSearcher searcher(direction, this.map, x, this.Y, 
       0, DEFAULT_HOOK_RANGE);
     while (searcher.Find(block, fromY, toY))
     {
@@ -314,14 +319,17 @@ final class Person
         this.Hooked = true;
         if (direction == Up)
         {
+          this.Y++;
           this.hookFromY = this.Y;
           this.hookToY = toY;
         }
         else
         {
+          this.Y--;
           this.hookFromY = fromY;
           this.hookToY = this.Y;
         }
+        this.X = x;
         return;
       }
     }

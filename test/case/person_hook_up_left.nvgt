@@ -1,0 +1,16 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_hook_up_left()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "tile fx0 tx0 fy10 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(1, 0, map);
+  p.Hook(Up, -1);
+  assert(p.Hooked);
+  assert(p.X == 0);
+  assert(p.Y == 1);
+}
