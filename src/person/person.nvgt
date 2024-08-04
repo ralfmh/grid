@@ -326,6 +326,8 @@ final class Person
     if (this.Hooked)
     {
       this.Hooked = false;
+      this.AutoMoveState = Falling;
+      @this.Block = null;
       return;
     }
     int x = this.X + xOffset;
