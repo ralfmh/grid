@@ -30,6 +30,11 @@ final class Person
   */
   bool Hooked;
   
+  /*
+  ** The block that the person is standing on while hooked to another block.
+  */
+  private Block hookBlock("hook", Ladder);
+  
   private int hookFromY;  // The minimum y position of the hook.
   
   private int hookToY;  // The maximum y position of the hook.
@@ -173,12 +178,22 @@ final class Person
     {
       return Edged;
     }
-    if (this.Hooked && (newY <= this.hookFromY || newY >= this.hookToY
-      || newX != this.X))
+    if (this.Hooked)
     {
-      this.Hooked = false;
+      if (newY <= this.hookFromY || newY >= this.hookToY || newX != this.X)
+      {
+        this.Hooked = false;
+        @this.Block = this.map.GetBlock(newX, newY);
+      }
+      else
+      {
+        @this.Block = @this.hookBlock;
+      }
     }
-    @this.Block = this.map.GetBlock(newX, newY);
+    else
+    {
+      @this.Block = this.map.GetBlock(newX, newY);
+    }
     if (this.Block == null)
     {
       if (this.Hooked)
