@@ -1,42 +1,4 @@
-#include "../person/person.nvgt"
-#include"includes/*/*.nvgt"
-#include"sound_pool.nvgt"
-#include"form.nvgt"
-#include"dget.nvgt"
-mixer mix;
-audio_form form;
-pack pf;
-sound_pool p,miscp;
-int soundcard=1;
-bool can_move=true;
-string savedir=DIRECTORY_APPDATA+"/grid";
-timer walktimer;
-int walktime=200;
-int mres;
-vector me,cam;
-dynamic_menu_pro m;
-void main() {
- if(!directory_exists(savedir)) directory_create(savedir);
- show_window("Grid");
- read_preferences();
- set_sound_output_device(soundcard);
- @p.mixer=mix;
- p.pan_step=0.8;
- if(!pf.open("sounds.dat", PACK_OPEN_MODE_READ)) {
-  alert("error", "failed to load sounds.dat!");
- }
- @sound_default_pack=pf;
- game();
- mainmenu();
-}
-void read_preferences() {
- //should load your settings form an ini file.
-}
-void save_preferences() {
- //should write your settings into an ini file.
-}
 void game() {
- speedhack_protection=true;
  Map m();
  string definition = "tile fx0 tx4 fy0 mlash" + LINE_SEPARATOR
   + "tile fx5 tx9 fy0 mlbridge" + LINE_SEPARATOR
@@ -59,7 +21,8 @@ void game() {
   wait(5);
   if (key_pressed(KEY_ESCAPE))
   {
-   exit();
+   MainMenu();
+   break;
   }
   if (key_down(KEY_LEFT))
   {
@@ -83,8 +46,4 @@ void game() {
    move = Delayed;
   }
  }
-}
-void monitor_form(audio_form@ f) {
- f.monitor();
- wait(5);
 }

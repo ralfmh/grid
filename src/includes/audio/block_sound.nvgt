@@ -1,0 +1,24 @@
+class BlockSound
+{
+ string block;
+ BlockSound(string b)
+ {
+  block=b;
+ }
+ int PlayStep()
+ {
+  return main_pool.play_stationary(sounds_directory+"/blocks/platforms/"+block+"/"+random(1,5)+".ogg",false); 
+ }
+ int PlayLand()
+ {
+  return main_pool.play_stationary(sounds_directory+"/blocks/platforms/"+block+"/land.ogg",false); 
+ }
+ int PlayFall()
+ {
+  return main_pool.play_stationary(sounds_directory+"/blocks/platforms/"+block+"/fall.ogg",false); 
+ }
+ int opCmp(BlockSound@ other)
+ {
+  return this.block.opCmp(other.block);
+ }
+}

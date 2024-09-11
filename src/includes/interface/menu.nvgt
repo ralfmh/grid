@@ -1,0 +1,31 @@
+void setupmenu(bool music=false,string menusounds="main") {
+ m.reset(false);
+ m.enable_first_letter_navigation=true;
+ m.wrap=false;
+ m.enable_side_scrolling=true;
+ m.speak_letter=true;
+ if(music) m.add_music("UI/menu/"+menusounds+"/music.ogg");
+ else if(!music) m.add_music("");
+ m.edge_sound="UI/menu/"+menusounds+"/edge.ogg";
+ m.close_sound="UI/menu/"+menusounds+"/close.ogg";
+ m.open_sound="UI/menu/"+menusounds+"/open.ogg";
+ m.click_sound="UI/menu//click.ogg";
+ m.enter_sound="UI/menu/"+menusounds+"/enter.ogg";
+ m.enable_home_and_end=true;
+ m.letters_autoactivate=true;
+ m.enable_left_and_right=true;
+ m.allow_escape=true;
+}
+void MainMenu() {
+ setupmenu(true,"main");
+ m.add_item_tts("Play","play","p");
+  m.add_item_tts("Exit","Exit","x");
+ mres=m.run("Main menu",true);
+ string mname=m.get_item_name(mres);
+ if(mname=="play") {
+  game();
+ }
+ else {
+  m.fade_music(15);
+ }
+}
