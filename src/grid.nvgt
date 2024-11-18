@@ -2,18 +2,9 @@
 #include"includes/*/*.nvgt"
 #include"speech.nvgt"
 #include"sound_pool.nvgt"
-pack pf;
-sound_pool main_pool,misc_pool;
-int soundcard=1;
-string sounds_directory="../sound/sounds";
-int mres;
-dynamic_menu_pro m;
+sound_pool main_pool;
+string sounds_directory="../sounds";
 void main() {
  show_window("Grid");
- set_sound_output_device(soundcard);
- if(!pf.open("sounds.dat", PACK_OPEN_MODE_READ)) {
-  alert("error", "failed to load sounds.dat!");
- }
- @sound_default_pack=pf;
- MainMenu();
+ game();
 }

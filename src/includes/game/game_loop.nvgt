@@ -21,7 +21,6 @@ void game() {
   wait(5);
   if (key_pressed(KEY_ESCAPE))
   {
-   MainMenu();
    break;
   }
   if (key_down(KEY_LEFT))
