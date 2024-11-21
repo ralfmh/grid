@@ -7,3 +7,5 @@ Grid is an offline, 2-dimensional side-scroller / world builder, similar to [ske
 ## Documentation
 
  * [Map definition](/doc/map_definition.md)
+ * [Sound attribution](/doc/sound_attribution.md)
+ 
