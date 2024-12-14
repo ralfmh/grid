@@ -1,24 +1,18 @@
-class BlockSound
-{
+class BlockSound {
  string block;
- BlockSound(string b)
- {
+ BlockSound(string b) {
   block=b;
  }
- int PlayStep()
- {
-  return main_pool.play_stationary(sounds_directory+"/blocks/platforms/"+block+"/"+random(1,5)+".ogg",false); 
+ stationary_sound @ PlayStep() {
+  return audio.play(sounds_directory+"/blocks/platforms/"+block+"/"+random(1,5)+".ogg"); 
  }
- int PlayLand()
- {
-  return main_pool.play_stationary(sounds_directory+"/blocks/platforms/"+block+"/land.ogg",false); 
+ stationary_sound @ PlayLand() {
+  return audio.play(sounds_directory+"/blocks/platforms/"+block+"/land.ogg"); 
  }
- int PlayFall()
- {
-  return main_pool.play_stationary(sounds_directory+"/blocks/platforms/"+block+"/fall.ogg",false); 
+ stationary_sound @ PlayFall() {
+  return audio.play(sounds_directory+"/blocks/platforms/"+block+"/fall.ogg"); 
  }
- int opCmp(BlockSound@ other)
- {
+ int opCmp(BlockSound@ other) {
   return this.block.opCmp(other.block);
  }
 }

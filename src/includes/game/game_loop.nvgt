@@ -4,43 +4,33 @@ void game() {
   + "tile fx5 tx9 fy0 mlbridge" + LINE_SEPARATOR
   + "tile fx10 tx14 fy0 mlcarpet";
  string[] errors = m.Parse(definition);
- if (errors.length() > 0)
- {
+ if (errors.length() > 0) {
   alert("Validation errors", errors.length());
  }
  m.CreateGrids();
  Block@[] usedBlocks = m.GetUsedBlocks();
  BlockSound@[] blockSounds;
- for (int i = 0; i < usedBlocks.length(); i++)
- {
+ for (int i = 0; i < usedBlocks.length(); i++) {
   blockSounds.insert_last(BlockSound(usedBlocks[i].Material));
  }
  Person p(0, 0, m);
  MoveResult move;
  while(true) {
   wait(5);
-  if (key_pressed(KEY_ESCAPE))
-  {
-   break;
-  }
-  if (key_down(KEY_LEFT))
-  {
+  if (key_pressed(KEY_ESCAPE)) break;
+  if (key_down(KEY_LEFT)) {
     move = p.Move(Left);
   }
-  else if (key_down(KEY_RIGHT))
-  {
+  else if (key_down(KEY_RIGHT)) {
     move = p.Move(Right);
   }
-  if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL))
-  {
+  if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
    p.ManualMoveInterval = DEFAULT_RUN_INTERVAL;
   }
-  else
-  {
+  else {
    p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
   }
-  if (move == Moved)
-  {
+  if (move == Moved) {
    blockSounds[blockSounds.find(BlockSound(p.Block.Material))].PlayStep();
    move = Delayed;
   }

@@ -1,10 +1,18 @@
-#include "person/person.nvgt"
 #include"includes/*/*.nvgt"
+#include "person/person.nvgt"
 #include"speech.nvgt"
-#include"sound_pool.nvgt"
-sound_pool main_pool;
+#include"menu.nvgt"
+sound_manager audio;
 string sounds_directory="../sounds";
+
+bool preglobals() {
+	if (!SCREEN_READER_AVAILABLE) alert("Error","Failed to load screen reader");
+	else if (!SOUND_AVAILABLE) alert("Error", "Failed to load sound system");
+	else return true;
+	return false;
+}
+
 void main() {
  show_window("Grid");
- game();
+ main_menu();
 }
