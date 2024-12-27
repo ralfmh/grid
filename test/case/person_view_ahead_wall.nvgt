@@ -1,0 +1,15 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_view_ahead_wall()
+{
+  string definition = "ladr fx0 tx5 fy0 ty1 mlmetal" + LINE_SEPARATOR;
+  definition += "wall fx3 tx3 fy0 ty5 mlstone";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(2, 1, map);
+  assert(p.View(Right) == "wall stone (1), ");
+  p.Move(Right);
+  assert(p.View(Right) == "wall stone (1), ", p.View(Right));
+}

@@ -19,7 +19,11 @@ final class Person
   
   private timer autoMoveTimer;  // The timer controlling automatic moves.
   
-  Block@ Block; // The current block at which the person is located.
+  /*
+  ** The current block at which the person is located. It may include walls
+  ** or empty space.
+  */
+  Block@ Block;
   
   int FallInterval; // The interval in ms for each falling move.
   
@@ -42,6 +46,11 @@ final class Person
   int JumpInterval; // The interval in ms for each jumping move.
   
   private int jumpStart;  // Y position where the person started to jump.
+  
+  /*
+  ** The last known material that the person was standing on.
+  */
+  private string localMaterial;
   
   private Map@ map; // The current map.
   
@@ -71,6 +80,8 @@ final class Person
     this.X = initialX;
     this.Y = initialY;
     @this.Block = this.map.GetBlock(this.X, this.Y);
+    this.localMaterial = this.Block != null ? this.Block.Material
+      : this.map.DefaultMaterial;
   }
   
   /*
@@ -230,6 +241,8 @@ final class Person
     }
     this.X = newX;
     this.Y = newY;
+    this.localMaterial = this.Block != null ? this.Block.Material
+      : this.map.DefaultMaterial;
     return Moved;
   }
   
@@ -243,8 +256,6 @@ final class Person
     EntityType &out type  // The type of the block.
   )
   {
-    string localMaterial = this.Block != null ? this.Block.Material
-      : this.map.DefaultMaterial;
     string remoteMaterial;
     BlockSearcher searcher(direction, this.map, this.X, this.Y,
       DEFAULT_SONAR_RANGE, DEFAULT_SONAR_RANGE);
@@ -261,7 +272,7 @@ final class Person
         remoteMaterial = this.map.DefaultMaterial;
         type = None;
       }
-      if (remoteMaterial != localMaterial
+      if (remoteMaterial != this.localMaterial
         && (searcher.SearchAxis == Horizontal
         || remoteMaterial != this.map.DefaultMaterial))
       {
@@ -281,8 +292,7 @@ final class Person
   {
     string view = "";
     Block@ block;
-    string localMaterial = this.Block != null ? this.Block.Material
-      : this.map.DefaultMaterial;
+    string viewMaterial = this.localMaterial;
     string remoteMaterial;
     string type;
     BlockSearcher searcher(direction, this.map, this.X, this.Y,
@@ -302,14 +312,14 @@ final class Person
       {
         remoteMaterial = this.map.DefaultMaterial;
       }
-      if (remoteMaterial != localMaterial)
+      if (remoteMaterial != viewMaterial)
       {
         if (searcher.SearchAxis == Horizontal
           || remoteMaterial != this.map.DefaultMaterial)
         {
           view += type + remoteMaterial + " (" + searcher.Squares + "), ";
         }
-        localMaterial = remoteMaterial;
+        viewMaterial = remoteMaterial;
       }
     }
     if (view == "")
