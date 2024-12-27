@@ -75,8 +75,9 @@ final class Person
   
   /*
   ** Moves the person automatically (e.g during jumping or falling).
+  ** Returns true if the AutoMoveState changed, false otherwise.
   */
-  void AutoMove()
+  bool AutoMove()
   {
     MoveResult result;
     switch (this.AutoMoveState)
@@ -88,21 +89,24 @@ final class Person
         {
           this.AutoMoveState = Falling;
           this.autoMoveInterval = this.FallInterval;
+          return true;
         }
-        break;
+        return false;
       case Falling:
         if (this.Block != null && this.Block.Type != Wall)
         {
           this.AutoMoveState = Standing;
-          break;
+          return true;
         }
         result = this.Move(Down, true);
         if (this.Block != null || result == Edged)
         {
           this.AutoMoveState = Standing;
+          return true;
         }
-        break;
+        return false;;
     }
+    return false;
   }
   
   /*
