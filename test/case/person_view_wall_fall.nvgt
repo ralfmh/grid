@@ -1,0 +1,29 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_view_wall_fall()
+{
+  string definition = "tile fx0 tx4 fy10 mlstone" + LINE_SEPARATOR;
+  definition += "wall fx5 tx5 fy0 ty5 mlfence" + LINE_SEPARATOR;
+  definition += "tile fx0 tx10 fy0 mldirt";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(4, 10, map);
+  p.Move(Right);
+  assert(p.AutoMoveState == Falling);
+  p.AutoMove();
+  assert(p.Y == 9);
+  p.AutoMove();
+  assert(p.Y == 8);
+  p.AutoMove();
+  assert(p.Y == 7);
+  p.AutoMove();
+  assert(p.Y == 6);
+  p.AutoMove();
+  assert(p.Y == 5);
+  assert(p.AutoMoveState == Standing);
+  assert(p.Block.Type == Wall);
+  assert(p.View(Right) == map.DefaultMaterial + " (1), ", p.View(Right));
+  assert(p.View(Down) == "nothing", p.View(Down));
+}

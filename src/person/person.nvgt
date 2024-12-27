@@ -236,6 +236,7 @@ final class Person
       {
         this.X = newX;
         this.Y = newY;
+        this.localMaterial = this.Block.Material;
       }
       return Walled;
     }
