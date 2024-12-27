@@ -8,3 +8,10 @@ enum Direction
   Right,
   Up
 }
+
+const int[] DIRECTION_KEY = {
+  KEY_DOWN,
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_UP
+};

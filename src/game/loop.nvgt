@@ -23,17 +23,26 @@ void game() {
   wait(5);
   if (key_pressed(KEY_ESCAPE)) break;
   if (key_pressed(KEY_C)) speak(p.X+", "+p.Y);
-  if (key_down(KEY_LEFT)) {
-    move = p.Move(Left);
+  if (key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT)) {
+    for (int i = 0; i < DIRECTION_KEY.length(); i++) {
+      if (key_pressed(DIRECTION_KEY[i])) {
+        speak(p.View(Direction(i)));
+      }
+    }
   }
-  else if (key_down(KEY_RIGHT)) {
-    move = p.Move(Right);
-  }
-  else if (key_down(KEY_UP)) {
-    move = p.Move(Up);
-  }
-  else if (key_down(KEY_DOWN)) {
-    move = p.Move(Down);
+  else {
+    if (key_down(KEY_LEFT)) {
+      move = p.Move(Left);
+    }
+    else if (key_down(KEY_RIGHT)) {
+      move = p.Move(Right);
+    }
+    else if (key_down(KEY_UP)) {
+      move = p.Move(Up);
+    }
+    else if (key_down(KEY_DOWN)) {
+      move = p.Move(Down);
+    }
   }
   if (key_pressed(KEY_SPACE)) {
     if (p.Jump()) {
