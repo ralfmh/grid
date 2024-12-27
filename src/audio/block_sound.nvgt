@@ -1,0 +1,20 @@
+class BlockSound {
+ string Block;
+ EntityType Type;
+ BlockSound(string block,EntityType type) {
+  this.Block=block;
+  this.Type=type;
+ }
+ stationary_sound @ PlayStep() {
+  return audio.play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/"+random(1,5):"walls/"+Block)+".ogg"); 
+ }
+ stationary_sound @ PlayLand() {
+  return audio.play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/land":"walls/"+Block)+".ogg"); 
+ }
+ stationary_sound @ PlayFall() {
+  return audio.play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/fall":"walls/"+Block)+".ogg"); 
+ }
+ int opCmp(BlockSound@ other) {
+  return this.Block.opCmp(other.Block);
+ }
+}

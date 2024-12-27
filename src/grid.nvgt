@@ -1,5 +1,4 @@
-#include"includes/*/*.nvgt"
-#include "person/person.nvgt"
+#include"*/*.nvgt"
 #include"speech.nvgt"
 #include"menu.nvgt"
 sound_manager audio;

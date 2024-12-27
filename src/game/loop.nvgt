@@ -2,22 +2,25 @@ void game() {
  Map m();
  string definition = "tile fx0 tx4 fy0 mlash" + LINE_SEPARATOR
   + "ladr fx5 tx9 fy0 ty10 mlbridge" + LINE_SEPARATOR
+  + "wall fx8 tx8 fy0 ty5 mlbank" + LINE_SEPARATOR
   + "tile fx10 tx14 fy0 mlcarpet";
  string[] errors = m.Parse(definition);
  if (errors.length() > 0) {
-  alert("Validation errors", errors.length());
+  alert("Validation errors", join(errors,"\n"));
+  return;
  }
  m.CreateGrids();
  Block@[] usedBlocks = m.GetUsedBlocks();
  BlockSound@[] blockSounds;
  for (int i = 0; i < usedBlocks.length(); i++) {
-  blockSounds.insert_last(BlockSound(usedBlocks[i].Material));
+  blockSounds.insert_last(BlockSound(usedBlocks[i].Material,usedBlocks[i].Type));
  }
  Person p(0, 0, m);
  MoveResult move;
  while(true) {
   wait(5);
   if (key_pressed(KEY_ESCAPE)) break;
+  if (key_pressed(KEY_C)) speak(p.X+", "+p.Y);
   if (key_down(KEY_LEFT)) {
     move = p.Move(Left);
   }
@@ -36,9 +39,9 @@ void game() {
   else {
    p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
   }
-  if (move == Moved || p.AutoMove()) {
+  if (move == Moved || move == Walled || p.AutoMove()) {
    if (p.Block != null) {
-    blockSounds[blockSounds.find(BlockSound(p.Block.Material))].PlayStep();
+    blockSounds[blockSounds.find(BlockSound(p.Block.Material,p.Block.Type))].PlayStep();
    }
    move = Delayed;
   }
