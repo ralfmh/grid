@@ -16,6 +16,8 @@ void game() {
   blockSounds.insert_last(BlockSound(usedBlocks[i].Material,usedBlocks[i].Type));
  }
  Person p(0, 0, m);
+ p.FallInterval = DEFAULT_FALL_INTERVAL;
+ p.JumpInterval = DEFAULT_JUMP_INTERVAL;
  MoveResult move;
  while(true) {
   wait(5);
@@ -32,6 +34,11 @@ void game() {
   }
   else if (key_down(KEY_DOWN)) {
     move = p.Move(Down);
+  }
+  if (key_pressed(KEY_SPACE)) {
+    if (p.Jump()) {
+      audio.play(sounds_directory+"/player/jump.ogg");
+    }
   }
   if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
    p.ManualMoveInterval = DEFAULT_RUN_INTERVAL;
