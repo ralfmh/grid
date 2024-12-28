@@ -7,5 +7,6 @@ enum EntityType
   None,
   Text,
   Tile,
-  Wall
+  Wall,
+  EntityTypes
 }

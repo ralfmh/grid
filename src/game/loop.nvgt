@@ -19,6 +19,14 @@ void game() {
  p.FallInterval = DEFAULT_FALL_INTERVAL;
  p.JumpInterval = DEFAULT_JUMP_INTERVAL;
  MoveResult move;
+ Direction sonarDirection;
+ int sonarDistance;
+ sound[] sonarSound(EntityTypes);
+ sonarSound[Ladder].load(sounds_directory + "/player/sonar/ladder.ogg");
+ sonarSound[None].load(sounds_directory + "/player/sonar/air.ogg");
+ sonarSound[Tile].load(sounds_directory + "/player/sonar/tile.ogg");
+ sonarSound[Wall].load(sounds_directory + "/player/sonar/wall.ogg");
+ EntityType sonarType;
  while(true) {
   wait(5);
   if (key_pressed(KEY_ESCAPE)) break;
@@ -33,15 +41,19 @@ void game() {
   else {
     if (key_down(KEY_LEFT)) {
       move = p.Move(Left);
+      sonarDirection = Left;
     }
     else if (key_down(KEY_RIGHT)) {
       move = p.Move(Right);
+      sonarDirection = Right;
     }
     else if (key_down(KEY_UP)) {
       move = p.Move(Up);
+      sonarDirection = Up;
     }
     else if (key_down(KEY_DOWN)) {
       move = p.Move(Down);
+      sonarDirection = Down;
     }
   }
   if (key_pressed(KEY_SPACE)) {
@@ -54,6 +66,18 @@ void game() {
   }
   else {
    p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
+  }
+  if (move == Moved && p.Sonar(sonarDirection, sonarDistance, sonarType)) {
+    sonarSound[sonarType].stop();
+    if (sonarDirection == Right) {
+      sonarSound[sonarType].pan = min(100, sonarDistance * DEFAULT_SONAR_RANGE);
+    } else if (sonarDirection == Left) {
+      sonarSound[sonarType].pan = max(-100, sonarDistance * -DEFAULT_SONAR_RANGE);
+    }
+    else {
+      sonarSound[sonarType].pan = 0;
+    }
+    sonarSound[sonarType].play();
   }
   if (move == Moved || move == Walled || p.AutoMove()) {
    if (p.Block != null) {
