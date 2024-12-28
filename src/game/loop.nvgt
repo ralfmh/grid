@@ -21,6 +21,7 @@ void game() {
  MoveResult move;
  Direction sonarDirection;
  int sonarDistance;
+ bool sonarEnabled = false;
  sound[] sonarSound(EntityTypes);
  sonarSound[Ladder].load(sounds_directory + "/player/sonar/ladder.ogg");
  sonarSound[None].load(sounds_directory + "/player/sonar/air.ogg");
@@ -61,13 +62,20 @@ void game() {
       audio.play(sounds_directory+"/player/jump.ogg");
     }
   }
+  else if (key_pressed(KEY_F3)) {
+    sonarEnabled = !sonarEnabled;
+    speak("sonarEnabled " + sonarEnabled);
+  }
   if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
    p.ManualMoveInterval = DEFAULT_RUN_INTERVAL;
   }
   else {
    p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
   }
-  if (move == Moved && p.Sonar(sonarDirection, sonarDistance, sonarType)) {
+  if (p.AutoMoveState == Falling || p.AutoMoveState == Jumping) {
+    sonarDirection = Down;
+  }
+  if (sonarEnabled && (move == Moved && p.Sonar(sonarDirection, sonarDistance, sonarType))) {
     sonarSound[sonarType].stop();
     if (sonarDirection == Right) {
       sonarSound[sonarType].pan = min(100, sonarDistance * DEFAULT_SONAR_RANGE);
