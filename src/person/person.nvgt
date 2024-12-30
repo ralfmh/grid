@@ -98,11 +98,17 @@ final class Person
         if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
           || result == Walled)
         {
-          this.AutoMoveState = Falling;
+          this.AutoMoveState = Landing;
           this.autoMoveInterval = this.FallInterval;
           return true;
         }
         return false;
+      case Landing:
+        if (this.Y <= this.jumpStart)
+        {
+          this.AutoMoveState = Falling;
+          return true;
+        }
       case Falling:
         if (this.Block != null && this.Block.Type != Wall)
         {
@@ -232,7 +238,7 @@ final class Person
     }
     else if (this.Block.Type == Wall)
     {
-      if (this.AutoMoveState == Falling)
+      if (this.AutoMoveState == Landing || this.AutoMoveState == Falling)
       {
         this.X = newX;
         this.Y = newY;

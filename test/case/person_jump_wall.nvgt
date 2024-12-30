@@ -20,7 +20,7 @@ void test_person_jump_wall()
   assert(p.Y == 4);
   p.AutoMove();
   assert(p.Y == 5);
-  assert(p.AutoMoveState == Falling);
+  assert(p.AutoMoveState == Landing);
   assert(p.Move(Right) == Moved);
   assert(p.X == 1);
   p.AutoMove();

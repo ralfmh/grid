@@ -20,7 +20,7 @@ void test_person_jump_tile()
   assert(p.Y == 4);
   p.AutoMove();
   assert(p.Y == 5);
-  assert(p.AutoMoveState == Falling);
+  assert(p.AutoMoveState == Landing);
   p.AutoMove();
   assert(p.AutoMoveState == Standing);
   assert(p.Y == 5);

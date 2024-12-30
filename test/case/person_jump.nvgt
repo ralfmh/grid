@@ -19,5 +19,5 @@ void test_person_jump()
   assert(p.Y == 4);
   p.AutoMove();
   assert(p.Y == 5);
-  assert(p.AutoMoveState == Falling);
+  assert(p.AutoMoveState == Landing);
 }
