@@ -42,3 +42,8 @@ const int DEFAULT_VIEW_HORIZONTAL = 60;
 ** The default vertical view range.
 */
 const int DEFAULT_VIEW_VERTICAL = 120;
+
+/*
+** The speedup factor of movement while jumping.
+*/
+const double JUMP_SPEEDUP_FACTOR = 2.69;
