@@ -2,11 +2,6 @@ menu@make_menu(const string&in intro="") {
  menu m;
  m.intro_text = intro;
  m.focus_first_item=true;
- m.click_sound=sounds_directory+"/ui/click.ogg";
- m.select_sound=sounds_directory+"/ui/select.ogg";
- m.wrap_sound=sounds_directory+"/ui/wrap.ogg";
- m.open_sound=sounds_directory+"/ui/open.ogg";
- m.close_sound=sounds_directory+"/ui/close.ogg";
  m.automatic_intro=true;
  m.wrap=true;
  return m;
