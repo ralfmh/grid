@@ -1,6 +1,7 @@
 #include"*/*.nvgt"
 #include"speech.nvgt"
 #include"menu.nvgt"
+#include"audio/sound_manager/sound_manager.nvgt"
 sound_manager audio;
 string sounds_directory="../sounds";
 
