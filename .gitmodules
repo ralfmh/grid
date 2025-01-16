@@ -1,0 +1,3 @@
+[submodule "src/audio/sound_manager"]
+	path = src/audio/sound_manager
+	url = https://github.com/masonasons/sound_manager
