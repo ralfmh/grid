@@ -12,6 +12,11 @@ enum AutoMoveState
   */
   Jumping,
   /*
+  ** The person is moved down the y axis after jumping
+  ** until the starting position of the jump.
+  */
+  Landing,
+  /*
   ** The person is not moved automatically.
   */
   Standing

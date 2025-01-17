@@ -72,7 +72,9 @@ void game() {
   else {
    p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
   }
-  if (p.AutoMoveState == Falling || p.AutoMoveState == Jumping) {
+  if (p.AutoMoveState == Jumping || p.AutoMoveState == Landing)
+    p.ManualMoveInterval /= JUMP_SPEEDUP_FACTOR;
+  if (p.AutoMoveState == Falling || p.AutoMoveState == Jumping || p.AutoMoveState == Landing) {
     sonarDirection = Down;
   }
   if (sonarEnabled && (move == Moved && p.Sonar(sonarDirection, sonarDistance, sonarType))) {
