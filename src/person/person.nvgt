@@ -27,7 +27,7 @@ final class Person
   
   int FallInterval; // The interval in ms for each falling move.
   
-  private int health; // Current health of the person.
+  int Health; // Current health of the person.
   
   /*
   ** Boolean value indicating whether the person is hooked to a block.
@@ -50,7 +50,7 @@ final class Person
   /*
   ** The last known material that the person was standing on.
   */
-  private string localMaterial;
+  string LocalMaterial;
   
   private Map@ map; // The current map.
   
@@ -75,12 +75,12 @@ final class Person
   )
   {
     this.AutoMoveState = Standing;
-    this.health = 100;
+    this.Health = 100;
     @this.map = @map;
     this.X = initialX;
     this.Y = initialY;
     @this.Block = this.map.GetBlock(this.X, this.Y);
-    this.localMaterial = this.Block != null ? this.Block.Material
+    this.LocalMaterial = this.Block != null ? this.Block.Material
       : this.map.DefaultMaterial;
   }
   
@@ -242,13 +242,13 @@ final class Person
       {
         this.X = newX;
         this.Y = newY;
-        this.localMaterial = this.Block.Material;
+        this.LocalMaterial = this.Block.Material;
       }
       return Walled;
     }
     this.X = newX;
     this.Y = newY;
-    this.localMaterial = this.Block != null ? this.Block.Material
+    this.LocalMaterial = this.Block != null ? this.Block.Material
       : this.map.DefaultMaterial;
     return Moved;
   }
@@ -279,7 +279,7 @@ final class Person
         remoteMaterial = this.map.DefaultMaterial;
         type = None;
       }
-      if (remoteMaterial != this.localMaterial
+      if (remoteMaterial != this.LocalMaterial
         && (searcher.SearchAxis == Horizontal
         || remoteMaterial != this.map.DefaultMaterial))
       {
@@ -299,7 +299,7 @@ final class Person
   {
     string view = "";
     Block@ block;
-    string viewMaterial = this.localMaterial;
+    string viewMaterial = this.LocalMaterial;
     string remoteMaterial;
     string type;
     BlockSearcher searcher(direction, this.map, this.X, this.Y,
