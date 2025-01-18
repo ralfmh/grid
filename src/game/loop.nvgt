@@ -32,6 +32,7 @@ void game() {
   wait(5);
   if (key_pressed(KEY_ESCAPE)) break;
   if (key_pressed(KEY_C)) speak(p.X+", "+p.Y+(p.LocalMaterial!=""?" on "+p.LocalMaterial:""));
+  if(key_pressed(KEY_H)) speak(p.Health+" health");
   if (key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT)) {
     for (int i = 0; i < DIRECTION_KEY.length(); i++) {
       if (key_pressed(DIRECTION_KEY[i])) {
