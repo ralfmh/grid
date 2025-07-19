@@ -3,3 +3,10 @@ ladr fx5 tx9 fy0 ty10 mlbridge
 wall fx8 tx8 fy0 ty5 mlbank
 tile fx10 tx20 fy0 mlcarpet
 tile fx18 tx30 fy0 mlwood_pile
+text fx0 tx4 fy0 ty5 lvThis is the beginning of the default map. Behold the shape of things to come.
+text fx5 tx7 fy0 ty9 lvThis is a ladder to the left of a wall. Climb up the ladder to get across the wall.
+text fx5 tx9 fy10 ty15 lvOn top of the ladder.
+text fx8 tx8 fy6 ty9 lvJust above the wall.
+text fx9 tx9 fy0 ty9 lvThe ladder to the right of the wall.
+text fx10 tx17 fy0 ty5 lvCarpet area.
+text fx18 tx30 fy0 ty5 lvWoodpile area.

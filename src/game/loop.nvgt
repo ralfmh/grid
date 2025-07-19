@@ -30,6 +30,10 @@ void game() {
   sonarSound[Tile].load(sounds_directory + "/player/sonar/tile.ogg");
   sonarSound[Wall].load(sounds_directory + "/player/sonar/wall.ogg");
   EntityType sonarType;
+  bool speakText = true;
+  string text;
+  p.GetText(text);
+  speak(text);
   while(true) {
     wait(5);
     if (key_pressed(KEY_ESCAPE)) break;
@@ -69,6 +73,10 @@ void game() {
       sonarEnabled = !sonarEnabled;
       speak("sonarEnabled " + sonarEnabled);
     }
+    else if (key_pressed(KEY_T)) {
+      speakText = !speakText;
+      speak("speakText " + speakText);
+    }
     if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
       p.ManualMoveInterval = DEFAULT_RUN_INTERVAL;
     }
@@ -88,6 +96,9 @@ void game() {
     if (move == Moved || move == Walled || p.AutoMove()) {
       if (p.Block != null) {
         blockSounds[blockSounds.find(BlockSound(p.Block.Material,p.Block.Type))].PlayStep();
+      }
+      if (speakText && p.GetText(text)) {
+        speak(text);
       }
       move = Delayed;
     }

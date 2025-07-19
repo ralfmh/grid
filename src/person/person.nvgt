@@ -61,6 +61,11 @@ final class Person
 
   private timer manualMoveTimer;  // The timer controlling manual moves.
 
+  /*
+  ** The last known text that was associated with the person's position.
+  */
+  private string text;
+
   int X;  // Current x position.
 
   int Y;  // Current y position.
@@ -390,5 +395,19 @@ final class Person
         return;
       }
     }
+  }
+
+  /*
+  ** Gets the text that is associated with the person's position on the map.
+  ** Returns true if the text has changed since the last call, false otherwise.
+  */
+  bool GetText(
+    string &out text  // The current text.
+  )
+  {
+    text = this.map.GetText(this.X, this.Y);
+    bool changed = text != this.text;
+    this.text = text;
+    return changed;
   }
 }
