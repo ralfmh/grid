@@ -60,7 +60,7 @@ void game() {
   }
   if (key_pressed(KEY_SPACE)) {
     if (p.Jump()) {
-      audio.play(sounds_directory+"/player/jump.ogg");
+      sound_play(sounds_directory+"/player/jump.ogg");
     }
   }
   else if (key_pressed(KEY_F3)) {

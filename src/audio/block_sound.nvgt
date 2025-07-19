@@ -5,14 +5,14 @@ class BlockSound {
   this.Block=block;
   this.Type=type;
  }
- stationary_sound @ PlayStep() {
-  return audio.play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/"+random(1,5):"walls/"+Block)+".ogg"); 
+ sound @ PlayStep() {
+  return sound_play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/"+random(1,5):"walls/"+Block)+".ogg"); 
  }
- stationary_sound @ PlayLand() {
-  return audio.play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/land":"walls/"+Block)+".ogg"); 
+ sound @ PlayLand() {
+  return sound_play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/land":"walls/"+Block)+".ogg"); 
  }
- stationary_sound @ PlayFall() {
-  return audio.play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/fall":"walls/"+Block)+".ogg"); 
+ sound @ PlayFall() {
+  return sound_play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/fall":"walls/"+Block)+".ogg"); 
  }
  int opCmp(BlockSound@ other) {
   return this.Block.opCmp(other.Block);
