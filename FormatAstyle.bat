@@ -2,6 +2,6 @@
 @echo off
 setlocal
 echo Running AStyle on %TARGET_FOLDER%...
-astyle --options=.astylerc --suffix=none --recursive "src/*.nvgt"
+astyle --options=.astylerc --suffix=none --recursive "src/*.nvgt" "test/*.nvgt"
 echo Formatting complete!
 pause

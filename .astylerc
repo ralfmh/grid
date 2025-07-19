@@ -1,3 +1,4 @@
 # Artistic style configuration file
 # indentation
 indent=spaces=2
+indent-switches
