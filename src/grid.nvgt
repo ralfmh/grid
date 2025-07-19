@@ -4,21 +4,21 @@
 string sounds_directory="../sounds";
 
 bool preglobals() {
- if(!SCREEN_READER_AVAILABLE) alert("Error", "Failed to load screen reader.");
- else if(SOUNDSYSTEM_LAST_ERROR!=AUDIO_ERROR_STATE_SUCCESS) alert("Error", "Failed to load sound system. Error code: "+get_SOUNDSYSTEM_LAST_ERROR());
- else return true;
- return false;
+  if(!SCREEN_READER_AVAILABLE) alert("Error", "Failed to load screen reader.");
+  else if(SOUNDSYSTEM_LAST_ERROR!=AUDIO_ERROR_STATE_SUCCESS) alert("Error", "Failed to load sound system. Error code: "+get_SOUNDSYSTEM_LAST_ERROR());
+  else return true;
+  return false;
 }
 
 void main() {
- set_application_name("Grid");
- if(!show_window("Grid")) {
-  alert("Error", "Failed to show the game window.");
-  exit();
- }
- if(!KEYBOARD_AVAILABLE) {
-  alert("No keyboard detected","Grid requires a keyboard to play. Please attach one and try again.");
-  exit();
- }
- main_menu();
+  set_application_name("Grid");
+  if(!show_window("Grid")) {
+    alert("Error", "Failed to show the game window.");
+    exit();
+  }
+  if(!KEYBOARD_AVAILABLE) {
+    alert("No keyboard detected","Grid requires a keyboard to play. Please attach one and try again.");
+    exit();
+  }
+  main_menu();
 }
