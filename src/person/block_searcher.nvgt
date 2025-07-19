@@ -11,23 +11,23 @@ final class BlockSearcher
   ** during the last step of the search.
   */
   private bool foundWall;
-  
+
   private Map@ map; // The map on which the search is performed.
-  
+
   /*
   ** The amount that the start position is modified
   ** during each step of the search (1 or -1).
   */
   private int modifier;
-  
+
   private int[] position; // The current position of the searcher.
-  
+
   Axis SearchAxis; // The axis on which to search.
-  
+
   int Squares;  // The number of passed squares since the search started.
-  
+
   private int target; // The target position.
-  
+
   /*
   ** Initializes a new instance of the BlockSearcher class.
   */
@@ -46,29 +46,29 @@ final class BlockSearcher
     this.Squares = 0;
     switch (direction)
     {
-      case Down:
-        this.SearchAxis = Vertical;
-        this.modifier = -1;
-        this.target = max(MAP_MIN_Y, startY - verticalRange);
-        break;
-      case Left:
-        this.SearchAxis = Horizontal;
-        this.modifier = -1;
-        this.target = max(MAP_MIN_X, startX - horizontalRange);
-        break;
-      case Right:
-        this.SearchAxis = Horizontal;
-        this.modifier = 1;
-        this.target = min(this.map.GetMaxX(), startX + horizontalRange);
-        break;
-      case Up:
-        this.SearchAxis = Vertical;
-        this.modifier = 1;
-        this.target = min(this.map.GetMaxY(), startY + verticalRange);
-        break;
+    case Down:
+      this.SearchAxis = Vertical;
+      this.modifier = -1;
+      this.target = max(MAP_MIN_Y, startY - verticalRange);
+      break;
+    case Left:
+      this.SearchAxis = Horizontal;
+      this.modifier = -1;
+      this.target = max(MAP_MIN_X, startX - horizontalRange);
+      break;
+    case Right:
+      this.SearchAxis = Horizontal;
+      this.modifier = 1;
+      this.target = min(this.map.GetMaxX(), startX + horizontalRange);
+      break;
+    case Up:
+      this.SearchAxis = Vertical;
+      this.modifier = 1;
+      this.target = min(this.map.GetMaxY(), startY + verticalRange);
+      break;
     }
   }
-  
+
   /*
   ** Advances the search to the next position.
   ** Returns a boolean value indicating whether the search is finished.
@@ -83,7 +83,7 @@ final class BlockSearcher
     this.Squares++;
     return true;
   }
-  
+
   /*
   ** Checks if the last search step encountered a wall
   ** and sets foundWall accordingly.
@@ -94,7 +94,7 @@ final class BlockSearcher
   {
     this.foundWall = @block != null && block.Type == Wall;
   }
-  
+
   /*
   ** Finds the next block.
   ** Returns a boolean value indicating whether the search is finished.
@@ -111,7 +111,7 @@ final class BlockSearcher
     this.CheckWall(block);
     return true;
   }
-  
+
   /*
   ** Finds the next block.
   ** Returns a boolean value indicating whether the search is finished.
@@ -130,8 +130,22 @@ final class BlockSearcher
     this.CheckWall(block);
     return true;
   }
+
+  /*
+  ** Returns the current position.
+  ** Returns a vector indicating the current position.
+  */
+   vector GetPosition(
+  )
+  {
+    return vector(this.position[0],this.position[1]);
+  }
 }
 
-int max(int a, int b) { return a > b ? a : b; }
+int max(int a, int b) {
+  return a > b ? a : b;
+}
 
-int min(int a, int b) { return a < b ? a : b; }
+int min(int a, int b) {
+  return a < b ? a : b;
+}

@@ -14,57 +14,57 @@ final class Person
   ** The interval in ms for each automatically performed move.
   */
   private int autoMoveInterval;
-  
+
   AutoMoveState AutoMoveState;  // Current AutoMoveState.
-  
+
   private timer autoMoveTimer;  // The timer controlling automatic moves.
-  
+
   /*
   ** The current block at which the person is located. It may include walls
   ** or empty space.
   */
   Block@ Block;
-  
+
   int FallInterval; // The interval in ms for each falling move.
-  
+
   int Health; // Current health of the person.
-  
+
   /*
   ** Boolean value indicating whether the person is hooked to a block.
   */
   bool Hooked;
-  
+
   /*
   ** The block that the person is standing on while hooked to another block.
   */
   private Block hookBlock("hook", Ladder);
-  
+
   private int hookFromY;  // The minimum y position of the hook.
-  
+
   private int hookToY;  // The maximum y position of the hook.
-  
+
   int JumpInterval; // The interval in ms for each jumping move.
-  
+
   private int jumpStart;  // Y position where the person started to jump.
-  
+
   /*
   ** The last known material that the person was standing on.
   */
   string LocalMaterial;
-  
+
   private Map@ map; // The current map.
-  
+
   /*
   ** The interval in ms for each manually performed move.
   */
   int ManualMoveInterval;
-  
+
   private timer manualMoveTimer;  // The timer controlling manual moves.
-  
+
   int X;  // Current x position.
-  
+
   int Y;  // Current y position.
-  
+
   /*
   ** Initializes a new instance of the Person class.
   */
@@ -81,9 +81,9 @@ final class Person
     this.Y = initialY;
     @this.Block = this.map.GetBlock(this.X, this.Y);
     this.LocalMaterial = this.Block != null ? this.Block.Material
-      : this.map.DefaultMaterial;
+                         : this.map.DefaultMaterial;
   }
-  
+
   /*
   ** Moves the person automatically (e.g during jumping or falling).
   ** Returns true if the AutoMoveState changed, false otherwise.
@@ -93,39 +93,39 @@ final class Person
     MoveResult result;
     switch (this.AutoMoveState)
     {
-      case Jumping:
-        result = this.Move(Up, true);
-        if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
+    case Jumping:
+      result = this.Move(Up, true);
+      if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
           || result == Walled)
-        {
-          this.AutoMoveState = Landing;
-          this.autoMoveInterval = this.FallInterval;
-          return true;
-        }
-        return false;
-      case Landing:
-        if (this.Y <= this.jumpStart)
-        {
-          this.AutoMoveState = Falling;
-          return true;
-        }
-      case Falling:
-        if (this.Block != null && this.Block.Type != Wall)
-        {
-          this.AutoMoveState = Standing;
-          return true;
-        }
-        result = this.Move(Down, true);
-        if (this.Block != null || result == Edged)
-        {
-          this.AutoMoveState = Standing;
-          return true;
-        }
-        return false;;
+      {
+        this.AutoMoveState = Landing;
+        this.autoMoveInterval = this.FallInterval;
+        return true;
+      }
+      return false;
+    case Landing:
+      if (this.Y <= this.jumpStart)
+      {
+        this.AutoMoveState = Falling;
+        return true;
+      }
+    case Falling:
+      if (this.Block != null && this.Block.Type != Wall)
+      {
+        this.AutoMoveState = Standing;
+        return true;
+      }
+      result = this.Move(Down, true);
+      if (this.Block != null || result == Edged)
+      {
+        this.AutoMoveState = Standing;
+        return true;
+      }
+      return false;;
     }
     return false;
   }
-  
+
   /*
   ** Initiates a jump from the current position.
   ** Returns true if the jump was initiated, false otherwise.
@@ -141,7 +141,7 @@ final class Person
     this.autoMoveInterval = this.JumpInterval;
     return true;
   }
-  
+
   /*
   ** Moves the person in the given direction.
   ** Returns MoveResult.Moved if the move succeeded.
@@ -152,7 +152,21 @@ final class Person
   {
     return this.Move(direction, false);
   }
-  
+
+  /*
+  ** Changes the persons position, setting X, Y and setting sound_listener.
+  ** Returns boolean if the move succeeded.
+  */
+  void ChangePosition(
+    int x, // .
+    int y // .
+  )
+  {
+    this.X=x;
+    this.Y=y;
+    sound_set_listener_position(this.X,this.Y,0); //Sets the sound listener position.
+  }
+
   /*
   ** Moves the person in the given direction.
   ** Returns MoveResult.Moved if the move succeeded.
@@ -182,18 +196,18 @@ final class Person
     int newY = this.Y;
     switch (direction)
     {
-      case Down:
-        newY--;
-        break;
-      case Left:
-        newX--;
-        break;
-      case Right:
-        newX++;
-        break;
-      case Up:
-        newY++;
-        break;
+    case Down:
+      newY--;
+      break;
+    case Left:
+      newX--;
+      break;
+    case Right:
+      newX++;
+      break;
+    case Up:
+      newY++;
+      break;
     }
     if (newX > this.map.GetMaxX() || newX < MAP_MIN_X || newY < MAP_MIN_Y)
     {
@@ -219,8 +233,7 @@ final class Person
     {
       if (this.Hooked)
       {
-        this.X = newX;
-        this.Y = newY;
+        this.ChangePosition(newX,newY);
         return Moved;
       }
       else if (this.AutoMoveState == Standing && newY == this.Y)
@@ -237,32 +250,30 @@ final class Person
     {
       if (this.AutoMoveState == Landing || this.AutoMoveState == Falling)
       {
-        this.X = newX;
-        this.Y = newY;
+        this.ChangePosition(newX,newY);
         this.LocalMaterial = this.Block.Material;
       }
       return Walled;
     }
-    this.X = newX;
-    this.Y = newY;
+    this.ChangePosition(newX,newY);
     this.LocalMaterial = this.Block != null ? this.Block.Material
-      : this.map.DefaultMaterial;
+                         : this.map.DefaultMaterial;
     return Moved;
   }
-  
+
   /*
   ** Checks if a block with a different material than the current block
   ** is approached during movement.
   */
   bool Sonar(
     Direction direction,  // The direction in which to search for the block.
-    int &out distance,  // The distance to the block.
+    vector &out position,  // The position of the block.
     EntityType &out type  // The type of the block.
   )
   {
     string remoteMaterial;
     BlockSearcher searcher(direction, this.map, this.X, this.Y,
-      DEFAULT_SONAR_RANGE, DEFAULT_SONAR_RANGE);
+                           DEFAULT_SONAR_RANGE, DEFAULT_SONAR_RANGE);
     Block@ block;
     while(searcher.Find(block))
     {
@@ -277,16 +288,16 @@ final class Person
         type = None;
       }
       if (remoteMaterial != this.LocalMaterial
-        && (searcher.SearchAxis == Horizontal
-        || remoteMaterial != this.map.DefaultMaterial))
+          && (searcher.SearchAxis == Horizontal
+              || remoteMaterial != this.map.DefaultMaterial))
       {
-        distance = searcher.Squares;
+        position = searcher.GetPosition();
         return true;
       }
     }
     return false;
   }
-  
+
   /*
   ** Summarizes the horizontally or vertically adjacent blocks.
   */
@@ -300,7 +311,7 @@ final class Person
     string remoteMaterial;
     string type;
     BlockSearcher searcher(direction, this.map, this.X, this.Y,
-      DEFAULT_VIEW_HORIZONTAL, DEFAULT_VIEW_VERTICAL);
+                           DEFAULT_VIEW_HORIZONTAL, DEFAULT_VIEW_VERTICAL);
     while (searcher.Find(block))
     {
       type = "";
@@ -319,7 +330,7 @@ final class Person
       if (remoteMaterial != viewMaterial)
       {
         if (searcher.SearchAxis == Horizontal
-          || remoteMaterial != this.map.DefaultMaterial)
+            || remoteMaterial != this.map.DefaultMaterial)
         {
           view += type + remoteMaterial + " (" + searcher.Squares + "), ";
         }
@@ -332,7 +343,7 @@ final class Person
     }
     return view;
   }
-  
+
   /*
   ** Hooks into a block above or below the current position.
   */
@@ -356,8 +367,8 @@ final class Person
     Block@ block;
     int fromY;
     int toY;
-    BlockSearcher searcher(direction, this.map, x, this.Y, 
-      0, DEFAULT_HOOK_RANGE);
+    BlockSearcher searcher(direction, this.map, x, this.Y,
+                           0, DEFAULT_HOOK_RANGE);
     while (searcher.Find(block, fromY, toY))
     {
       if (@block != null)

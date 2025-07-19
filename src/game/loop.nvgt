@@ -1,100 +1,94 @@
 void game() {
- Map m();
- string definition = "tile fx0 tx4 fy0 mlash" + LINE_SEPARATOR
-  + "ladr fx5 tx9 fy0 ty10 mlbridge" + LINE_SEPARATOR
-  + "wall fx8 tx8 fy0 ty5 mlbank" + LINE_SEPARATOR
-  + "tile fx10 tx14 fy0 mlcarpet";
- string[] errors = m.Parse(definition);
- if (errors.length() > 0) {
-  alert("Validation errors", join(errors,"\n"));
-  return;
- }
- m.CreateGrids();
- Block@[] usedBlocks = m.GetUsedBlocks();
- BlockSound@[] blockSounds;
- for (int i = 0; i < usedBlocks.length(); i++) {
-  blockSounds.insert_last(BlockSound(usedBlocks[i].Material,usedBlocks[i].Type));
- }
- Person p(0, 0, m);
- p.FallInterval = DEFAULT_FALL_INTERVAL;
- p.JumpInterval = DEFAULT_JUMP_INTERVAL;
- MoveResult move;
- Direction sonarDirection;
- int sonarDistance;
- bool sonarEnabled = false;
- sound[] sonarSound(EntityTypes);
- sonarSound[Ladder].load(sounds_directory + "/player/sonar/ladder.ogg");
- sonarSound[None].load(sounds_directory + "/player/sonar/air.ogg");
- sonarSound[Tile].load(sounds_directory + "/player/sonar/tile.ogg");
- sonarSound[Wall].load(sounds_directory + "/player/sonar/wall.ogg");
- EntityType sonarType;
- while(true) {
-  wait(5);
-  if (key_pressed(KEY_ESCAPE)) break;
-  if (key_pressed(KEY_C)) speak(p.X+", "+p.Y+(p.LocalMaterial!=""?" on "+p.LocalMaterial:""));
-  if(key_pressed(KEY_H)) speak(p.Health+" health");
-  if (key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT)) {
-    for (int i = 0; i < DIRECTION_KEY.length(); i++) {
-      if (key_pressed(DIRECTION_KEY[i])) {
-        speak(p.View(Direction(i)));
+  Map m();
+  string definition = "tile fx0 tx4 fy0 mlash" + LINE_SEPARATOR
+                      + "ladr fx5 tx9 fy0 ty10 mlbridge" + LINE_SEPARATOR
+                      + "wall fx8 tx8 fy0 ty5 mlbank" + LINE_SEPARATOR
+                      + "tile fx10 tx20 fy0 mlcarpet" + LINE_SEPARATOR
+                      + "tile fx18 tx30 fy0 mlwood_pile";
+  string[] errors = m.Parse(definition);
+  if (errors.length() > 0) {
+    alert("Validation errors", join(errors,"\n"));
+    return;
+  }
+  m.CreateGrids();
+  Block@[] usedBlocks = m.GetUsedBlocks();
+  BlockSound@[] blockSounds;
+  for (int i = 0; i < usedBlocks.length(); i++) {
+    blockSounds.insert_last(BlockSound(usedBlocks[i].Material,usedBlocks[i].Type));
+  }
+  Person p(0, 0, m);
+  p.FallInterval = DEFAULT_FALL_INTERVAL;
+  p.JumpInterval = DEFAULT_JUMP_INTERVAL;
+  MoveResult move;
+  Direction sonarDirection;
+  vector sonarPosition;
+  bool sonarEnabled = false;
+  sound[] sonarSound(EntityTypes);
+  sonarSound[Ladder].load(sounds_directory + "/player/sonar/ladder.ogg");
+  sonarSound[None].load(sounds_directory + "/player/sonar/air.ogg");
+  sonarSound[Tile].load(sounds_directory + "/player/sonar/tile.ogg");
+  sonarSound[Wall].load(sounds_directory + "/player/sonar/wall.ogg");
+  EntityType sonarType;
+  while(true) {
+    wait(5);
+    if (key_pressed(KEY_ESCAPE)) break;
+    if (key_pressed(KEY_C)) speak(p.X+", "+p.Y+(p.LocalMaterial!=""?" on "+p.LocalMaterial:""));
+    if(key_pressed(KEY_H)) speak(p.Health+" health");
+    if (key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT)) {
+      for (int i = 0; i < DIRECTION_KEY.length(); i++) {
+        if (key_pressed(DIRECTION_KEY[i])) {
+          speak(p.View(Direction(i)));
+        }
       }
     }
-  }
-  else {
-    if (key_down(KEY_LEFT)) {
-      move = p.Move(Left);
-      sonarDirection = Left;
+    else {
+      if (key_down(KEY_LEFT)) {
+        move = p.Move(Left);
+        sonarDirection = Left;
+      }
+      else if (key_down(KEY_RIGHT)) {
+        move = p.Move(Right);
+        sonarDirection = Right;
+      }
+      else if (key_down(KEY_UP)) {
+        move = p.Move(Up);
+        sonarDirection = Up;
+      }
+      else if (key_down(KEY_DOWN)) {
+        move = p.Move(Down);
+        sonarDirection = Down;
+      }
     }
-    else if (key_down(KEY_RIGHT)) {
-      move = p.Move(Right);
-      sonarDirection = Right;
+    if (key_pressed(KEY_SPACE)) {
+      if (p.Jump()) {
+        sound_play(sounds_directory+"/player/jump.ogg");
+      }
     }
-    else if (key_down(KEY_UP)) {
-      move = p.Move(Up);
-      sonarDirection = Up;
+    else if (key_pressed(KEY_F3)) {
+      sonarEnabled = !sonarEnabled;
+      speak("sonarEnabled " + sonarEnabled);
     }
-    else if (key_down(KEY_DOWN)) {
-      move = p.Move(Down);
-      sonarDirection = Down;
-    }
-  }
-  if (key_pressed(KEY_SPACE)) {
-    if (p.Jump()) {
-      sound_play(sounds_directory+"/player/jump.ogg");
-    }
-  }
-  else if (key_pressed(KEY_F3)) {
-    sonarEnabled = !sonarEnabled;
-    speak("sonarEnabled " + sonarEnabled);
-  }
-  if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
-   p.ManualMoveInterval = DEFAULT_RUN_INTERVAL;
-  }
-  else {
-   p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
-  }
-  if (p.AutoMoveState == Jumping || p.AutoMoveState == Landing)
-    p.ManualMoveInterval /= JUMP_SPEEDUP_FACTOR;
-  if (p.AutoMoveState == Falling || p.AutoMoveState == Jumping || p.AutoMoveState == Landing) {
-    sonarDirection = Down;
-  }
-  if (sonarEnabled && (move == Moved && p.Sonar(sonarDirection, sonarDistance, sonarType))) {
-    sonarSound[sonarType].stop();
-    if (sonarDirection == Right) {
-      sonarSound[sonarType].pan = min(100, sonarDistance * DEFAULT_SONAR_RANGE);
-    } else if (sonarDirection == Left) {
-      sonarSound[sonarType].pan = max(-100, sonarDistance * -DEFAULT_SONAR_RANGE);
+    if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
+      p.ManualMoveInterval = DEFAULT_RUN_INTERVAL;
     }
     else {
-      sonarSound[sonarType].pan = 0;
+      p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
     }
-    sonarSound[sonarType].play();
+    if (p.AutoMoveState == Jumping || p.AutoMoveState == Landing)
+      p.ManualMoveInterval /= JUMP_SPEEDUP_FACTOR;
+    if (p.AutoMoveState == Falling || p.AutoMoveState == Jumping || p.AutoMoveState == Landing) {
+      sonarDirection = Down;
+    }
+    if (sonarEnabled && (move == Moved && p.Sonar(sonarDirection, sonarPosition, sonarType))) {
+      sonarSound[sonarType].stop();
+      sonarSound[sonarType].set_position_3d(sonarPosition);
+      sonarSound[sonarType].play();
+    }
+    if (move == Moved || move == Walled || p.AutoMove()) {
+      if (p.Block != null) {
+        blockSounds[blockSounds.find(BlockSound(p.Block.Material,p.Block.Type))].PlayStep();
+      }
+      move = Delayed;
+    }
   }
-  if (move == Moved || move == Walled || p.AutoMove()) {
-   if (p.Block != null) {
-    blockSounds[blockSounds.find(BlockSound(p.Block.Material,p.Block.Type))].PlayStep();
-   }
-   move = Delayed;
-  }
- }
 }
