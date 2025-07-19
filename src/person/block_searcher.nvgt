@@ -46,26 +46,26 @@ final class BlockSearcher
     this.Squares = 0;
     switch (direction)
     {
-    case Down:
-      this.SearchAxis = Vertical;
-      this.modifier = -1;
-      this.target = max(MAP_MIN_Y, startY - verticalRange);
-      break;
-    case Left:
-      this.SearchAxis = Horizontal;
-      this.modifier = -1;
-      this.target = max(MAP_MIN_X, startX - horizontalRange);
-      break;
-    case Right:
-      this.SearchAxis = Horizontal;
-      this.modifier = 1;
-      this.target = min(this.map.GetMaxX(), startX + horizontalRange);
-      break;
-    case Up:
-      this.SearchAxis = Vertical;
-      this.modifier = 1;
-      this.target = min(this.map.GetMaxY(), startY + verticalRange);
-      break;
+      case Down:
+        this.SearchAxis = Vertical;
+        this.modifier = -1;
+        this.target = max(MAP_MIN_Y, startY - verticalRange);
+        break;
+      case Left:
+        this.SearchAxis = Horizontal;
+        this.modifier = -1;
+        this.target = max(MAP_MIN_X, startX - horizontalRange);
+        break;
+      case Right:
+        this.SearchAxis = Horizontal;
+        this.modifier = 1;
+        this.target = min(this.map.GetMaxX(), startX + horizontalRange);
+        break;
+      case Up:
+        this.SearchAxis = Vertical;
+        this.modifier = 1;
+        this.target = min(this.map.GetMaxY(), startY + verticalRange);
+        break;
     }
   }
 
@@ -135,7 +135,7 @@ final class BlockSearcher
   ** Returns the current position.
   ** Returns a vector indicating the current position.
   */
-   vector GetPosition(
+  vector GetPosition(
   )
   {
     return vector(this.position[0],this.position[1]);

@@ -1,8 +1,8 @@
 menu@make_menu(const string&in intro="") {
- menu m;
- m.intro_text = intro;
- m.focus_first_item=true;
- m.automatic_intro=true;
- m.wrap=true;
- return m;
+  menu m;
+  m.intro_text = intro;
+  m.focus_first_item=true;
+  m.automatic_intro=true;
+  m.wrap=true;
+  return m;
 }

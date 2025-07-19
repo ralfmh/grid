@@ -93,35 +93,35 @@ final class Person
     MoveResult result;
     switch (this.AutoMoveState)
     {
-    case Jumping:
-      result = this.Move(Up, true);
-      if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
-          || result == Walled)
-      {
-        this.AutoMoveState = Landing;
-        this.autoMoveInterval = this.FallInterval;
-        return true;
-      }
-      return false;
-    case Landing:
-      if (this.Y <= this.jumpStart)
-      {
-        this.AutoMoveState = Falling;
-        return true;
-      }
-    case Falling:
-      if (this.Block != null && this.Block.Type != Wall)
-      {
-        this.AutoMoveState = Standing;
-        return true;
-      }
-      result = this.Move(Down, true);
-      if (this.Block != null || result == Edged)
-      {
-        this.AutoMoveState = Standing;
-        return true;
-      }
-      return false;;
+      case Jumping:
+        result = this.Move(Up, true);
+        if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
+            || result == Walled)
+        {
+          this.AutoMoveState = Landing;
+          this.autoMoveInterval = this.FallInterval;
+          return true;
+        }
+        return false;
+      case Landing:
+        if (this.Y <= this.jumpStart)
+        {
+          this.AutoMoveState = Falling;
+          return true;
+        }
+      case Falling:
+        if (this.Block != null && this.Block.Type != Wall)
+        {
+          this.AutoMoveState = Standing;
+          return true;
+        }
+        result = this.Move(Down, true);
+        if (this.Block != null || result == Edged)
+        {
+          this.AutoMoveState = Standing;
+          return true;
+        }
+        return false;;
     }
     return false;
   }
@@ -196,18 +196,18 @@ final class Person
     int newY = this.Y;
     switch (direction)
     {
-    case Down:
-      newY--;
-      break;
-    case Left:
-      newX--;
-      break;
-    case Right:
-      newX++;
-      break;
-    case Up:
-      newY++;
-      break;
+      case Down:
+        newY--;
+        break;
+      case Left:
+        newX--;
+        break;
+      case Right:
+        newX++;
+        break;
+      case Up:
+        newY++;
+        break;
     }
     if (newX > this.map.GetMaxX() || newX < MAP_MIN_X || newY < MAP_MIN_Y)
     {

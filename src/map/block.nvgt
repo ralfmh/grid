@@ -6,9 +6,9 @@
 final class Block
 {
   string Material;  // The material of the block.
-  
+
   EntityType Type;  // The type of the block.
-  
+
   /*
   ** Initializes a new instance of the Block class.
   */
@@ -20,7 +20,7 @@ final class Block
     this.Material = material;
     this.Type = type;
   }
-  
+
   int opCmp(Block@ other)
   {
     return (this.Type + this.Material).opCmp(other.Type + other.Material);

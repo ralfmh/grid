@@ -29,7 +29,7 @@ void main()
   double getTime = getTimer.elapsed;
   assert(block.Material == "metal50");
   info_box("Map benchmark", "Results", "Created " + count + " ladders, "
-    + "ranging from 0, 0 to 1000, 1000:\r\nParse time: " + parseTime
-    + " ms\r\nGrid creation time: " + createTime + " ms\r\nBlock query time: "
-    + getTime + " ms");
+           + "ranging from 0, 0 to 1000, 1000:\r\nParse time: " + parseTime
+           + " ms\r\nGrid creation time: " + createTime + " ms\r\nBlock query time: "
+           + getTime + " ms");
 }

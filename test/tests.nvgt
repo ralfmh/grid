@@ -11,49 +11,49 @@ string output = "";
 int tests_total, tests_skipped, tests_failed, tests_passed;
 
 void main() {
-	timer timetracker;
-	string[]@ files = find_files("case/*.nvgt");
-	for (uint i = 0; i < files.length(); i++) {
-		test(spec::path(files[i]).basename);
-	}
-	string title;
-	if (tests_failed == 0) {
-		output += "\r\n%0 of %1 tests passed successfully in %2ms!".format(tests_passed, tests_total, timetracker.elapsed);
-		title = "All good!";
-	}
-	else {
-		output += "\r\n%0 of %1 tests have passed successfully, with %2 failures. Total time %3ms.".format(tests_passed, tests_total, tests_failed, timetracker.elapsed);
-		title = "Something's wrong!";
-	}
-	if (tests_skipped > 0) output += "\r\n%0 tests skipped.".format(tests_skipped);
-	info_box(title, "Messages", output);
+  timer timetracker;
+  string[]@ files = find_files("case/*.nvgt");
+  for (uint i = 0; i < files.length(); i++) {
+    test(spec::path(files[i]).basename);
+  }
+  string title;
+  if (tests_failed == 0) {
+    output += "\r\n%0 of %1 tests passed successfully in %2ms!".format(tests_passed, tests_total, timetracker.elapsed);
+    title = "All good!";
+  }
+  else {
+    output += "\r\n%0 of %1 tests have passed successfully, with %2 failures. Total time %3ms.".format(tests_passed, tests_total, tests_failed, timetracker.elapsed);
+    title = "Something's wrong!";
+  }
+  if (tests_skipped > 0) output += "\r\n%0 tests skipped.".format(tests_skipped);
+  info_box(title, "Messages", output);
 }
 void test(const string&in testcase) {
-	tests_total++;
-	// It is possible to skip a test by creating a global variable in the test case called bool test_<case>_skip = true;
-	any@ v_skip = nvgt_game.get_global(nvgt_game.get_global_index_by_decl("bool test_%0_skip".format(testcase)));
-	bool b_skip = false;
-	if (@v_skip != null and v_skip.retrieve(b_skip) and b_skip) {
-		if (verbose) output += "\r\nSkipping %0 (script)".format(testcase);
-		tests_skipped++;
-		return;
-	}
-	script_function@ func = nvgt_game.get_function_by_decl("void test_%0()".format(testcase));
-	if (@func == null) {
-		output += "\r\nError, test case %0 is badly formatted, can't find void test_%0()".format(testcase);
-		tests_failed++;
-		return;
-	}
-	string[] errors;
-	if (verbose) output += "Testing %0... ".format(testcase);
-	func({}, errors);
-	if (errors.length() < 1) {
-		if (verbose) output += "\r\nOK";
-		tests_passed++;
-		return;
-	}
-	tests_failed++;
-	if (verbose) output += "\r\nFAILED!";
-	else output += "\r\nTEST %0 FAILED!".format(testcase);
-	output += "\r\n" + errors[0];
+  tests_total++;
+  // It is possible to skip a test by creating a global variable in the test case called bool test_<case>_skip = true;
+  any@ v_skip = nvgt_game.get_global(nvgt_game.get_global_index_by_decl("bool test_%0_skip".format(testcase)));
+  bool b_skip = false;
+  if (@v_skip != null and v_skip.retrieve(b_skip) and b_skip) {
+    if (verbose) output += "\r\nSkipping %0 (script)".format(testcase);
+    tests_skipped++;
+    return;
+  }
+  script_function@ func = nvgt_game.get_function_by_decl("void test_%0()".format(testcase));
+  if (@func == null) {
+    output += "\r\nError, test case %0 is badly formatted, can't find void test_%0()".format(testcase);
+    tests_failed++;
+    return;
+  }
+  string[] errors;
+  if (verbose) output += "Testing %0... ".format(testcase);
+  func({}, errors);
+  if (errors.length() < 1) {
+    if (verbose) output += "\r\nOK";
+    tests_passed++;
+    return;
+  }
+  tests_failed++;
+  if (verbose) output += "\r\nFAILED!";
+  else output += "\r\nTEST %0 FAILED!".format(testcase);
+  output += "\r\n" + errors[0];
 }

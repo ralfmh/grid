@@ -1,11 +1,11 @@
 void main_menu() {
- menu@ m = make_menu("Main Menu");
- m.add_item("Play","play");
- m.add_item("Exit","exit");
- while (true) {
-  wait(5);
-  if (m.monitor()) continue;
-  if(m.selected_item_id=="play") game();
-  else if(m.selected_item_id=="exit") exit();
- }
+  menu@ m = make_menu("Main Menu");
+  m.add_item("Play","play");
+  m.add_item("Exit","exit");
+  while (true) {
+    wait(5);
+    if (m.monitor()) continue;
+    if(m.selected_item_id=="play") game();
+    else if(m.selected_item_id=="exit") exit();
+  }
 }

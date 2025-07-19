@@ -8,9 +8,9 @@
 final class Map
 {
   private grid<int>@ blocks;  // Grid of blocks.
-  
+
   private int blocksMaxX; // The maximum x position of the blocks on this map.
-  
+
   private int blocksMaxY; // The maximum y position of the blocks on this map.
 
   /*
@@ -18,15 +18,15 @@ final class Map
   ** in case none is defined at the requested position.
   */
   string DefaultMaterial = DEFAULT_MATERIAL;
-  
+
   private string definition;  // The complete map definition.
-  
+
   private Entity@[] entities; // Array of entities.
-  
+
   private grid<int>@ texts; // Grid of texts.
-  
+
   private int textMaxX; // The maximum x position of the texts on this map.
-  
+
   private int textMaxY; // The maximum y position of the texts on this map.
 
   /*
@@ -36,7 +36,7 @@ final class Map
   {
     return this.blocksMaxX;
   }
-  
+
   /*
   ** Returns the maximum y position of all blocks on the map.
   */
@@ -44,7 +44,7 @@ final class Map
   {
     return this.blocksMaxY;
   }
-  
+
   /*
   ** Returns an array of all distinct used blocks on the map.
   */
@@ -59,7 +59,7 @@ final class Map
         continue;
       }
       @block = Block(this.entities[i].Content,
-        this.entities[i].Type == Ladder ? Tile : this.entities[i].Type);
+                     this.entities[i].Type == Ladder ? Tile : this.entities[i].Type);
       if (blocks.find(block) == -1)
       {
         blocks.insert_last(block);
@@ -67,7 +67,7 @@ final class Map
     }
     return blocks;
   }
-  
+
   /*
   ** Parses a map definition, fills the entities array and sets
   ** the maximum x and y positions of the map.
@@ -118,7 +118,7 @@ final class Map
       if (typeIndex == -1)
       {
         validationErrors.insert_last("Unknown type '" + segments[0]
-          + "' in line " + (l + 1));
+                                     + "' in line " + (l + 1));
         lineHasErrors = true;
         continue;
       }
@@ -132,15 +132,15 @@ final class Map
         if (MAP_DEFINITION[typeIndex].find(1, label) == -1)
         {
           validationErrors.insert_last("Segment '" + label
-            + "' is not supported for type '" + MAP_DEFINITION[typeIndex][0]
-            + "' in line " + (l + 1));
+                                       + "' is not supported for type '" + MAP_DEFINITION[typeIndex][0]
+                                       + "' in line " + (l + 1));
           lineHasErrors = true;
           break;
         }
         if (processedSegments.find(label) > -1)
         {
           validationErrors.insert_last("Duplicate segment '" + label
-            + "' in line " + (l + 1));
+                                       + "' in line " + (l + 1));
           lineHasErrors = true;
         }
         requiredIndex = requiredSegments.find(label);
@@ -153,15 +153,15 @@ final class Map
         if (value.empty())
         {
           validationErrors.insert_last("The value for segment '" + label
-            + "' is missing in line " + (l + 1));
+                                       + "' is missing in line " + (l + 1));
           lineHasErrors = true;
           break;
         }
         if (label != SEGMENT_LV && label != SEGMENT_ML
-          && !value.is_digits())
+            && !value.is_digits())
         {
           validationErrors.insert_last("Invalid value '" + value
-            + "' for segment '" + label + "' in line " + (l + 1));
+                                       + "' for segment '" + label + "' in line " + (l + 1));
           lineHasErrors = true;
           break;
         }
@@ -194,7 +194,7 @@ final class Map
       if (!lineHasErrors && requiredSegments.length() > 0)
       {
         string message = "The following segments are missing for type '"
-          + MAP_DEFINITION[typeIndex][0] + "' in line " + (l + 1) + ": ";
+                         + MAP_DEFINITION[typeIndex][0] + "' in line " + (l + 1) + ": ";
         for (int i = 0; i < requiredSegments.length(); i++)
         {
           if (i > 0)
@@ -217,13 +217,13 @@ final class Map
       if (entity.ToX < entity.FromX)
       {
         validationErrors.insert_last("'tx' may not be less than 'fx' in line "
-          + (l + 1));
+                                     + (l + 1));
         break;
       }
       if (entity.ToY < entity.FromY)
       {
         validationErrors.insert_last("'ty' may not be less than 'fy' in line "
-          + (l + 1));
+                                     + (l + 1));
         break;
       }
       this.entities.insert_last(entity);
@@ -252,7 +252,7 @@ final class Map
     }
     return validationErrors;
   }
-  
+
   /*
   ** Creates the blocks and texts grids.
   */
@@ -298,7 +298,7 @@ final class Map
       }
     }
   }
-  
+
   /*
   ** Gets the block entity at a position.
   ** Returns null if none exists at the given position,
@@ -310,14 +310,14 @@ final class Map
   )
   {
     if (x >= this.blocks.width() || y >= this.blocks.height()
-      || this.blocks[x, y] == -1)
+        || this.blocks[x, y] == -1)
     {
       return null;
     }
     return Block(this.entities[this.blocks[x, y]].Content,
-      this.entities[this.blocks[x, y]].Type);
+                 this.entities[this.blocks[x, y]].Type);
   }
-  
+
   /*
   ** Gets the block entity at a position.
   ** Returns null if none exists at the given position,
@@ -331,16 +331,16 @@ final class Map
   )
   {
     if (x >= this.blocks.width() || y >= this.blocks.height()
-      || this.blocks[x, y] == -1)
+        || this.blocks[x, y] == -1)
     {
       return null;
     }
     fromY = this.entities[this.blocks[x, y]].FromY;
     toY = this.entities[this.blocks[x, y]].ToY;
     return Block(this.entities[this.blocks[x, y]].Content,
-      this.entities[this.blocks[x, y]].Type);
+                 this.entities[this.blocks[x, y]].Type);
   }
-  
+
   /*
   ** Gets the text at a position.
   ** Returns the default text if none exists at the given position,
@@ -352,7 +352,7 @@ final class Map
   )
   {
     if (x >= this.texts.width() || y >= this.texts.height()
-      || this.texts[x, y] == -1)
+        || this.texts[x, y] == -1)
     {
       return DEFAULT_TEXT;
     }
