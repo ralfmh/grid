@@ -1,10 +1,11 @@
 void game() {
   Map m();
-  string definition = "tile fx0 tx4 fy0 mlash" + LINE_SEPARATOR
-                      + "ladr fx5 tx9 fy0 ty10 mlbridge" + LINE_SEPARATOR
-                      + "wall fx8 tx8 fy0 ty5 mlbank" + LINE_SEPARATOR
-                      + "tile fx10 tx20 fy0 mlcarpet" + LINE_SEPARATOR
-                      + "tile fx18 tx30 fy0 mlwood_pile";
+  string definition = file_get_contents("default.map");
+  if (definition.is_empty())
+  {
+    alert("Grid", "Unable to open default.map.");
+    return;
+  }
   string[] errors = m.Parse(definition);
   if (errors.length() > 0) {
     alert("Validation errors", join(errors,"\n"));
