@@ -223,17 +223,14 @@ final class Person
         this.Y = newY;
         return Moved;
       }
-      else if (this.AutoMoveState == Standing)
+      else if (this.AutoMoveState == Standing && newY == this.Y)
       {
-        if (newY != this.Y)
-        {
-          return Edged;
-        }
-        else
-        {
-          this.AutoMoveState = Falling;
-          this.autoMoveInterval = this.FallInterval;
-        }
+        this.AutoMoveState = Falling;
+        this.autoMoveInterval = this.FallInterval;
+      }
+      else if (!isAutoMove && newY != this.Y)
+      {
+        return Edged;
       }
     }
     else if (this.Block.Type == Wall)
