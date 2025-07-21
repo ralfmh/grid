@@ -93,12 +93,14 @@ void game() {
       sonarSound[sonarType].set_position_3d(sonarPosition);
       sonarSound[sonarType].play();
     }
+    if (move == Moved || p.AutoMoveState != Standing) {
+      if (speakText && p.GetText(text)) {
+        speak(text);
+      }
+    }
     if (move == Moved || move == Walled || p.AutoMove()) {
       if (p.Block != null) {
         blockSounds[blockSounds.find(BlockSound(p.Block.Material,p.Block.Type))].PlayStep();
-      }
-      if (speakText && p.GetText(text)) {
-        speak(text);
       }
       move = Delayed;
     }
