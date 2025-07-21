@@ -253,7 +253,8 @@ final class Person
     }
     else if (this.Block.Type == Wall)
     {
-      if (this.AutoMoveState == Landing || this.AutoMoveState == Falling)
+      if (isAutoMove
+          && (this.AutoMoveState == Landing || this.AutoMoveState == Falling))
       {
         this.ChangePosition(newX,newY);
         this.LocalMaterial = this.Block.Material;
