@@ -1,5 +1,6 @@
 tile fx0 tx50 fy0 mlash
 ladr fx5 tx10 fy0 ty10 mlbridge
+wall fx4 tx4 fy10 ty100 mlglass
 wall fx7 tx7 fy0 ty5 mlsign
 tile fx20 tx30 fy0 mlcarpet
 text fx0 tx4 fy0 ty5 lvThis is the beginning of the default map. Behold the shape of things to come.

@@ -21,3 +21,14 @@ enum AutoMoveState
   */
   Standing
 }
+
+/*
+** Names for AutoMoveState enum.
+*/
+const string[] AutoMoveStateName =
+{
+  "falling",
+  "jumping",
+  "landing",
+  "standing"
+};
