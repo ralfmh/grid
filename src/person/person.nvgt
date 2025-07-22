@@ -37,7 +37,7 @@ final class Person
   /*
   ** The block that the person is standing on while hooked to another block.
   */
-  private Block hookBlock("hook", Ladder);
+  Block HookBlock("rope", Tile);
 
   private int hookFromY;  // The minimum y position of the hook.
 
@@ -227,7 +227,7 @@ final class Person
       }
       else
       {
-        @this.Block = @this.hookBlock;
+        @this.Block = @this.HookBlock;
       }
     }
     else

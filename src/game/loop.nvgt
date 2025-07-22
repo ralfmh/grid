@@ -12,12 +12,13 @@ void game() {
     return;
   }
   m.CreateGrids();
+  Person p(0, 0, m);
   Block@[] usedBlocks = m.GetUsedBlocks();
+  usedBlocks.insert_last(p.HookBlock);
   BlockSound@[] blockSounds;
   for (int i = 0; i < usedBlocks.length(); i++) {
     blockSounds.insert_last(BlockSound(usedBlocks[i].Material,usedBlocks[i].Type));
   }
-  Person p(0, 0, m);
   p.FallInterval = DEFAULT_FALL_INTERVAL;
   p.JumpInterval = DEFAULT_JUMP_INTERVAL;
   MoveResult move;
@@ -42,6 +43,7 @@ void game() {
   speak(text);
   while(true) {
     wait(5);
+    wasHooked = p.Hooked;
     if (key_pressed(KEY_ESCAPE)) break;
     if (key_pressed(KEY_C)) {
       speak(p.X+", "+p.Y+(p.LocalMaterial!=""?" on "+p.LocalMaterial:"")
@@ -56,7 +58,6 @@ void game() {
       }
     }
     else {
-      wasHooked = p.Hooked;
       if (key_down(KEY_LEFT)) {
         move = p.Move(Left);
         sonarDirection = Left;
@@ -72,10 +73,6 @@ void game() {
       else if (key_down(KEY_DOWN)) {
         move = p.Move(Down);
         sonarDirection = Down;
-      }
-      if (wasHooked && !p.Hooked)
-      {
-        unhookSound.play();
       }
     }
     if (key_pressed(KEY_SPACE)) {
@@ -133,6 +130,10 @@ void game() {
         blockSounds[blockSounds.find(BlockSound(p.Block.Material,p.Block.Type))].PlayStep();
       }
       move = Delayed;
+    }
+    if (wasHooked && !p.Hooked)
+    {
+      unhookSound.play();
     }
   }
 }
