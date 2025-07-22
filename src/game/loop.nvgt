@@ -30,6 +30,12 @@ void game() {
   sonarSound[Tile].load(sounds_directory + "/player/sonar/tile.ogg");
   sonarSound[Wall].load(sounds_directory + "/player/sonar/wall.ogg");
   EntityType sonarType;
+  sound hookSound,hookedSound,unhookSound;
+  hookSound.load(sounds_directory + "/player/hook/hook.ogg");
+  hookedSound.load(sounds_directory + "/player/hook/hooked.ogg");
+  unhookSound.load(sounds_directory + "/player/hook/unhook.ogg");
+  int[] hookKeys = { KEY_Q, KEY_W, KEY_E, KEY_A, KEY_S, KEY_D };
+  bool wasHooked;
   bool speakText = true;
   string text;
   p.GetText(text);
@@ -50,6 +56,7 @@ void game() {
       }
     }
     else {
+      wasHooked = p.Hooked;
       if (key_down(KEY_LEFT)) {
         move = p.Move(Left);
         sonarDirection = Left;
@@ -65,6 +72,10 @@ void game() {
       else if (key_down(KEY_DOWN)) {
         move = p.Move(Down);
         sonarDirection = Down;
+      }
+      if (wasHooked && !p.Hooked)
+      {
+        unhookSound.play();
       }
     }
     if (key_pressed(KEY_SPACE)) {
@@ -85,6 +96,22 @@ void game() {
     }
     else {
       p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
+    }
+    for (int i = 0; i < hookKeys.length(); i++)
+    {
+      if (key_pressed(hookKeys[i]))
+      {
+        p.Hook(i < 3 ? Up : Down, i < 3 ? i - 1 : i - 4);
+        if (p.Hooked)
+        {
+          hookSound.play();
+          hookedSound.play();
+        }
+        else
+        {
+          unhookSound.play();
+        }
+      }
     }
     if (p.AutoMoveState == Jumping || p.AutoMoveState == Landing)
       p.ManualMoveInterval /= JUMP_SPEEDUP_FACTOR;
