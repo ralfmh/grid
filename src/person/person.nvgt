@@ -121,7 +121,7 @@ final class Person
           return true;
         }
         result = this.Move(Down, true);
-        if (this.Block != null || result == Edged)
+        if ((result != Delayed && this.Block != null) || result == Edged)
         {
           this.AutoMoveState = Standing;
           return true;
