@@ -111,7 +111,7 @@ final class Person
       case Landing:
         if (this.Y <= this.jumpStart)
         {
-          this.AutoMoveState = Falling;
+          this.Fall();
           return true;
         }
       case Falling:
@@ -145,6 +145,15 @@ final class Person
     this.AutoMoveState = Jumping;
     this.autoMoveInterval = this.JumpInterval;
     return true;
+  }
+
+  /*
+  ** Starts falling from the current position.
+  */
+  private void Fall()
+  {
+    this.AutoMoveState = Falling;
+    this.autoMoveInterval = this.FallInterval;
   }
 
   /*
@@ -224,7 +233,7 @@ final class Person
       {
         this.Hooked = false;
         @this.Block = this.map.GetBlock(newX, newY);
-        this.AutoMoveState = Falling;
+        this.Fall();
       }
       else
       {
@@ -244,8 +253,7 @@ final class Person
       }
       else if (this.AutoMoveState == Standing && newY == this.Y)
       {
-        this.AutoMoveState = Falling;
-        this.autoMoveInterval = this.FallInterval;
+        this.Fall();
       }
       else if (!isAutoMove && newY != this.Y)
       {
@@ -362,7 +370,7 @@ final class Person
     if (this.Hooked)
     {
       this.Hooked = false;
-      this.AutoMoveState = Falling;
+      this.Fall();
       @this.Block = null;
       return;
     }
