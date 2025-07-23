@@ -9,7 +9,7 @@ void test_person_sonar_nothing_material()
   assert(errors.length() == 0);
   map.CreateGrids();
   Person p(0, 0, map);
-  int distance;
+  vector position;
   EntityType type;
-  assert(!p.Sonar(Right, distance, type));
+  assert(!p.Sonar(Right, position, type));
 }

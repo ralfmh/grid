@@ -9,9 +9,9 @@ void test_person_sonar_none()
   assert(errors.length() == 0);
   map.CreateGrids();
   Person p(0, 5, map);
-  int distance;
+  vector position;
   EntityType type;
-  assert(p.Sonar(Right, distance, type));
-  assert(distance == 6);
+  assert(p.Sonar(Right, position, type));
+  assert(position == vector(6,5,0));
   assert(type == None);
 }
