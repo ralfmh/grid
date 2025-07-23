@@ -124,8 +124,8 @@ void game() {
       sonarSound[sonarType].play();
     }
     if (move == Moved || p.AutoMoveState != Standing) {
-      if (speakText && p.GetText(text)) {
-        speak(text);
+      if (p.GetText(text)) {
+        if(speakText) speak(text);
       }
     }
     if (move == Moved || move == Walled || p.AutoMove()) {
