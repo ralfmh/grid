@@ -380,6 +380,7 @@ final class Person
       if (@block != null)
       {
         this.Hooked = true;
+        this.AutoMoveState = Standing;
         if (direction == Up)
         {
           this.Y++;

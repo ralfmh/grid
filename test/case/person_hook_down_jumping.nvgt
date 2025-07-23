@@ -1,0 +1,24 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_hook_down_jumping()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(0, 0, map);
+  assert(p.Jump());
+  p.AutoMove();
+  assert(p.Y == 1);
+  p.AutoMove();
+  assert(p.Y == 2);
+  p.AutoMove();
+  assert(p.Y == 3);
+  p.Hook(Down, 0);
+  assert(p.Hooked);
+  assert(p.AutoMoveState == Standing, "Expected standing, got "
+         + AutoMoveStateName[p.AutoMoveState]);
+  p.AutoMove();
+  assert(p.Hooked);
+}
