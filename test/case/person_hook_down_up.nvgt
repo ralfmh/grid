@@ -1,0 +1,18 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_hook_down_up()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "tile fx5 tx5 fy10 mlwood";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(5, 10, map);
+  p.Hook(Down, 1);
+  assert(p.Hooked);
+  p.Move(Up);
+  assert(!p.Hooked);
+  assert(p.AutoMoveState == Falling, "Expected falling, got "
+         + AutoMoveStateName[p.AutoMoveState]);
+}

@@ -224,6 +224,7 @@ final class Person
       {
         this.Hooked = false;
         @this.Block = this.map.GetBlock(newX, newY);
+        this.AutoMoveState = Falling;
       }
       else
       {
