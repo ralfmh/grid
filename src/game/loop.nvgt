@@ -85,8 +85,11 @@ void game() {
       speak("sonarEnabled " + sonarEnabled);
     }
     else if (key_pressed(KEY_T)) {
-      speakText = !speakText;
-      speak("speakText " + speakText);
+      if(key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT)) {
+        speakText = !speakText;
+        speak("speakText " + speakText);
+      }
+      else speak(text);
     }
     if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
       p.ManualMoveInterval = DEFAULT_RUN_INTERVAL;
