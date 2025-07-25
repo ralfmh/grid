@@ -233,6 +233,7 @@ final class Person
       {
         this.Hooked = false;
         @this.Block = this.map.GetBlock(newX, newY);
+        this.ChangePosition(newX,newY);
         this.Fall();
       }
       else

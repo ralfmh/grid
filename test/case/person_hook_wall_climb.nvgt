@@ -19,4 +19,5 @@ void test_person_hook_wall_climb()
   assert(p.Hooked == false);
   assert(@p.Block != null);
   assert(p.Block.Material == "fence");
+  assert(p.Y == 4, "Expected Y to be 4, got " + p.Y);
 }
