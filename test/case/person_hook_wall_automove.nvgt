@@ -1,0 +1,24 @@
+#include "../../src/person/person.nvgt"
+
+void test_person_hook_wall_automove()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR;
+  definition += "wall fx5 tx5 fy0 ty4 mlfence";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0);
+  map.CreateGrids();
+  Person p(4, 0, map);
+  p.Hook(Up, 1);
+  assert(p.Hooked);
+  assert(p.X == 5);
+  assert(p.Y == 1);
+  assert(p.Move(Up) == Moved);
+  assert(p.Move(Up) == Moved);
+  assert(p.Move(Up) == Walled);
+  assert(p.AutoMove());
+  assert(p.Hooked == false);
+  assert(@p.Block != null);
+  assert(p.Block.Material == "fence");
+  assert(p.Y == 4, "Expected Y to be 4, got " + p.Y);
+}

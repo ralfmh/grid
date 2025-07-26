@@ -115,7 +115,8 @@ final class Person
           return true;
         }
       case Falling:
-        if (this.Block != null && this.Block.Type != Wall)
+        @this.Block = this.map.GetBlock(this.X, this.Y);
+        if (this.Block != null)
         {
           this.AutoMoveState = Standing;
           return true;
