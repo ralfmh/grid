@@ -64,6 +64,16 @@ class Shadow : Person
   }
   
   /*
+  ** Hooks into a block above or below the current position.
+  */
+  void Hook(
+    Direction direction,  // The vertical direction in which to hook.
+    int xOffset // The offset from the x axis.
+  ) override
+  {
+  }
+  
+  /*
   ** Initiates a jump from the current position.
   ** Returns true if the jump was initiated, false otherwise.
   */
@@ -71,6 +81,19 @@ class Shadow : Person
   {
     this.ChangePosition(this.origin.X, this.origin.Y);
     sound_play(sounds_directory+"/player/shadow/on.ogg", vector(this.X, this.Y));
+    return false;
+  }
+  
+  /*
+  ** Checks if a block with a different material than the current block
+  ** is approached during movement.
+  */
+  bool Sonar(
+    Direction direction,  // The direction in which to search for the block.
+    vector &out position,  // The position of the block.
+    EntityType &out type  // The type of the block.
+  ) override
+  {
     return false;
   }
 }
