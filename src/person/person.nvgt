@@ -8,7 +8,7 @@
 /*
 ** Represents a person moving around the map.
 */
-final class Person
+class Person
 {
   /*
   ** The interval in ms for each automatically performed move.

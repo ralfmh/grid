@@ -1,0 +1,21 @@
+#include "person.nvgt"
+
+/*
+** Represents a person moving around the map, which is not affected by gravity.
+*/
+class Shadow : Person
+{
+  private Person@ origin; // The origin of this shaodw (e.g the player).
+
+  /*
+  ** Initializes a new instance of the Shadow class.
+  */
+  Shadow(
+    Person@ origin, // The origin of this shaodw.
+    Map@ map  // The current map.
+  )
+  {
+    super(origin.X, origin.Y, map);
+    @this.origin = @origin;
+  }
+}

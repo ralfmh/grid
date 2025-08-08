@@ -12,7 +12,10 @@ void game() {
     return;
   }
   m.CreateGrids();
-  Person p(0, 0, m);
+  Person@ p;
+  Person player(0, 0, m);
+  @p = @player;
+  Shadow shadow(player, m);
   Block@[] usedBlocks = m.GetUsedBlocks();
   usedBlocks.insert_last(p.HookBlock);
   BlockSound@[] blockSounds;
@@ -111,6 +114,16 @@ void game() {
         {
           unhookSound.play();
         }
+      }
+    }
+    if (key_pressed(KEY_TAB)) {
+      if (@p == @player) {
+        @p = @shadow;
+        speak("Shadow");
+      }
+      else {
+        @p = @player;
+        speak("Player");
       }
     }
     if (p.AutoMoveState == Jumping || p.AutoMoveState == Landing)
