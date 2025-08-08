@@ -120,10 +120,12 @@ void game() {
       if (@p == @player) {
         @p = @shadow;
         speak("Shadow");
+        sound_play(sounds_directory+"/player/shadow/on.ogg", vector(shadow.X, shadow.Y));
       }
       else {
         @p = @player;
         speak("Player");
+        sound_play(sounds_directory+"/player/shadow/off.ogg");
       }
     }
     if (p.AutoMoveState == Jumping || p.AutoMoveState == Landing)
