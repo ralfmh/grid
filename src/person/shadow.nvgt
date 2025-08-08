@@ -40,6 +40,8 @@ class Shadow : Person
   {
     this.X=x;
     this.Y=y;
+    this.LocalMaterial = this.Block != null ? this.Block.Material
+                         : this.map.DefaultMaterial;
   }
 
   /*
