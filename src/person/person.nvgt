@@ -55,9 +55,14 @@ class Person
   private Map@ map; // The current map.
 
   /*
+  ** The factor by which the manual move interval will be multiplied.
+  */
+  double ManualMoveFactor;
+  
+  /*
   ** The interval in ms for each manually performed move.
   */
-  int ManualMoveInterval;
+  double ManualMoveInterval;
 
   private timer manualMoveTimer;  // The timer controlling manual moves.
 
@@ -87,6 +92,7 @@ class Person
     @this.Block = this.map.GetBlock(this.X, this.Y);
     this.LocalMaterial = this.Block != null ? this.Block.Material
                          : this.map.DefaultMaterial;
+    this.ManualMoveFactor = 1;
   }
 
   /*

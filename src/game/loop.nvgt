@@ -95,10 +95,10 @@ void game() {
       else speak(text);
     }
     if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
-      p.ManualMoveInterval = DEFAULT_RUN_INTERVAL;
+      p.ManualMoveInterval = DEFAULT_RUN_INTERVAL * p.ManualMoveFactor;
     }
     else {
-      p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL;
+      p.ManualMoveInterval = DEFAULT_MOVE_INTERVAL * p.ManualMoveFactor;
     }
     for (int i = 0; i < hookKeys.length(); i++)
     {

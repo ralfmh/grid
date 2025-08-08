@@ -17,6 +17,7 @@ class Shadow : Person
   {
     super(origin.X, origin.Y, map);
     @this.origin = @origin;
+    this.ManualMoveFactor = 0.2;
   }
   
   /*
