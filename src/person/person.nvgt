@@ -82,11 +82,8 @@ final class Person
     this.AutoMoveState = Standing;
     this.Health = 100;
     @this.map = @map;
-    this.X = initialX;
-    this.Y = initialY;
-    @this.Block = this.map.GetBlock(this.X, this.Y);
-    this.LocalMaterial = this.Block != null ? this.Block.Material
-                         : this.map.DefaultMaterial;
+    @this.Block = this.map.GetBlock(initialX, initialY);
+    this.ChangePosition(initialX, initialY);
   }
 
   /*
@@ -179,6 +176,8 @@ final class Person
   {
     this.X=x;
     this.Y=y;
+    this.LocalMaterial = this.Block != null ? this.Block.Material
+                         : this.map.DefaultMaterial;
     sound_set_listener_position(this.X,this.Y,0); //Sets the sound listener position.
   }
 
@@ -268,13 +267,10 @@ final class Person
           && (this.AutoMoveState == Landing || this.AutoMoveState == Falling))
       {
         this.ChangePosition(newX,newY);
-        this.LocalMaterial = this.Block.Material;
       }
       return Walled;
     }
     this.ChangePosition(newX,newY);
-    this.LocalMaterial = this.Block != null ? this.Block.Material
-                         : this.map.DefaultMaterial;
     return Moved;
   }
 
