@@ -62,4 +62,15 @@ class Shadow : Person
     this.ChangePosition(newX,newY);
     return Moved;
   }
+  
+  /*
+  ** Initiates a jump from the current position.
+  ** Returns true if the jump was initiated, false otherwise.
+  */
+  bool Jump() override
+  {
+    this.ChangePosition(this.origin.X, this.origin.Y);
+    sound_play(sounds_directory+"/player/shadow/on.ogg", vector(this.X, this.Y));
+    return false;
+  }
 }
