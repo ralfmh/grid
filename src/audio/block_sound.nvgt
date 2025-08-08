@@ -5,8 +5,8 @@ class BlockSound {
     this.Block=block;
     this.Type=type;
   }
-  sound @ PlayStep() {
-    return sound_play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/"+random(1,5):"walls/"+Block)+".ogg");
+  sound @ PlayStep(vector position) {
+    return sound_play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/"+random(1,5):"walls/"+Block)+".ogg", position);
   }
   sound @ PlayLand() {
     return sound_play(sounds_directory+"/blocks/"+(Type==Tile?"platforms/"+Block+"/land":"walls/"+Block)+".ogg");

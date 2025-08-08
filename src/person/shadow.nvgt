@@ -18,4 +18,17 @@ class Shadow : Person
     super(origin.X, origin.Y, map);
     @this.origin = @origin;
   }
+  
+  /*
+  ** Changes the persons position, setting X, Y and setting sound_listener.
+  ** Returns boolean if the move succeeded.
+  */
+  void ChangePosition(
+    int x, // .
+    int y // .
+  ) override
+  {
+    this.X=x;
+    this.Y=y;
+  }
 }

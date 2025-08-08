@@ -143,7 +143,7 @@ void game() {
     }
     if (move == Moved || move == Walled || p.AutoMove()) {
       if (p.Block != null) {
-        blockSounds[blockSounds.find(BlockSound(p.Block.Material,p.Block.Type))].PlayStep();
+        blockSounds[blockSounds.find(BlockSound(p.Block.Material,p.Block.Type))].PlayStep(vector(p.X, p.Y));
       }
       move = Delayed;
     }
