@@ -19,7 +19,16 @@ class Shadow : Person
     @this.origin = @origin;
     this.ManualMoveFactor = 0.2;
   }
-  
+
+  /*
+  ** Moves the person automatically (e.g during jumping or falling).
+  ** Returns true if the AutoMoveState changed, false otherwise.
+  */
+  bool AutoMove() override
+  {
+    return false;
+  }
+
   /*
   ** Changes the persons position, setting X, Y and setting sound_listener.
   ** Returns boolean if the move succeeded.
@@ -31,5 +40,24 @@ class Shadow : Person
   {
     this.X=x;
     this.Y=y;
+  }
+
+  /*
+  ** Finalizes a previously started move.
+  ** Returns MoveResult.Moved if the move succeeded.
+  */
+  private MoveResult FinalizeMove(
+    int newX, // The new x position.
+    int newY, // The new y position.
+    bool isAutoMove // Boolean value indicating whether the move is performed automatically.
+  ) override
+  {
+    @this.Block = this.map.GetBlock(newX, newY);
+    if (this.Block == null)
+    {
+      sound_play(sounds_directory+"/player/shadow/air.ogg", vector(newX, newY));
+    }
+    this.ChangePosition(newX,newY);
+    return Moved;
   }
 }

@@ -58,7 +58,7 @@ class Person
   ** The factor by which the manual move interval will be multiplied.
   */
   double ManualMoveFactor;
-  
+
   /*
   ** The interval in ms for each manually performed move.
   */
@@ -234,6 +234,19 @@ class Person
     {
       return Edged;
     }
+    return this.FinalizeMove(newX, newY, isAutoMove);
+  }
+
+  /*
+  ** Finalizes a previously started move.
+  ** Returns MoveResult.Moved if the move succeeded.
+  */
+  private MoveResult FinalizeMove(
+    int newX, // The new x position.
+    int newY, // The new y position.
+    bool isAutoMove // Boolean value indicating whether the move is performed automatically.
+  )
+  {
     if (this.Hooked)
     {
       if (newY <= this.hookFromY || newY >= this.hookToY || newX != this.X)
