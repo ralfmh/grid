@@ -438,4 +438,13 @@ class Person
     this.text = text;
     return changed;
   }
+
+  /*
+  ** Returns a string describing the current position of the person.
+  */
+  string DescribePosition()
+  {
+    return this.X+", "+this.Y+" on "+this.LocalMaterial
+           +", "+AutoMoveStateName[this.AutoMoveState];
+  }
 }

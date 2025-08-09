@@ -49,8 +49,7 @@ void game() {
     wasHooked = p.Hooked;
     if (key_pressed(KEY_ESCAPE)) break;
     if (key_pressed(KEY_C)) {
-      speak(p.X+", "+p.Y+(p.LocalMaterial!=""?" on "+p.LocalMaterial:"")
-            +", "+AutoMoveStateName[p.AutoMoveState]);
+      speak(p.DescribePosition());
     }
     if(key_pressed(KEY_H)) speak(p.Health+" health");
     if (key_down(KEY_LSHIFT) || key_down(KEY_RSHIFT)) {
