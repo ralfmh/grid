@@ -45,6 +45,49 @@ class Shadow : Person
   }
 
   /*
+  ** Returns a string describing the current position of the person.
+  */
+  string DescribePosition() override
+  {
+    string position;
+    int xDiff = abs(this.origin.X - this.X);
+    int yDiff = abs(this.origin.Y - this.Y);
+    if (xDiff > 0)
+    {
+      if (this.X < this.origin.X)
+      {
+        position += "left ";
+      }
+      else
+      {
+        position += "right ";
+      }
+      position += xDiff;
+    }
+    if (yDiff > 0)
+    {
+      if (!position.is_empty())
+      {
+        position += ", ";
+      }
+      if (this.Y < this.origin.Y)
+      {
+        position += "down ";
+      }
+      else
+      {
+        position += "up ";
+      }
+      position += yDiff;
+    }
+    if (!position.is_empty())
+    {
+      position += "; ";
+    }
+    return position + Person::DescribePosition();
+  }
+  
+  /*
   ** Finalizes a previously started move.
   ** Returns MoveResult.Moved if the move succeeded.
   */
