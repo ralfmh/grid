@@ -116,7 +116,7 @@ void game() {
       }
     }
     if (key_pressed(KEY_TAB)) {
-      if (@p == @player) {
+      if (@p == @player && player.AutoMoveState == Standing) {
         @p = @shadow;
         speak("Shadow");
         sound_play(sounds_directory+"/player/shadow/on.ogg", vector(shadow.X, shadow.Y));
