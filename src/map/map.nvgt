@@ -157,7 +157,7 @@ final class Map
           lineHasErrors = true;
           break;
         }
-        if (label != SEGMENT_LV && label != SEGMENT_ML
+        if (DIGIT_SEGMENT.find(label) > -1
             && !value.is_digits())
         {
           validationErrors.insert_last("Invalid value '" + value

@@ -25,6 +25,17 @@ const string SEGMENT_PX = "px";
 const string SEGMENT_TX = "tx";
 const string SEGMENT_TY = "ty";
 
+/*
+** Defines segments whose values are digits.
+*/
+const string[] DIGIT_SEGMENT =
+{
+  SEGMENT_FX,
+  SEGMENT_FY,
+  SEGMENT_PT,
+  SEGMENT_TX,
+  SEGMENT_TY
+};
 
 /*
 ** Entity types.
