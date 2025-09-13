@@ -17,6 +17,11 @@ const string SEGMENT_FX = "fx";
 const string SEGMENT_FY = "fy";
 const string SEGMENT_LV = "lv";
 const string SEGMENT_ML = "ml";
+const string SEGMENT_PA = "pa";
+const string SEGMENT_PN = "pn";
+const string SEGMENT_PS = "ps";
+const string SEGMENT_PT = "pt";
+const string SEGMENT_PX = "px";
 const string SEGMENT_TX = "tx";
 const string SEGMENT_TY = "ty";
 
@@ -25,6 +30,7 @@ const string SEGMENT_TY = "ty";
 ** Entity types.
 */
 const string TYPE_LADDER = "ladr";
+const string TYPE_PORTAL = "port";
 const string TYPE_TEXT = "text";
 const string TYPE_TILE = "tile";
 const string TYPE_WALL = "wall";
@@ -33,6 +39,7 @@ string[] ENTITY_TYPE =
 {
   TYPE_LADDER,
   "none",
+  TYPE_PORTAL,
   TYPE_TEXT,
   TYPE_TILE,
   TYPE_WALL
@@ -42,6 +49,7 @@ string[] ENTITY_TYPE_NAME =
 {
   "ladder",
   "none",
+  "portal",
   "text",
   "tile",
   "wall"
@@ -60,6 +68,18 @@ const string[][] MAP_DEFINITION =
     SEGMENT_FX,
     SEGMENT_FY,
     SEGMENT_ML,
+    SEGMENT_TX,
+    SEGMENT_TY
+  },
+  {
+    TYPE_PORTAL,
+    SEGMENT_FX,
+    SEGMENT_FY,
+    SEGMENT_PA,
+    SEGMENT_PN,
+    SEGMENT_PS,
+    SEGMENT_PT,
+    SEGMENT_PX,
     SEGMENT_TX,
     SEGMENT_TY
   },
