@@ -118,6 +118,10 @@ void game() {
     if (key_pressed(KEY_TAB)) {
       if (@p == @player && player.AutoMoveState == Standing) {
         @p = @shadow;
+        if (!key_down(KEY_LCTRL) && !key_down(KEY_RCTRL)) {
+          shadow.X = player.X;
+          shadow.Y = player.Y;
+        }
         speak("Shadow");
         sound_play(sounds_directory+"/player/shadow/on.ogg", vector(shadow.X, shadow.Y));
       }
