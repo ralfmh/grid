@@ -26,6 +26,27 @@ const string SEGMENT_TX = "tx";
 const string SEGMENT_TY = "ty";
 
 /*
+** Choices (available segment values).
+*/
+const string CHOICE_M = "m";
+const string CHOICE_U = "u";
+
+/*
+** Mapping of choices to segment.
+** [0]: Segment.
+** [1]: Choice 1.
+** [2]: Choice n...
+*/
+const string[][] SEGMENT_CHOICE =
+{
+  {
+    SEGMENT_PA,
+    CHOICE_M,
+    CHOICE_U
+  }
+};
+
+/*
 ** Defines segments whose values are digits.
 */
 const string[] DIGIT_SEGMENT =
@@ -154,4 +175,24 @@ string[] GetRequiredSegments(
     segments.insert_last(MAP_DEFINITION[typeIndex][i]);
   }
   return segments;
+}
+
+/*
+** Searches the given 2-dimensional array for a value in the inner array.
+** Returns the 0-based index of the outer array, or -1 if the value was not found.
+*/
+int Find2D(
+  string[][] array, // The Array to search.
+  int innerIndex, // The index of the inner array.
+  string value  // The value to search for.
+)
+{
+  for (int i = 0; i < array.length(); i++)
+  {
+    if (array[i][0] == value)
+    {
+      return i;
+    }
+  }
+  return -1;
 }

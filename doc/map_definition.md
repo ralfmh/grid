@@ -18,7 +18,7 @@ The following line types are supported:
 
 Each segment (except the line type) consists of a 2-character label and a value. The following segments are supported:
 
-|Segment|applies to line types|meaning|possible values|
+|Segment|applies to line types|meaning|possible values / choices|
 |-------|---------------------|-------|---------------|
 |fx|ladr, port, text, tile, wall|From (or minimum) x position.|Positive integer|
 |fy|ladr, port, text, tile, wall|From (or minimum) y position.|Positive integer|

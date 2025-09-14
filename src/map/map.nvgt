@@ -165,6 +165,15 @@ final class Map
           lineHasErrors = true;
           break;
         }
+        int choiceIndex = Find2D(SEGMENT_CHOICE, 0, label);
+        if (choiceIndex > -1
+            && SEGMENT_CHOICE[choiceIndex].find(1, value) == -1)
+        {
+          validationErrors.insert_last("Invalid choice '" + value
+                                       + "' for segment '" + label + "' in line " + (l + 1));
+          lineHasErrors = true;
+          break;
+        }
         if (label == SEGMENT_FX)
         {
           entity.FromX = parse_int(value);

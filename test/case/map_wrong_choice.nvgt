@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_wrong_choice()
+{
+  string definition = "port fx0 fy0 tx0 ty10 pax pnlift_start pslift_loop pt5000 pxlift_end";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "Invalid choice 'x' for segment 'pa' in line 1");
+}
