@@ -1,0 +1,9 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_portal_backwards()
+{
+  string definition = "port fx10 fy10 tx0 ty0 pam pnlift_start pslift_loop pt5000 pxlift_end";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+}
