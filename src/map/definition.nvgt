@@ -59,6 +59,16 @@ const string[] DIGIT_SEGMENT =
 };
 
 /*
+** Defines segments which are optional.
+*/
+const string[] OPTIONAL_SEGMENT =
+{
+  SEGMENT_PN,
+  SEGMENT_PS,
+  SEGMENT_PX
+};
+
+/*
 ** Entity types.
 */
 const string TYPE_LADDER = "ladr";
@@ -172,7 +182,10 @@ string[] GetRequiredSegments(
   string[] segments;
   for (int i = 1; i < MAP_DEFINITION[typeIndex].length(); i++)
   {
-    segments.insert_last(MAP_DEFINITION[typeIndex][i]);
+    if (OPTIONAL_SEGMENT.find(MAP_DEFINITION[typeIndex][i]) == -1)
+    {
+      segments.insert_last(MAP_DEFINITION[typeIndex][i]);
+    }
   }
   return segments;
 }

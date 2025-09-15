@@ -1,0 +1,9 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_optional_segment()
+{
+  string definition = "port fx0 fy0 tx0 ty10 pam pt5000";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+}
