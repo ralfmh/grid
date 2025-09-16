@@ -1,6 +1,7 @@
 #include "block.nvgt"
 #include "definition.nvgt"
 #include "entity.nvgt"
+#include "portal.nvgt"
 
 /*
 ** Represents a 2-dimensional map of tiles and text areas.
@@ -22,6 +23,18 @@ final class Map
   private string definition;  // The complete map definition.
 
   private Entity@[] entities; // Array of entities.
+
+  private grid<int>@ portals; // Grid of portal.
+
+  /*
+  ** The maximum from-x position of the portals on this map.
+  */
+  private int portalsMaxX;
+
+  /*
+  ** The maximum from-y position of the portals on this map.
+  */
+  private int portalsMaxY;
 
   private grid<int>@ texts; // Grid of texts.
 
@@ -186,6 +199,26 @@ final class Map
         {
           entity.Content = value;
         }
+        else if (label == SEGMENT_PA)
+        {
+          entity.PortalActivation = PortalActivation(SEGMENT_CHOICE[choiceIndex].find(value) - 1);
+        }
+        else if (label == SEGMENT_PN)
+        {
+          entity.PortalEnterSound = value;
+        }
+        else if (label == SEGMENT_PS)
+        {
+          entity.PortalTravelSound = value;
+        }
+        else if (label == SEGMENT_PT)
+        {
+          entity.PortalTravelTime = parse_int(value);
+        }
+        else if (label == SEGMENT_PX)
+        {
+          entity.PortalExitSound = value;
+        }
         else if (label == SEGMENT_TX)
         {
           entity.ToX = parse_int(value);
@@ -223,7 +256,7 @@ final class Map
       {
         entity.ToY = entity.FromY;
       }
-      if (entity.Type != Portal)
+      if (entity.Type != PortalType)
       {
         if (entity.ToX < entity.FromX)
         {
@@ -248,6 +281,17 @@ final class Map
         if (entity.ToY > this.textMaxY)
         {
           this.textMaxY = entity.ToY;
+        }
+      }
+      else if (entity.Type == PortalType)
+      {
+        if (entity.FromX > this.portalsMaxX)
+        {
+          this.portalsMaxX = entity.FromX;
+        }
+        if (entity.FromY > this.portalsMaxY)
+        {
+          this.portalsMaxY = entity.FromY;
         }
       }
       else
@@ -278,6 +322,14 @@ final class Map
         this.blocks[i, j] = -1;
       }
     }
+    @this.portals = grid<int>(this.portalsMaxX + 1, this.portalsMaxY + 1);
+    for (int i = 0; i <= this.portalsMaxX; i++)
+    {
+      for (int j = 0; j <= this.portalsMaxY; j++)
+      {
+        this.portals[i, j] = -1;
+      }
+    }
     @this.texts = grid<int>(this.textMaxX + 1, this.textMaxY + 1);
     for (int i = 0; i <= this.textMaxX; i++)
     {
@@ -297,6 +349,10 @@ final class Map
             this.texts[x, y] = i;
           }
         }
+      }
+      else if (this.entities[i].Type == PortalType)
+      {
+        this.portals[this.entities[i].FromX, this.entities[i].FromY] = i;
       }
       else
       {
@@ -351,6 +407,31 @@ final class Map
     toY = this.entities[this.blocks[x, y]].ToY;
     return Block(this.entities[this.blocks[x, y]].Content,
                  this.entities[this.blocks[x, y]].Type);
+  }
+
+  /*
+  ** Gets the portal at the given position.
+  ** Returns null if none exists at the given position,
+  ** or the position lies outside of map boundaries.
+  */
+  Portal@ GetPortal(
+    int x,  // The x position.
+    int y // The y position.
+  )
+  {
+    if (x >= this.portals.width() || y >= this.portals.height()
+        || this.portals[x, y] == -1)
+    {
+      return null;
+    }
+    int p = this.portals[x, y];
+    return Portal(this.entities[p].PortalActivation,
+                  this.entities[p].PortalEnterSound,
+                  this.entities[p].PortalExitSound,
+                  this.entities[p].PortalTravelSound,
+                  this.entities[p].PortalTravelTime,
+                  this.entities[p].ToX,
+                  this.entities[p].ToY);
   }
 
   /*

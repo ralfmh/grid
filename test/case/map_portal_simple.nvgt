@@ -6,4 +6,14 @@ void test_map_portal_simple()
   Map map;
   string[] errors = map.Parse(definition);
   assert(errors.length() == 0, join(errors, ", "));
+  map.CreateGrids();
+  Portal@ p = map.GetPortal(0, 0);
+  assert(@p != null);
+  assert(p.Activation == Manual);
+  assert(p.EnterSound == "lift_start");
+  assert(p.ExitSound == "lift_end");
+  assert(p.TravelSound == "lift_loop");
+  assert(p.TravelTime == 5000);
+  assert(p.ToX == 0);
+  assert(p.ToY == 10);
 }

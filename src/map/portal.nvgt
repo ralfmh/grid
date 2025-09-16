@@ -1,0 +1,43 @@
+#include "portal_activation.nvgt"
+
+/*
+** Represents a portal on the map.
+*/
+final class Portal
+{
+  PortalActivation Activation;  // Portal activation mode.
+
+  string EnterSound;  // Played sound when the player enters the portal.
+
+  string ExitSound; // Played sound when the player exits the portal.
+
+  string TravelSound; // Played sound while the player travels through the portal.
+
+  int TravelTime; // Time it takes in milliseconds to travel through the portal.
+
+  int ToX;  // The target x position of the portal.
+
+  int ToY;  // The target y position of the portal.
+
+  /*
+  ** Initializes a new instance of the Portal class.
+  */
+  Portal(
+    PortalActivation activation,  // Portal activation mode.
+    string enterSound,  // Played sound when the player enters the portal.
+    string exitSound, // Played sound when the player exits the portal.
+    string travelSound, // Played sound while the player travels through the portal.
+    int travelTime, // Time it takes in milliseconds to travel through the portal.
+    int toX,  // The target x position of the portal.
+    int toY // The target y position of the portal.
+  )
+  {
+    this.Activation = activation;
+    this.EnterSound = enterSound;
+    this.ExitSound = exitSound;
+    this.TravelSound = travelSound;
+    this.TravelTime = travelTime;
+    this.ToX = toX;
+    this.ToY = toY;
+  }
+}

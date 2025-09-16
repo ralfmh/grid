@@ -1,4 +1,5 @@
 #include "entity_type.nvgt"
+#include "portal_activation.nvgt"
 
 /*
 ** Represents an entity on the map.
@@ -10,6 +11,16 @@ final class Entity
   int FromX;  // The minimum x position of the entity.
 
   int FromY;  // The minimum y position of the entity.
+
+  PortalActivation PortalActivation;  // Portal activation mode.
+
+  string PortalEnterSound;  // Played sound when the player enters the portal.
+
+  string PortalExitSound; // Played sound when the player exits the portal.
+
+  string PortalTravelSound; // Played sound while the player travels through the portal.
+
+  int PortalTravelTime; // Time it takes in milliseconds to travel through the portal.
 
   int ToX;  // The maximum x position of the entity.
 

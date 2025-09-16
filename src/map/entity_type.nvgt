@@ -5,7 +5,7 @@ enum EntityType
 {
   Ladder,
   None,
-  Portal,
+  PortalType,
   Text,
   Tile,
   Wall,
