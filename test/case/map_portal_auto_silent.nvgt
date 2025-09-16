@@ -1,0 +1,19 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_portal_auto_silent()
+{
+  string definition = "port fx10 fy10 tx20 ty20 pau pt0";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+  map.CreateGrids();
+  Portal@ p = map.GetPortal(10, 10);
+  assert(@p != null);
+  assert(p.Activation == Automatic);
+  assert(p.EnterSound.is_empty());
+  assert(p.ExitSound.is_empty());
+  assert(p.TravelSound.is_empty());
+  assert(p.TravelTime == 0);
+  assert(p.ToX == 20);
+  assert(p.ToY == 20);
+}
