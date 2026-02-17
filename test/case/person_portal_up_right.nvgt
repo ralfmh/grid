@@ -1,0 +1,20 @@
+#include "../../src/map/map.nvgt"
+
+void test_person_portal_up_right()
+{
+  string definition = "port fx0 fy0 tx2 ty2 pam pt0";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+  map.CreateGrids();
+  Person p(0, 0, map);
+  p.ActivatePortal();
+  assert(p.AutoMoveState == Porting);
+  p.AutoMove();
+  p.AutoMove();
+  p.AutoMove();
+  p.AutoMove();
+  assert(p.AutoMoveState == Standing);
+  assert(p.X == 2);
+  assert(p.Y == 2);
+}

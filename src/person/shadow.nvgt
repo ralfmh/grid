@@ -86,7 +86,7 @@ class Shadow : Person
     }
     return position + Person::DescribePosition();
   }
-  
+
   /*
   ** Finalizes a previously started move.
   ** Returns MoveResult.Moved if the move succeeded.
@@ -105,7 +105,7 @@ class Shadow : Person
     this.ChangePosition(newX,newY);
     return Moved;
   }
-  
+
   /*
   ** Hooks into a block above or below the current position.
   */
@@ -115,7 +115,7 @@ class Shadow : Person
   ) override
   {
   }
-  
+
   /*
   ** Initiates a jump from the current position.
   ** Returns true if the jump was initiated, false otherwise.
@@ -126,7 +126,7 @@ class Shadow : Person
     sound_play(sounds_directory+"/player/shadow/on.ogg", vector(this.X, this.Y));
     return false;
   }
-  
+
   /*
   ** Checks if a block with a different material than the current block
   ** is approached during movement.

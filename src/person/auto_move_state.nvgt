@@ -17,6 +17,10 @@ enum AutoMoveState
   */
   Landing,
   /*
+  ** The person is travelling through a portal.
+  */
+  Porting,
+  /*
   ** The person is not moved automatically.
   */
   Standing
@@ -30,5 +34,6 @@ const string[] AutoMoveStateName =
   "falling",
   "jumping",
   "landing",
+  "porting",
   "standing"
 };

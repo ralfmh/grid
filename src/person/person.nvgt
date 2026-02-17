@@ -11,6 +11,11 @@
 class Person
 {
   /*
+  ** The portal through which the person currently travels.
+  */
+  private Portal@ activePortal;
+
+  /*
   ** The interval in ms for each automatically performed move.
   */
   private int autoMoveInterval;
@@ -67,6 +72,11 @@ class Person
   private timer manualMoveTimer;  // The timer controlling manual moves.
 
   /*
+  ** Callback for a functiion which plays sounds triggered by the person.
+  */
+  PlaySoundCallback@ PlaySound;
+
+  /*
   ** The last known text that was associated with the person's position.
   */
   private string text;
@@ -90,6 +100,26 @@ class Person
     @this.Block = this.map.GetBlock(initialX, initialY);
     this.ChangePosition(initialX, initialY);
     this.ManualMoveFactor = 1;
+    @this.PlaySound = PlaySoundSilent;
+  }
+
+  /*
+  ** Manually activates a portal at the current position.
+  */
+  void ActivatePortal()
+  {
+    if (@this.activePortal != null)
+    {
+      return;
+    }
+    @this.activePortal = this.map.GetPortal(this.X, this.Y);
+    if (@this.activePortal != null)
+    {
+      this.autoMoveInterval = this.activePortal.TravelTime / (abs(
+                                this.activePortal.ToX - this.X)
+                              + abs(this.activePortal.ToY - this.Y));
+      this.AutoMoveState = Porting;
+    }
   }
 
   /*
@@ -131,6 +161,33 @@ class Person
           return true;
         }
         return false;;
+      case Porting:
+        if (this.autoMoveTimer.elapsed >= this.autoMoveInterval)
+        {
+          if (this.X < this.activePortal.ToX)
+          {
+            this.ChangePosition(this.X + 1, this.Y);
+          }
+          else if (this.X > this.activePortal.ToX)
+          {
+            this.ChangePosition(this.X - 1, this.Y);
+          }
+          else if (this.Y < this.activePortal.ToY)
+          {
+            this.ChangePosition(this.X, this.Y + 1);
+          }
+          else if (this.Y > this.activePortal.ToY)
+          {
+            this.ChangePosition(this.X, this.Y - 1);
+          }
+          this.autoMoveTimer.restart();
+          if (this.X == this.activePortal.ToX && this.Y == this.activePortal.ToY)
+          {
+            @this.activePortal = null;
+            this.AutoMoveState = Standing;
+            return true;
+          }
+        }
     }
     return false;
   }
@@ -447,4 +504,19 @@ class Person
     return this.X+", "+this.Y+" on "+this.LocalMaterial
            +", "+AutoMoveStateName[this.AutoMoveState];
   }
+}
+
+/*
+** Defines the function which plays sounds.
+*/
+funcdef void PlaySoundCallback(
+  string filename,  // The name of the sound file.
+  bool loop // Boolean value indicating whether the playback should be looped.
+);
+
+/*
+** A no-oop PlaySoundCallback, used for testing.
+*/
+void PlaySoundSilent(string filename, bool loopp)
+{
 }
