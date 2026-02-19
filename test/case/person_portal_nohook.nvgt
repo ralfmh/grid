@@ -1,0 +1,26 @@
+#include "../../src/map/map.nvgt"
+
+void test_person_portal_nohook()
+{
+  string definition = "port fx1 fy1 tx3 ty0 pam pt0" + LINE_SEPARATOR
+                      + "tile fx0 tx5 fy5 mlmetal";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+  map.CreateGrids();
+  Person p(0, 0, map);
+  p.Hook(Up, 1);
+  assert(p.Hooked);
+  p.ActivatePortal();
+  assert(!p.Hooked);
+  assert(p.AutoMoveState == Porting);
+  p.Hook(Up, 1);
+  assert(!p.Hooked);
+  p.AutoMove();
+  assert(p.X == 2);
+  p.AutoMove();
+  assert(p.X == 3);
+  p.AutoMove();
+  assert(p.Y == 0);
+  assert(p.AutoMoveState == Standing);
+}

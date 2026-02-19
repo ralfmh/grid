@@ -119,6 +119,7 @@ class Person
                                 this.activePortal.ToX - this.X)
                               + abs(this.activePortal.ToY - this.Y));
       this.AutoMoveState = Porting;
+      this.Hooked = false;
       this.PlaySound(this.activePortal.EnterSound, false);
       this.PlaySound(this.activePortal.TravelSound, true);
     }
@@ -445,6 +446,10 @@ class Person
     int xOffset // The offset from the x axis.
   )
   {
+    if (this.AutoMoveState == Porting)
+    {
+      return;
+    }
     if (this.Hooked)
     {
       this.Hooked = false;
