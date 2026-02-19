@@ -266,7 +266,8 @@ class Person
     }
     else
     {
-      if (this.manualMoveTimer.elapsed < this.ManualMoveInterval)
+      if (this.manualMoveTimer.elapsed < this.ManualMoveInterval
+          || this.AutoMoveState == Porting)
       {
         return Delayed;
       }
