@@ -14,6 +14,7 @@ void game() {
   m.CreateGrids();
   Person@ p;
   Person player(0, 0, m);
+  @player.PlaySound = PlaySound;
   @p = @player;
   Shadow shadow(player, m);
   Block@[] usedBlocks = m.GetUsedBlocks();
@@ -93,6 +94,10 @@ void game() {
       }
       else speak(text);
     }
+    else if (key_pressed(KEY_RETURN))
+    {
+      p.ActivatePortal();
+    }
     if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
       p.ManualMoveInterval = DEFAULT_RUN_INTERVAL * p.ManualMoveFactor;
     }
@@ -157,4 +162,13 @@ void game() {
       unhookSound.play();
     }
   }
+}
+
+void PlaySound(string filename, bool loop)
+{
+  if (filename.is_empty())
+  {
+    return;
+  }
+  sound_play(sounds_directory + "/portals/" + filename + ".ogg");
 }

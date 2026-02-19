@@ -119,6 +119,8 @@ class Person
                                 this.activePortal.ToX - this.X)
                               + abs(this.activePortal.ToY - this.Y));
       this.AutoMoveState = Porting;
+      this.PlaySound(this.activePortal.EnterSound, false);
+      this.PlaySound(this.activePortal.TravelSound, true);
     }
   }
 
@@ -183,6 +185,7 @@ class Person
           this.autoMoveTimer.restart();
           if (this.X == this.activePortal.ToX && this.Y == this.activePortal.ToY)
           {
+            this.PlaySound(activePortal.ExitSound, false);
             @this.activePortal = null;
             this.AutoMoveState = Standing;
             return true;
