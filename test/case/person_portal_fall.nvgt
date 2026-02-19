@@ -1,8 +1,8 @@
 #include "../../src/map/map.nvgt"
 
-void test_person_portal_up_right()
+void test_person_portal_fall()
 {
-  string definition = "port fx0 fy0 tx2 ty2 pam pt0";
+  string definition = "port fx0 fy0 tx0 ty1 pam pt0";
   Map map;
   string[] errors = map.Parse(definition);
   assert(errors.length() == 0, join(errors, ", "));
@@ -11,10 +11,6 @@ void test_person_portal_up_right()
   p.ActivatePortal();
   assert(p.AutoMoveState == Porting);
   p.AutoMove();
-  p.AutoMove();
-  p.AutoMove();
-  p.AutoMove();
+  assert(p.Y == 1);
   assert(p.AutoMoveState == Falling);
-  assert(p.X == 2);
-  assert(p.Y == 2);
 }

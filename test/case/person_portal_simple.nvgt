@@ -16,5 +16,5 @@ void test_person_portal_simple()
   assert(p.X == 2);
   p.AutoMove();
   assert(p.X == 3);
-  assert(p.AutoMoveState == Standing);
+  assert(p.AutoMoveState == Falling);
 }

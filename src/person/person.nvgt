@@ -188,7 +188,7 @@ class Person
           {
             this.PlaySound(activePortal.ExitSound, false);
             @this.activePortal = null;
-            this.AutoMoveState = Standing;
+            this.Fall();
             return true;
           }
         }
