@@ -410,12 +410,13 @@ class Person
   {
     string view = "";
     Block@ block;
+    Portal@ portal;
     string viewMaterial = this.LocalMaterial;
     string remoteMaterial;
     string type;
     BlockSearcher searcher(direction, this.map, this.X, this.Y,
                            DEFAULT_VIEW_HORIZONTAL, DEFAULT_VIEW_VERTICAL);
-    while (searcher.Find(block))
+    while (searcher.Find(block, portal))
     {
       type = "";
       if (@block != null)
@@ -438,6 +439,10 @@ class Person
           view += type + remoteMaterial + " (" + searcher.Squares + "), ";
         }
         viewMaterial = remoteMaterial;
+      }
+      if (@portal != null)
+      {
+        view += "portal (" + searcher.Squares + "), ";
       }
     }
     if (view == "")

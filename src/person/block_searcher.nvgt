@@ -113,6 +113,20 @@ final class BlockSearcher
   }
 
   /*
+  ** Finds the next block or portal.
+  ** Returns a boolean value indicating whether the search is finished.
+  */
+  bool Find(
+    Block@ &out block,  // The found block.
+    Portal@ &out portal // The found portal.
+  )
+  {
+    bool finished = this.Find(block);
+    @portal = this.map.GetPortal(this.position[0], this.position[1]);
+    return finished;
+  }
+
+  /*
   ** Finds the next block.
   ** Returns a boolean value indicating whether the search is finished.
   */
