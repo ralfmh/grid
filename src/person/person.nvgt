@@ -77,6 +77,12 @@ class Person
   PlaySoundCallback@ PlaySound;
 
   /*
+  ** Callback for a functiion which stops a currently playing sound,
+  ** triggered by the person.
+  */
+  StopSoundCallback@ StopSound;
+
+  /*
   ** The last known text that was associated with the person's position.
   */
   private string text;
@@ -100,7 +106,8 @@ class Person
     @this.Block = this.map.GetBlock(initialX, initialY);
     this.ChangePosition(initialX, initialY);
     this.ManualMoveFactor = 1;
-    @this.PlaySound = PlaySoundSilent;
+    @this.PlaySound = PlaySoundNoOp;
+    @this.StopSound = StopSoundNoOp;
   }
 
   /*
@@ -186,6 +193,7 @@ class Person
           this.autoMoveTimer.restart();
           if (this.X == this.activePortal.ToX && this.Y == this.activePortal.ToY)
           {
+            this.StopSound();
             this.PlaySound(activePortal.ExitSound, false);
             @this.activePortal = null;
             this.Fall();
@@ -524,8 +532,20 @@ funcdef void PlaySoundCallback(
 );
 
 /*
-** A no-oop PlaySoundCallback, used for testing.
+** Defines the function which stops a currently playing sounds.
 */
-void PlaySoundSilent(string filename, bool loopp)
+funcdef void StopSoundCallback();
+
+/*
+** A no-op PlaySoundCallback, used for testing.
+*/
+void PlaySoundNoOp(string filename, bool loopp)
+{
+}
+
+/*
+** A no-op StopSoundCallback, used for testing.
+*/
+void StopSoundNoOp()
 {
 }

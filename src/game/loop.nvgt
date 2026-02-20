@@ -1,3 +1,5 @@
+sound ActivePortalTravelSound;
+
 void game() {
   Map m();
   string definition = file_get_contents("default.map");
@@ -15,6 +17,7 @@ void game() {
   Person@ p;
   Person player(0, 0, m);
   @player.PlaySound = PlaySound;
+  @player.StopSound = StopSound;
   @p = @player;
   Shadow shadow(player, m);
   Block@[] usedBlocks = m.GetUsedBlocks();
@@ -170,5 +173,18 @@ void PlaySound(string filename, bool loop)
   {
     return;
   }
-  sound_play(sounds_directory + "/portals/" + filename + ".ogg");
+  if (!loop)
+  {
+    sound_play(sounds_directory + "/portals/" + filename + ".ogg");
+  }
+  else
+  {
+    ActivePortalTravelSound.stream(sounds_directory + "/portals/" + filename + ".ogg");
+    ActivePortalTravelSound.play_looped();
+  }
+}
+
+void StopSound()
+{
+  ActivePortalTravelSound.stop();
 }
