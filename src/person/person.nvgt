@@ -126,6 +126,7 @@ class Person
                                 this.activePortal.ToX - this.X)
                               + abs(this.activePortal.ToY - this.Y));
       this.AutoMoveState = Porting;
+      this.autoMoveTimer.restart();
       this.Hooked = false;
       this.PlaySound(this.activePortal.EnterSound, false);
       this.PlaySound(this.activePortal.TravelSound, true);
