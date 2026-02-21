@@ -111,7 +111,7 @@ class Person
   }
 
   /*
-  ** Manually activates a portal at the current position.
+  ** Activates a portal at the current position.
   */
   void ActivatePortal(
     PortalActivation activation  // The type of portal to activate.
@@ -149,7 +149,7 @@ class Person
       case Jumping:
         result = this.Move(Up, true);
         if (((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
-            || result == Walled)
+             || result == Walled)
             && this.AutoMoveState != Porting)
         {
           this.AutoMoveState = Landing;
@@ -171,12 +171,13 @@ class Person
           return true;
         }
         result = this.Move(Down, true);
-        if ((result != Delayed && this.Block != null) || result == Edged)
+        if (((result != Delayed && this.Block != null) || result == Edged)
+            && this.AutoMoveState != Porting)
         {
           this.AutoMoveState = Standing;
           return true;
         }
-        return false;;
+        return false;
       case Porting:
         if (this.autoMoveTimer.elapsed >= this.autoMoveInterval)
         {
