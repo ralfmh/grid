@@ -1,0 +1,23 @@
+#include "../../src/map/map.nvgt"
+
+void test_person_portal_auto_chain()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR
+                      + "port fx1 fy0 tx1 ty5 pau pt0" + LINE_SEPARATOR
+                      + "port fx1 fy5 tx1 ty10 pau pt0";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+  map.CreateGrids();
+  Person p(0, 0, map);
+  p.Move(Right);
+  assert(p.AutoMoveState == Porting);
+  p.AutoMove();
+  p.AutoMove();
+  p.AutoMove();
+  p.AutoMove();
+  p.AutoMove();
+  assert(p.AutoMoveState == Porting);
+  p.AutoMove();
+  assert(p.Y == 6);
+}

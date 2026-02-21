@@ -112,14 +112,15 @@ class Person
 
   /*
   ** Activates a portal at the current position.
+  ** Returns a boolean value indicating whether a portal was activated.
   */
-  void ActivatePortal(
+  bool ActivatePortal(
     PortalActivation activation  // The type of portal to activate.
   )
   {
     if (@this.activePortal != null)
     {
-      return;
+      return false;
     }
     Portal @portal = this.map.GetPortal(this.X, this.Y);
     if (@portal != null
@@ -134,7 +135,9 @@ class Person
       this.Hooked = false;
       this.PlaySound(this.activePortal.EnterSound, false);
       this.PlaySound(this.activePortal.TravelSound, true);
+      return true;
     }
+    return false;
   }
 
   /*
@@ -232,6 +235,10 @@ class Person
   */
   private void Fall()
   {
+    if (this.ActivatePortal(Automatic))
+    {
+      return;
+    }
     this.AutoMoveState = Falling;
     this.autoMoveInterval = this.FallInterval;
   }
