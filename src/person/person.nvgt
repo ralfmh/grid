@@ -135,6 +135,10 @@ class Person
       this.Hooked = false;
       this.PlaySound(this.activePortal.EnterSound, false);
       this.PlaySound(this.activePortal.TravelSound, true);
+      if (this.activePortal.TravelTime == -1)
+      {
+        this.ChangePosition(this.activePortal.ToX, this.activePortal.ToY);
+      }
       return true;
     }
     return false;

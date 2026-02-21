@@ -1,0 +1,16 @@
+#include "../../src/map/map.nvgt"
+
+void test_person_portal_instant()
+{
+  string definition = "port fx0 fy0 tx10 ty0 pam pt-1";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+  map.CreateGrids();
+  Person p(0, 0, map);
+  p.ActivatePortal(Manual);
+  assert(p.AutoMoveState == Porting);
+  p.AutoMove();
+  assert(p.X == 10);
+  assert(p.AutoMoveState == Falling);
+}
