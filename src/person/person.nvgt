@@ -148,8 +148,9 @@ class Person
     {
       case Jumping:
         result = this.Move(Up, true);
-        if ((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
+        if (((this.Y - this.jumpStart) >= DEFAULT_JUMP_RANGE
             || result == Walled)
+            && this.AutoMoveState != Porting)
         {
           this.AutoMoveState = Landing;
           this.autoMoveInterval = this.FallInterval;

@@ -1,0 +1,24 @@
+#include "../../src/map/map.nvgt"
+
+void test_person_portal_auto_jump()
+{
+  string definition = "tile fx0 tx10 fy0 mlstone" + LINE_SEPARATOR
+                      + "port fx0 fy5 tx1 ty5 pau pt0";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+  map.CreateGrids();
+  Person p(0, 0, map);
+  p.Jump();
+  assert(p.AutoMoveState == Jumping);
+  p.AutoMove();
+  p.AutoMove();
+  p.AutoMove();
+  p.AutoMove();
+  p.AutoMove();
+  assert(p.Y == 5);
+  assert(p.AutoMoveState == Porting);
+  p.AutoMove();
+  assert(p.X == 1);
+  assert(p.AutoMoveState == Falling);
+}
