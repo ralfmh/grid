@@ -1,0 +1,10 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_negative2_value()
+{
+  string definition = "port fx0 fy0 tx0 ty10 pam pnlift_start pslift_loop pt-2 pxlift_end";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 1);
+  assert(errors[0] == "Invalid value '-2' for segment 'pt' in line 1");
+}

@@ -59,6 +59,15 @@ const string[] DIGIT_SEGMENT =
 };
 
 /*
+** Defines segments whose values can be digits
+** and additionally -1.
+*/
+const string[] NEGATIVE1_SEGMENT =
+{
+  SEGMENT_PT
+};
+
+/*
 ** Defines segments which are optional.
 */
 const string[] OPTIONAL_SEGMENT =

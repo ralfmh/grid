@@ -1,0 +1,19 @@
+#include "../../src/map/map.nvgt"
+
+void test_map_portal_instant()
+{
+  string definition = "port fx0 fy0 tx0 ty10 pam pnlift_start pslift_loop pt-1 pxlift_end";
+  Map map;
+  string[] errors = map.Parse(definition);
+  assert(errors.length() == 0, join(errors, ", "));
+  map.CreateGrids();
+  Portal@ p = map.GetPortal(0, 0);
+  assert(@p != null);
+  assert(p.Activation == Manual);
+  assert(p.EnterSound == "lift_start");
+  assert(p.ExitSound == "lift_end");
+  assert(p.TravelSound == "lift_loop");
+  assert(p.TravelTime == -1);
+  assert(p.ToX == 0);
+  assert(p.ToY == 10);
+}

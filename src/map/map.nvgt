@@ -171,7 +171,9 @@ final class Map
           break;
         }
         if (DIGIT_SEGMENT.find(label) > -1
-            && !value.is_digits())
+          && !value.is_digits()
+          && !(NEGATIVE1_SEGMENT.find(label) > -1
+             && value == "-1"))
         {
           validationErrors.insert_last("Invalid value '" + value
                                        + "' for segment '" + label + "' in line " + (l + 1));
