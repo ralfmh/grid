@@ -20,3 +20,5 @@ text fx3 tx3 fy95 ty95 lvPress enter to get back down.
 port pam fx3 fy95 tx7 ty10 pnenter2 pstravel2 pt3000 pxexit2
 text fx0 tx2 fy95 ty95 lvOn a platform at the top left of the big glass wall.
 tile fx0 tx3 fy95 mldiamond
+text fx5 tx5 fy5 ty5 lvUse the portal to the left to go to the end of the map.
+port fx4 fy5 tx50 ty0 pau pt0 pxexit2

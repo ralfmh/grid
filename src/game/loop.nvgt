@@ -99,7 +99,7 @@ void game() {
     }
     else if (key_pressed(KEY_RETURN))
     {
-      p.ActivatePortal();
+      p.ActivatePortal(Manual);
     }
     if (key_down(KEY_LCTRL) || key_down(KEY_RCTRL)) {
       p.ManualMoveInterval = DEFAULT_RUN_INTERVAL * p.ManualMoveFactor;

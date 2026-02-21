@@ -8,7 +8,7 @@ void test_person_portal_up_right()
   assert(errors.length() == 0, join(errors, ", "));
   map.CreateGrids();
   Person p(0, 0, map);
-  p.ActivatePortal();
+  p.ActivatePortal(Manual);
   assert(p.AutoMoveState == Porting);
   p.AutoMove();
   p.AutoMove();

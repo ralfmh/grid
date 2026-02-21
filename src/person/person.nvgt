@@ -113,15 +113,19 @@ class Person
   /*
   ** Manually activates a portal at the current position.
   */
-  void ActivatePortal()
+  void ActivatePortal(
+    PortalActivation activation  // The type of portal to activate.
+  )
   {
     if (@this.activePortal != null)
     {
       return;
     }
-    @this.activePortal = this.map.GetPortal(this.X, this.Y);
-    if (@this.activePortal != null)
+    Portal @portal = this.map.GetPortal(this.X, this.Y);
+    if (@portal != null
+        && portal.Activation == activation)
     {
+      @this.activePortal = @portal;
       this.autoMoveInterval = this.activePortal.TravelTime / (abs(
                                 this.activePortal.ToX - this.X)
                               + abs(this.activePortal.ToY - this.Y));
@@ -340,6 +344,7 @@ class Person
       if (this.Hooked)
       {
         this.ChangePosition(newX,newY);
+        this.ActivatePortal(Automatic);
         return Moved;
       }
       else if (this.AutoMoveState == Standing && newY == this.Y)
@@ -357,10 +362,12 @@ class Person
           && (this.AutoMoveState == Landing || this.AutoMoveState == Falling))
       {
         this.ChangePosition(newX,newY);
+        this.ActivatePortal(Automatic);
       }
       return Walled;
     }
     this.ChangePosition(newX,newY);
+    this.ActivatePortal(Automatic);
     return Moved;
   }
 
