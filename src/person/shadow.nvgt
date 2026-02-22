@@ -21,6 +21,17 @@ class Shadow : Person
   }
 
   /*
+  ** Activates a portal at the current position.
+  ** Returns a boolean value indicating whether a portal was activated.
+  */
+  bool ActivatePortal(
+    PortalActivation activation  // The type of portal to activate.
+  ) override
+  {
+    return false;
+  }
+  
+  /*
   ** Moves the person automatically (e.g during jumping or falling).
   ** Returns true if the AutoMoveState changed, false otherwise.
   */
