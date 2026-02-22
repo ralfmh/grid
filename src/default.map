@@ -15,7 +15,8 @@ text fx6 tx8 fy0 ty0 lvPress enter to walk through the wall.
 port pam fx6 tx8 fy0 ty0 pnenter1 pt2000 pxexit1
 port pam fx8 tx6 fy0 ty0 pnenter1 pt2000 pxexit1
 text fx7 tx7 fy10 ty10 lvPress enter to get high.
-port pam fx7 fy10 tx0 ty95 pnenter2 pstravel2 pt3000 pxexit2
+port pam fx7 fy10 tx4 ty50 pnenter2 pstravel2 pt1500
+port pau fx4 fy50 tx0 ty95 pnenter2 pstravel2 pt1500 pxexit2
 text fx3 tx3 fy95 ty95 lvPress enter to get back down.
 port pam fx3 fy95 tx7 ty10 pnenter2 pstravel2 pt3000 pxexit2
 text fx0 tx2 fy95 ty95 lvOn a platform at the top left of the big glass wall.
