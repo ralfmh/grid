@@ -27,7 +27,7 @@ Each segment (except the line type) consists of a 2-character label and a value.
 |pa|port|Portal activation.|m (= manual activation), u (= automatic activation)|
 |pn|port|Portal enter sound.||
 |ps|port|Portal travel sound.||
-|pt|port|Portal travel time in milliseconds.|Positive integer|
+|pt|port|Portal travel time in milliseconds.|Positive integer, or -1 for an instant portal|
 |px|port|Portal exit sound.||
 |tx|ladr, port, text, tile, wall|To (or maximum) x position.|Positive integer >= fx|
 |ty|ladr, port, text, wall|To (or maximum) y position.|Positive integer >= fy|
