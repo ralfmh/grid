@@ -172,6 +172,8 @@ class Person
         }
       case Falling:
         @this.Block = this.map.GetBlock(this.X, this.Y);
+        this.LocalMaterial = this.Block != null ? this.Block.Material
+                             : this.map.DefaultMaterial;
         if (this.Block != null)
         {
           this.AutoMoveState = Standing;
